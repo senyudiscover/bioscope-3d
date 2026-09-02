@@ -5,14 +5,14 @@
 
 ---
 
-## NOW（Sprint #001，本迭代）
+## NOW（Sprint #001 已完成；Sprint #002 未排期）
 
 | 项 | 说明 | 状态 |
 |---|---|---|
-| BIO-006 git 首次提交 | 建立版本基线（当前 0 commit，无回滚点） | Sprint 进行中 |
-| BIO-007 根目录 README | 面向 human + AI Agent 的项目入口 | Sprint 进行中 |
-| BIO-010 AI Handoff Test | 验证 .ai-company/ 是否能让陌生 Agent 恢复上下文 | Sprint 进行中 |
-| BIO-002A 光合作用机制导航 MVP | Stretch Goal，仅在 006/007/010 完成后经 CEO 批准再启动 | 待批准 |
+| BIO-006 git 首次提交 | 建立版本基线（commit 7dfcc07） | ✅ 完成（2026-09-03） |
+| BIO-007 根目录 README | 面向 human + AI Agent 的项目入口 | ✅ 完成（commit b7fdcca） |
+| BIO-010 AI Handoff Test | 陌生 Agent 仅凭 .ai-company/ 恢复上下文 | ✅ 完成（commit f367db5） |
+| BIO-002A 光合作用机制导航 MVP | Stretch Goal，架构判定 PARTIAL FIT（见 docs/audit/PHOTOSYNTHESIS-ARCHITECTURE-v1.md），仍待 CEO 批准 | 待批准 |
 
 ## NEXT（下一个迭代）
 

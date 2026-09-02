@@ -85,6 +85,8 @@ v0.1 试点项目（"AI Company" 的第一个项目）。当前实际状态：
 - `lib/anatomy-filters.ts`：系统筛选（心血管/呼吸/消化…）和显示层筛选（表面/肌肉/器官/骨骼…）。
 - `lib/anatomy-terminology.ts`：把模型内部的英文结构名翻译成中文。
   分三层：人工确认的术语（verified）→ 词组规则 → 单词拼接（unverified）。
+- `lib/knowledge-graph-validator.ts`：知识图引用完整性验证器（ERROR/WARNING/INFO 分级），
+  由 `npm run validate:knowledge` 与两个只读审计脚本消费。
 - `lib/bioscope-core.ts`：定义"模块/场景/机制步骤"这些核心类型。
 - `lib/knowledge-nodes.ts`：知识数据的统一出口（兼容再导出）。
 

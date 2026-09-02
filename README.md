@@ -64,6 +64,10 @@ Windows 可双击 启动网站.cmd（自动 build + preview）。
     npm run build   # vinext build（Cloudflare + RSC）
     npm run start   # wrangler dev
 
+> 注意（2026-09-03 审计）：生产路径的 `public/models/` 为空——vinext 链路下人体模型
+> 会 404，完整体验目前只有本地预览（local-build + 手动放置 GLB）可复现；仓库也暂无
+> 自动部署脚本。详见 docs/audit/BUILD-DEPLOYMENT-RISK-v1.md。
+
 ---
 
 ## 测试
