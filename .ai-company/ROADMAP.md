@@ -18,7 +18,7 @@
 
 | 项 | 说明 |
 |---|---|
-| 知识网络反向边 | 当前 `related` 多为单向，严格双向可走需要补回边 |
+| 知识网络反向边 | 当前 `related` 多为单向，严格双向可走需要补回边。已有只读审计基线：`npm run audit:knowledge-chain`（核心链 7 跳中 3 处单向，断点已固化进测试；补边方案见 Night Shift Report，需 CEO 决策） |
 | 植物模块 Explore Questions | 人体 6 器官已有，植物节点尚未补 WHY/HOW/WHAT IF |
 | 术语系统补 verified | 大量结构名靠单词拼接（unverified），高频器官需人工确认 |
 | picking 可用性问题 | `internal-structures` 命名结构被整体过滤（测试已记录，需产品判断） |
@@ -27,7 +27,7 @@
 
 | 项 | 说明 |
 |---|---|
-| 测试覆盖扩展 | 目前只有 picking-manager 有测试 |
+| 测试覆盖扩展 | 已部分完成（2026-09-03 night-shift）：核心逻辑层 picking-manager / anatomy-filters / anatomy-terminology / knowledge-graph-validator 均有回归基线；UI 组件层与 workbench 交互仍无测试 |
 | 更多解剖系统术语 | 补齐 verified 覆盖 |
 
 ## FROZEN（冻结，仅阅读/参考）
