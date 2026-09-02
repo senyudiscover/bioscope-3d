@@ -452,6 +452,74 @@ describe('model reference 分层验证', () => {
 });
 
 // ---------------------------------------------------------------------------
+// 9b. 分支覆盖补全（night-shift NS-1 review）
+//
+// 独立 review 发现以下 5 个验证器分支此前没有任何测试断言，其中
+// MISSING_FOLLOWUP_TARGET / MISSING_KEY_STRUCTURE_NODE 是 ERROR 级：
+// 若重构破坏检测，CI 无法发现。本组逐一固化其触发条件与严重级。
+// ---------------------------------------------------------------------------
+
+describe('9b · 未覆盖分支补全', () => {
+  it('followUps 目标不存在 → ERROR MISSING_FOLLOWUP_TARGET', () => {
+    const report = validateKnowledgeGraph({
+      registries: [
+        source('a', node('stomach', { exploreQuestions: { why: { question: 'q', answer: 'a', followUps: ['ghost'] } } })),
+      ],
+    });
+
+    expect(codes(report.errors)).toEqual(['MISSING_FOLLOWUP_TARGET']);
+    expect(report.errors[0].message).toContain('"stomach"');
+    expect(report.errors[0].message).toContain('"ghost"');
+  });
+
+  it('keyStructures[].id 指向不存在的节点 → ERROR MISSING_KEY_STRUCTURE_NODE', () => {
+    const report = validateKnowledgeGraph({
+      registries: [source('a', node('heart', { keyStructures: [{ id: 'ghost-node', nameZh: '幽灵结构' }] }))],
+    });
+
+    expect(codes(report.errors)).toEqual(['MISSING_KEY_STRUCTURE_NODE']);
+    expect(report.errors[0].message).toContain('"heart"');
+    expect(report.errors[0].message).toContain('"ghost-node"');
+  });
+
+  it('空字符串 model 引用 → WARNING EMPTY_MODEL_REFERENCE（无需 knownStructureIds）', () => {
+    const report = validateKnowledgeGraph({
+      registries: [
+        source('a', node('a-empty-id', { modelStructureIds: [''] })),
+        source('b', node('b-blank-ref', { modelRef: '   ' })),
+      ],
+    });
+
+    expect(report.errors).toEqual([]);
+    expect(codes(report.warnings)).toEqual(['EMPTY_MODEL_REFERENCE', 'EMPTY_MODEL_REFERENCE']);
+  });
+
+  it('scene.parentSceneId 不存在 → WARNING MISSING_SCENE_PARENT（knowledge 引用完好则无 error）', () => {
+    const report = validateKnowledgeGraph({
+      registries: [source('a', node('heart', {}))],
+      microLab: { scenes: { organ: { knowledgeNodeId: 'heart', parentSceneId: 'ghost-parent' } } },
+    });
+
+    expect(report.errors).toEqual([]);
+    expect(codes(report.warnings)).toEqual(['MISSING_SCENE_PARENT']);
+    expect(report.warnings[0].message).toContain('"organ"');
+    expect(report.warnings[0].message).toContain('"ghost-parent"');
+  });
+
+  it('scene.childSceneIds 指向不存在的场景 → WARNING MISSING_SCENE_CHILD', () => {
+    const report = validateKnowledgeGraph({
+      registries: [source('a', node('heart', {}))],
+      microLab: { scenes: { cell: { knowledgeNodeId: 'heart', childSceneIds: ['ghost-child'] } } },
+    });
+
+    expect(report.errors).toEqual([]);
+    expect(codes(report.warnings)).toEqual(['MISSING_SCENE_CHILD']);
+    expect(report.warnings[0].message).toContain('"cell"');
+    expect(report.warnings[0].message).toContain('"ghost-child"');
+  });
+});
+
+// ---------------------------------------------------------------------------
 // 10. 当前真实 BioScope 知识数据（characterization baseline）
 // ---------------------------------------------------------------------------
 
