@@ -1,0 +1,44 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/.vinext/
+/out/
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local environment
+.env*
+
+# deployment and generated files
+.vercel
+next-env.d.ts
+*.tsbuildinfo
+/dist/
+/dist-local/
+/.wrangler/
+/outputs/
+/work/
+
+# third-party model assets (Z-Anatomy 1.4.0, self-hosted, fetched from upstream)
+# 见 DECISIONS D-009：模型为第三方 immutable 资产，不纳入 git 历史。
+/local-public/models/
