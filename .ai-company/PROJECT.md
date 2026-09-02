@@ -167,8 +167,6 @@ v0.1 试点项目（"AI Company" 的第一个项目）。当前实际状态：
 ## 6. 已知问题 / 技术债（详见 BOARD.md）
 
 - 旧 plant-workbench 与 photosynthesis 模块的 3D 组件大量重复（两套手绘细胞器）。
-- 整个 git 仓库 **0 次提交**，无版本历史、无回滚点。
-- 无根目录 README（项目自述缺失）。
 - `content/` 内容管线（`content-schema.ts`）定义但零引用，未接通。
 - `isPublishableBiologyNote`、`deprecatedExperimentalModules`、`sharedKnowledgeNodeIds`
   等符号目前是"定义了但没被业务消费"的死代码/预留位。

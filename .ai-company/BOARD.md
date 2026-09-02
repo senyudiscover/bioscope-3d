@@ -15,25 +15,6 @@
 
 ---
 
-## IN PROGRESS（Sprint #001）
-
-### BIO-006 · Establish Git Baseline（P0）
-- **Owner**：CTO
-- **依赖**：安全检查（已完成：无敏感信息）
-- **验收标准**：首次 commit 成功；确认 .gitignore 正确排除 node_modules/dist/.next/.wrangler/.vinext/.env/tsbuildinfo
-
-### BIO-007 · Root README（P0）
-- **Owner**：CTO
-- **依赖**：无
-- **验收标准**：README 含定位/模块/技术栈/安装/运行/测试/目录结构/成熟度/AI Agent onboarding；不复制 .ai-company 全文；单独 commit
-
-### BIO-010 · AI Handoff Test（P0）
-- **Owner**：独立 subagent（Codex 优先）+ CTO Review
-- **依赖**：BIO-006、BIO-007 完成
-- **验收标准**：陌生 Agent 仅凭 README + .ai-company/ 回答 8 问；CTO 输出 Handoff Report 并给 PASS/PARTIAL/FAIL
-
----
-
 ## READY（待批准后开工）
 
 ### BIO-002A · Photosynthesis Mechanism Navigation MVP（P1，Stretch）
@@ -83,3 +64,18 @@
 - **Owner**：CTO
 - **完成**：data/modules/registry.tsx 中 'human-body' → 'human'
 - **验收**：tsc 通过；全项目无 'human-body' 残留
+
+### BIO-006 · Establish Git Baseline（P0）
+- **Owner**：CTO
+- **完成**：commit 7dfcc07（112 文件，27791 行）；.gitignore 排除 node_modules/dist/.next/.wrangler/.vinext/.env/tsbuildinfo + 模型资产
+- **验收**：build 通过（vinext build exit 0）；测试 23/23 通过；无敏感信息进入仓库
+
+### BIO-007 · Root README（P0）
+- **Owner**：CTO
+- **完成**：commit b7fdcca；README.md 117 行，含定位/模块/技术栈/安装/运行/测试/目录结构/成熟度/AI onboarding
+- **验收**：单独 commit；不复制 .ai-company 全文；指向 .ai-company 作为事实来源
+
+### BIO-010 · AI Handoff Test（P0）
+- **Owner**：独立 subagent + CTO Review
+- **完成**：陌生 subagent 仅凭 README + .ai-company/ 回答 8 问；CTO 输出 Handoff Report（结论见 Midpoint Report）
+- **验收**：8 问全部回答准确；暴露 4 处文档滞后，已修复
