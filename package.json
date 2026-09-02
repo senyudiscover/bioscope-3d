@@ -15,6 +15,7 @@
     "format": "oxfmt",
     "test": "vitest run",
     "validate:knowledge": "vitest run tests/knowledge-graph.test.ts",
+    "audit:knowledge-chain": "vitest run tests/knowledge-chain-audit.test.ts",
     "postinstall": "node scripts/patch-vanatome-camera.mjs"
   },
   "dependencies": {
