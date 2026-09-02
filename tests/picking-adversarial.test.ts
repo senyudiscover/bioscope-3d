@@ -25,7 +25,6 @@ import {
 // ============================================================================
 
 type ResolveInput = Parameters<typeof resolvePickCandidates>[0];
-type StatesInput = Parameters<typeof createPickableStates>[0];
 
 const structure = (
   seed: Partial<VanatomeStructure> & Pick<VanatomeStructure, 'id' | 'name'>,
