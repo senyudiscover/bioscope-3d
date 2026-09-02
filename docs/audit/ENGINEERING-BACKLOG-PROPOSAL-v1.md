@@ -12,7 +12,7 @@
 | # | 项 | Evidence | Impact | Cost | Risk | Owner | AC |
 |---|---|---|---|---|---|---|---|
 | P0-1 | `.gitignore` 补 `/public/models/` | BUILD-DEPLOYMENT R8（.gitignore:44 只有 local-public） | 防止 30MB GLB 误入 git 历史（修 R1 时必然发生） | XS | 零 | Engineer | 新 ignore 行生效；`git status` 不再显示 public/models |
-| P0-2 | `appearance` 对象身份稳定 + rAF 合并 `setPointer` | PERFORMANCE 1.6/Top5-1（anatomy-workbench :1072-1081 每渲染新对象字面量 → 第三方每次鼠标移动全场景材质刷写） | 消除最大隐藏热路径；N 增大时防掉帧 | XS | 低（视觉数值零变化） | Engineer | Profiler 显示 pointer move 不再触发材质 effect；全部测试绿；肉眼无视觉差异 |
+| P0-2 | `appearance` 对象身份稳定（提 useMemo([])）——**rAF 合并 setPointer 已按 Track O 复审移除**（tooltip 依赖同步 setPointer，合帧产生可感滞后） | PERFORMANCE 1.6/Top5-1（anatomy-workbench :1072-1081 每渲染新对象字面量 → 第三方每次鼠标移动全场景材质刷写）；Track O 修正 | 消除最大隐藏热路径；N 增大时防掉帧 | XS | 低（视觉数值零变化） | Engineer | Profiler 显示 pointer move 不再触发材质 effect；全部测试绿；肉眼无视觉差异 |
 | P0-3 | `getStructureTerm` 记忆化 | PERFORMANCE 1.5/Top5-3（树 ~3.2 万正则/渲染；搜索每键入 O(N×40 正则)） | 搜索/树/tooltip 重复计算消失 | XS-S | 低（纯缓存零行为变化） | Engineer | 现有术语测试**不改一字**全绿；打字卡顿消失（807→8000 均适用） |
 | P0-4 | a11y Top3 安全修复 | ACCESSIBILITY 可直接修 Top 3（M4 的 aria-pressed/expanded/current、M6 的两个无名 X、M7 的 role=status/alert） | 键盘/读屏基本语义；零视觉变化 | S | 低 | Engineer | 属性补齐；tsc+测试绿；视觉 diff 为零 |
 
@@ -23,18 +23,20 @@
 | P1-1 | 补 `musculoskeletal` 中文系统术语 | TERMINOLOGY-QA E-1（CONFIRMED；systems 表缺条目，breadcrumb 回落英文）；D-005 中文优先 | UI 一致性 bug 修复 | XS | 低（zh 字符串「肌肉骨骼」已在 systemFilterOptions 使用，措辞无新造） | Engineer | getSystemTerm('musculoskeletal').zh 非空；terminology-qa 守门基线更新为 [] |
 | P1-2 | vanatome-react 锁精确版本 | CAMERA-PATCH R1 / DEPENDENCY 排序第一（caret 与 patch 契约矛盾） | 消除"npm install 突然全阻断"的必然风险 | XS（改 package.json） | 低（升级变显式决策） | CTO 拍板 → Engineer | package.json `0.1.6` 精确；camera 契约测试绿 |
 | P1-3 | M2 CandidateMenu 弹层语义 | ACCESSIBILITY M2（无 role、Esc 实际无效、焦点丢失） | 键盘可用性 | S | 中（焦点行为微变，需手测） | Engineer + 手测 | role/aria-label/Esc/焦点归还四项落实 |
-| P1-4 | M1/M3/M9 a11y 中项 | ACCESSIBILITY M1/M3/M9 | Canvas 可感知、面板切换可通告 | S | 低-中 | Engineer | 同报告建议逐条 |
+| P1-4 | a11y 中项（按 Track O 收窄：**只做 M1** Canvas role/tabIndex；M3/M9 收益存疑或自标可选） | ACCESSIBILITY M1/M3/M9；INDEPENDENT-REVIEW §6-2 | Canvas 可感知 | S | 低 | Engineer | M1 落地 |
 | P1-5 | 神经系统接入 + 其余 CEO 批准的补边 | KNOWLEDGE-GRAPH-AUDIT-v2 F-1/F-2/F-3 + CED-1~8 | BIO-004 验收达成 | S（数据+更新 characterization 基线） | 低（测试有意变红→更新） | CEO 批准 → Engineer | audit 测试基线更新后全绿；核心链双向走通 |
 
 ## P2（有明确价值，排后；或需要新基建）
 
 | # | 项 | Evidence | Impact | Cost | Risk | Owner | AC |
 |---|---|---|---|---|---|---|---|
+| P2-0 | **建 CI（哪怕一条 `npm test` + tsc 的 workflow）+ 加 git remote/备份** | INDEPENDENT-REVIEW Q1-1/Q1-2（元风险：无 remote、无 CI，护栏均为单机纸面资产） | 一切护栏的前提 | S | 零（不碰代码） | DSH（权限项） | remote 存在且推送；CI 在 PR/推送时跑绿 |
 | P2-1 | picking 解析缓存化（byId/children/displayLayersFor）+ 解析移入防抖 | PERFORMANCE 1.2/1.3/Top5-2 | N 增大后 hover 不退化 | S-M | 中（必须保持纯函数确定性，测试钉死） | Engineer | 两套 picking 测试不改一字全绿；基准脚本对比数据 |
 | P2-2 | hover 状态下沉 / 面板 memo 边界 | PERFORMANCE Top5-4 | hover 提交重渲染面整页→3D 区 | M | 中 | Engineer | React Profiler 验证；手测无回归 |
 | P2-3 | 搜索索引前置 | PERFORMANCE Top5-5 | 打字 O(N×正则)→O(N×includes) | S | 低 | Engineer | searchResults 行为不变 |
-| P2-4 | 组件测试基建（jsdom/R3F mock）+ 首批组件测试：D-002 model-context 契约、CandidateMenu 行为 | TEST-COVERAGE-MATRIX ⏸ 行 | workbench 层零测试的缺口开始收敛 | L | 中（基建决策） | CTO 排期 → Engineer | 基建落地并覆盖 2 个契约测试 |
-| P2-5 | a11y M5 树语义 / MINOR 批量 | ACCESSIBILITY | 读屏结构感 | M | 低 | Engineer | aria-level/expanded 落地 |
+| P2-4 | **picking getAncestors 环防御（~3 行，Track O 异议后从 DEFER 升入）** | Track C POSSIBLE BUG + INDEPENDENT-REVIEW Q3-4 | 消除唯一已知的挂死路径 | XS | 低（需过 picking 全套基线） | Engineer | 构造环 fixture 的测试转正并绿 |
+| P2-5 | 组件测试基建（jsdom/R3F mock）——**前置条件：P2-0 CI 先落地**（Track O：否则 90% 时间不运行） | TEST-COVERAGE-MATRIX ⏸ 行 | workbench 层零测试的缺口开始收敛 | L | 中（基建决策） | CTO 排期 → Engineer | 基建落地并覆盖 2 个契约测试 |
+| P2-6 | a11y M5 树语义 | ACCESSIBILITY | 读屏结构感 | M | 低 | Engineer | aria-level/expanded 落地 |
 
 ## P3（打磨 / 文档 / 卫生）
 
@@ -49,7 +51,7 @@
 
 | # | 项 | 触发条件 | 依据 |
 |---|---|---|---|
-| D-1 | picking `getAncestors` 环防御 | 真实数据出现非树形父关系，或决定做对抗加固批次 | Track C：生产 atlas 是树，实际风险低；改 stable 代码需证据 |
+| D-1 | ~~picking getAncestors 环防御~~ **已升级为 P2-4（Track O 异议采纳）** | — | INDEPENDENT-REVIEW Q3-4 |
 | D-2 | 离线自托管 Google Fonts / Vanatome catalog | 出现离线/受控网络 CI 需求 | BUILD R3/R5 |
 | D-3 | lockfile 换官方 registry | 出现海外协作/CI | BUILD R4 |
 | D-4 | engines 收紧或 engine-strict | 团队统一 Node 版本时 | BUILD R7 |

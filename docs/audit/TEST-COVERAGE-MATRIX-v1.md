@@ -5,7 +5,7 @@
 > 与被测模块的通读（含 #001 NS-1 review 与本轮 Track C/D/E/F/H 的新增）。
 > 本轮按矩阵新增的高价值测试：`tests/bioscope-data-invariants.test.ts`（见 §尾）。
 
-**当前基线：10 个测试文件 / 242 tests（含本轮新增），`npm test` 全绿；tsc 通过；
+**当前基线：11 个测试文件 / 247 tests（含本轮新增，#002 独立复审复核通过），`npm test` 全绿；tsc 通过；
 lint 0 新增（历史 19 个 error 全在豁免的 components/ui 与 use-mobile）。**
 
 ---
