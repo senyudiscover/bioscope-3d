@@ -5,20 +5,20 @@
 
 ---
 
-## NOW（Sprint #001，本迭代）
+## NOW（Sprint #001 已完成；Sprint #002 未排期）
 
 | 项 | 说明 | 状态 |
 |---|---|---|
-| BIO-006 git 首次提交 | 建立版本基线（当前 0 commit，无回滚点） | Sprint 进行中 |
-| BIO-007 根目录 README | 面向 human + AI Agent 的项目入口 | Sprint 进行中 |
-| BIO-010 AI Handoff Test | 验证 .ai-company/ 是否能让陌生 Agent 恢复上下文 | Sprint 进行中 |
-| BIO-002A 光合作用机制导航 MVP | Stretch Goal，仅在 006/007/010 完成后经 CEO 批准再启动 | 待批准 |
+| BIO-006 git 首次提交 | 建立版本基线（commit 7dfcc07） | ✅ 完成（2026-09-03） |
+| BIO-007 根目录 README | 面向 human + AI Agent 的项目入口 | ✅ 完成（commit b7fdcca） |
+| BIO-010 AI Handoff Test | 陌生 Agent 仅凭 .ai-company/ 恢复上下文 | ✅ 完成（commit f367db5） |
+| BIO-002A 光合作用机制导航 MVP | Stretch Goal，架构判定 PARTIAL FIT（见 docs/audit/PHOTOSYNTHESIS-ARCHITECTURE-v1.md），仍待 CEO 批准 | 待批准 |
 
 ## NEXT（下一个迭代）
 
 | 项 | 说明 |
 |---|---|
-| 知识网络反向边 | 当前 `related` 多为单向，严格双向可走需要补回边 |
+| 知识网络反向边 | 当前 `related` 多为单向，严格双向可走需要补回边。已有只读审计基线：`npm run audit:knowledge-chain`（核心链 7 跳中 3 处单向，断点已固化进测试；补边方案见 Night Shift Report，需 CEO 决策） |
 | 植物模块 Explore Questions | 人体 6 器官已有，植物节点尚未补 WHY/HOW/WHAT IF |
 | 术语系统补 verified | 大量结构名靠单词拼接（unverified），高频器官需人工确认 |
 | picking 可用性问题 | `internal-structures` 命名结构被整体过滤（测试已记录，需产品判断） |
@@ -27,7 +27,7 @@
 
 | 项 | 说明 |
 |---|---|
-| 测试覆盖扩展 | 目前只有 picking-manager 有测试 |
+| 测试覆盖扩展 | 已部分完成（2026-09-03 night-shift）：核心逻辑层 picking-manager / anatomy-filters / anatomy-terminology / knowledge-graph-validator 均有回归基线；UI 组件层与 workbench 交互仍无测试 |
 | 更多解剖系统术语 | 补齐 verified 覆盖 |
 
 ## FROZEN（冻结，仅阅读/参考）

@@ -85,13 +85,15 @@ v0.1 试点项目（"AI Company" 的第一个项目）。当前实际状态：
 - `lib/anatomy-filters.ts`：系统筛选（心血管/呼吸/消化…）和显示层筛选（表面/肌肉/器官/骨骼…）。
 - `lib/anatomy-terminology.ts`：把模型内部的英文结构名翻译成中文。
   分三层：人工确认的术语（verified）→ 词组规则 → 单词拼接（unverified）。
+- `lib/knowledge-graph-validator.ts`：知识图引用完整性验证器（ERROR/WARNING/INFO 分级），
+  由 `npm run validate:knowledge` 与两个只读审计脚本消费。
 - `lib/bioscope-core.ts`：定义"模块/场景/机制步骤"这些核心类型。
 - `lib/knowledge-nodes.ts`：知识数据的统一出口（兼容再导出）。
 
 **底层 —— 数据（data/）**
 
 - `data/knowledge/anatomy.ts`：34 个人体知识节点（心脏、肺、肝…到 ATP、线粒体）。
-- `data/knowledge/plants.ts`：13 个植物知识节点（菠菜、叶肉细胞、叶绿体、光反应…）。
+- `data/knowledge/plants.ts`：12 个植物知识节点（菠菜、叶肉细胞、叶绿体、光反应…）。
 - `data/knowledge/index.ts`：把上面两份合并成一个总知识表。
 - `data/photosynthesis/micro-lab.ts`：光合作用的三层场景 + 6 个光反应步骤。
 - `data/modules/registry.tsx`：注册哪些模块可用。
@@ -137,6 +139,13 @@ v0.1 试点项目（"AI Company" 的第一个项目）。当前实际状态：
 
 - `tests/picking-manager.test.ts`（484 行）：picking 行为回归基线，覆盖 hidden/isolation/
   system/display layer/空间邻域/评分回归。这些测试是"行为快照"，不是规范。
+- `tests/anatomy-filters.test.ts` / `tests/anatomy-terminology.test.ts`：两个 lib 的
+  行为回归基线（含已知分类"污染"现状的 characterization）。
+- `tests/knowledge-graph.test.ts` + `scripts/validate-knowledge-graph.ts`：知识图引用
+  完整性验证器（ERROR/WARNING/INFO 分级，纯函数）。`npm run validate:knowledge`
+  对真实数据运行，errors 必须为 0；WARNING/INFO 现状已在测试中固化。
+- `tests/knowledge-chain-audit.test.ts` + `scripts/audit-knowledge-chain.ts`：核心学习链
+  双向可达性只读审计（BIO-004 前置基线，`npm run audit:knowledge-chain`）。
 
 ### Camera 修复（重要历史）
 

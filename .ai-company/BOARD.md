@@ -38,6 +38,10 @@
 ### BIO-004 · 知识网络反向边补全
 - **优先级**：中 · **Owner**：Engineer
 - **验收标准**：核心链「肺→肺泡→氧气→血液→心脏→ATP→细胞呼吸→线粒体」可严格双向走通；脚本或测试验证
+- **进展（2026-09-03 night-shift）**：只读审计基线已建立（`npm run audit:knowledge-chain`，
+  scripts/audit-knowledge-chain.ts + characterization 测试）。当前 7 跳中 3 处单向：
+  oxygen↛alveoli、atp↛heart、cellular-respiration↛mitochondrion。
+  补边方案属知识语义变更，待 CEO 决策（见 Night Shift Report 2026-09-03）。
 
 ### BIO-005 · 植物/光合作用节点补 Explore Questions
 - **优先级**：中 · **Owner**：Engineer

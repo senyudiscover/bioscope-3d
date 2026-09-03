@@ -64,13 +64,19 @@ Windows 可双击 启动网站.cmd（自动 build + preview）。
     npm run build   # vinext build（Cloudflare + RSC）
     npm run start   # wrangler dev
 
+> 注意（2026-09-03 审计）：生产路径的 `public/models/` 为空——vinext 链路下人体模型
+> 会 404，完整体验目前只有本地预览（local-build + 手动放置 GLB）可复现；仓库也暂无
+> 自动部署脚本。详见 docs/audit/BUILD-DEPLOYMENT-RISK-v1.md。
+
 ---
 
 ## 测试
 
-    npm test          # vitest（当前覆盖 lib/picking-manager）
-    npx tsc --noEmit  # 类型检查
-    npm run lint      # oxlint
+    npm test                    # vitest(picking / anatomy-filters / anatomy-terminology / 知识图)
+    npm run validate:knowledge  # 知识图引用完整性校验（errors 必须为 0）
+    npm run audit:knowledge-chain  # 核心学习链双向可达性审计（只读基线）
+    npx tsc --noEmit            # 类型检查
+    npm run lint                # oxlint
 
 ---
 
@@ -79,9 +85,9 @@ Windows 可双击 启动网站.cmd（自动 build + preview）。
     app/           工作台与页面（anatomy / photosynthesis / plant workbench，workspace）
     components/    业务组件（photosynthesis-viewer、micro-lab、plant-viewer）+ shadcn ui/
     data/          数据层（knowledge/anatomy+plants、photosynthesis/micro-lab、modules 注册表）
-    lib/           核心库（picking-manager、anatomy-filters、anatomy-terminology、bioscope-core、knowledge-nodes）
-    scripts/       构建脚本（patch-vanatome-camera.mjs）
-    tests/         测试（picking-manager.test.ts）
+    lib/           核心库（picking-manager、anatomy-filters、anatomy-terminology、knowledge-graph-validator、bioscope-core、knowledge-nodes）
+    scripts/       构建/守护脚本（patch-vanatome-camera.mjs、validate-knowledge-graph.ts、audit-knowledge-chain.ts）
+    tests/         回归基线（picking-manager、anatomy-filters、anatomy-terminology、knowledge-graph、knowledge-chain-audit）
     local-public/  本地静态资产（模型文件，git 忽略）
     .ai-company/   项目运行状态与团队规则（见下）
 
