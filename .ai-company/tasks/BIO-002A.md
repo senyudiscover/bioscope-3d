@@ -2,7 +2,7 @@
 
 > Task / Handoff 文件。Owner：Codex（Senior Engineer）· 委派：CTO/EM（DSH）
 > 状态：READY FOR IMPLEMENTATION（2026-09-03，CEO 已批准为下一阶段唯一核心 Milestone）
-> 分支：`feature/bio-002a-mechanism-nav`（从当前 master `47faf29` 切出）
+> 分支：`feature/bio-002a-mechanism-nav`（从当前 master `4dda7d2` 切出）
 
 ---
 
@@ -134,7 +134,7 @@
 
 ## 5. 分支与提交约定
 
-1. 从 master（当前 `47faf29`）切出分支：`git checkout -b feature/bio-002a-mechanism-nav`。
+1. 从 master（当前 `4dda7d2`，含本 task 文件与 BOARD/ROADMAP 更新）切出分支：`git checkout -b feature/bio-002a-mechanism-nav`。
 2. 按 T1→T4 顺序实现，每完成一个 Task 做一次**语义化 commit**（如 `feat(data): add step→mesh mapping`）。
 3. 不要 squash 成一个巨型 commit；不要 `git add .` 一把梭（分文件、分阶段暂存）。
 4. 不要 merge 回 master，不要 push（无 remote），不要动其他分支。
