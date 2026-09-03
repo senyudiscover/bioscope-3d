@@ -22,6 +22,12 @@
 - **依赖**：BIO-006/007/010 完成 + CEO 批准
 - **验收标准**：利用现有 lightReactionSteps 做前后切换 + 当前步骤状态 + 知识/机制内容同步；不做完整动画；独立 Reviewer 检查；验证 MechanismStep 抽象是否够用
 
+### 光合作用键盘可达性（a11y S1）· 已批准
+- **Owner**：Engineer（下一 Sprint 分配 Task ID + AC）
+- **状态**：CEO 已批准为正式工程/产品质量任务（2026-09-03）；本轮 merge 前不启动
+- **背景**：键盘/读屏用户在叶绿体层被卡住（进入类囊体的唯一入口是 3D 点击）
+- **验收标准**（下一 Sprint 细化）：关键结构条目改为 button（照 anatomy Key Structures 模式），键盘可到达类囊体层；不破坏指针体验
+
 ---
 
 ## FROZEN（CEO 决策，不开发不删除）
@@ -41,7 +47,8 @@
 - **进展（2026-09-03 night-shift）**：只读审计基线已建立（`npm run audit:knowledge-chain`，
   scripts/audit-knowledge-chain.ts + characterization 测试）。当前 7 跳中 3 处单向：
   oxygen↛alveoli、atp↛heart、cellular-respiration↛mitochondrion。
-  补边方案属知识语义变更，待 CEO 决策（见 Night Shift Report 2026-09-03）。
+  补边方案属知识语义变更，**BIOLOGY REVIEW REQUIRED**：CEO 已决定内容批次（CED-1~8）
+  在 Biology Review 前不批准批量修改；工程团队保留证据与 Proposal，不修改正式知识内容。
 
 ### BIO-005 · 植物/光合作用节点补 Explore Questions
 - **优先级**：中 · **Owner**：Engineer
@@ -51,6 +58,24 @@
 - **优先级**：低 · **Owner**：CTO（先判断）+ Engineer
 - **依赖**：产品判断该结构是否应可选中
 - **验收标准**：确认心脏内部结构等应如何拾取；改 picking-manager 前先更新测试基线
+
+---
+
+## CONFIRMED TECH DEBT（P2，夜班验收确认，未排期）
+
+- **P2 · camera patch contract 测试 hermetic 化**：当前幂等用例在测试内 `execFileSync`
+  运行 patch 脚本，非 hermetic——已接受为已知技术债，不阻塞本次 merge，**暂不修**。
+  详见 docs/audit/CAMERA-PATCH-RISK-v1.md。
+- **P2 · 测试清理**：约 8 处恒真确定性断言 + 5 处 console.log 全文输出噪音。
+  不阻塞 merge，**暂不清理**（避免为"美观"扩大夜班工作）。
+
+---
+
+## KNOWN RISKS（CEO 决策：本地优先）
+
+- **无 git remote / 无 CI**：已确认为真实工程风险；CEO 决定项目继续保持本地。
+  状态 = **KNOWN RISK**，记入 Engineering Backlog 为 **Future Infrastructure Decision**，
+  等 CEO 日后决定启用远程仓库时再处理。当前不得自行建 repo / push / 配置云 CI。
 
 ---
 

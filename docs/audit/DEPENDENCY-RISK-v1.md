@@ -1,5 +1,7 @@
 # BioScope Dependency Risk v1
 
+> ⚠️ SNAPSHOT（历史快照）：基准 commit 为 night-shift 验收（2026-09-03），版本/lockfile 相关结论随依赖变化而过时，不承诺持续维护。见 docs/audit/README.md。
+
 > Deep Assurance #002 · Track M 产出（2026-09-03）。只读评估，**不建议/不执行任何自动升级**。
 > lockfile 概况：package-lock.json lockfileVersion 3；773 包；774/774 resolved 带 sha512
 > integrity 且**全部指向 registry.npmmirror.com**；无 git/http/file/link 依赖；根

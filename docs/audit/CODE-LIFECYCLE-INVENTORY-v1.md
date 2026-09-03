@@ -1,5 +1,7 @@
 # BioScope Code Lifecycle Inventory v1
 
+> ⚠️ SNAPSHOT（历史快照）：基准 commit 为 night-shift 验收（2026-09-03），死码/依赖清单随代码演进而过时，不承诺持续维护。见 docs/audit/README.md。
+
 > Deep Assurance #002 · Track I 产出（2026-09-03）。
 > 方法：全部源文件做全仓 grep 反向 import 追踪（排除自身与 node_modules），对照
 > BOARD（BIO-003/BIO-008）与 DECISIONS（D-003/D-005/D-006/D-007/D-008）分类。

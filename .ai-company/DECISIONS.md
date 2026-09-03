@@ -70,3 +70,31 @@
 - **Reason**：这些常量是反复调出来的启发式，没有明确规范；固化是为了防止无意回归。
 - **Impact**：改评分算法或常量前，必须先有意识地更新测试期望值。
 - **Revisit when**：每次触碰 picking-manager.ts 时。
+
+## D-010 · 知识守护层正式化
+- **Date**：2026-09-03（Night Shift 验收并入 master）
+- **Decision**：`lib/knowledge-graph-validator.ts` + `validate:knowledge` + 两个只读审计脚本 + characterization 基线，作为项目正式守护层资产。
+- **Reason**：把知识图引用完整性、核心链双向可达性从"人工记得检查"变成"可脚本验证"。
+- **Impact**：改 `data/knowledge/*` 前必须先有意识地更新 characterization 基线（红 = 更新基线，非测试坏了）。
+- **Revisit when**：若未来拆 CI 步骤、或需要 `--json` 输出模式时。
+
+## D-013 · 3-5-1 Rule 的 related ≤ 5 维持不放宽
+- **Date**：2026-09-03（CEO 决策）
+- **Decision**：每个知识节点 related ≤ 5 维持硬约束，暂不放宽。
+- **Reason**："human 已达 5/5"只证明容量满，不证明体验需要更多关系；守住"信息克制"产品原则。
+- **Impact**：CED-5（human → nervous-system）需改用 exploreQuestions/followUp 等替代入口形态，而非突破约束。
+- **Revisit when**：未来学习体验确实需要更多关系时，由 CEO 重新评估。
+
+## D-014 · 部署状态：本地预览已验证，生产部署未验证
+- **Date**：2026-09-03（CEO 决策）
+- **Decision**：当前产品事实 = **LOCAL DEVELOPMENT / LOCAL PREVIEW VALIDATED · PRODUCTION DEPLOYMENT NOT VERIFIED**。不推进生产云部署。
+- **Reason**：`public/models/` 为空（GLB 404）、无 deploy 脚本、D1/R2 仅占位。
+- **Impact**：文档不得暗示"生产部署已可用/验证"；不创建云资源、不部署 Cloudflare、不要求 credentials。
+- **Revisit when**：CEO 决定推进生产部署时。
+
+## D-015 · 无 remote / 无 CI = KNOWN RISK，本地优先
+- **Date**：2026-09-03（CEO 决策）
+- **Decision**：项目继续保持本地（无 git remote、无 CI），此状态为 **KNOWN RISK**。
+- **Reason**：CEO 当前希望本地优先；远程仓库/CI 属 Future Infrastructure Decision。
+- **Impact**：不得自行创建 GitHub repo、push remote、配置云 CI；护栏资产的价值依赖本地 git 历史 + 本次 merge/tag。
+- **Revisit when**：CEO 决定启用远程仓库时。

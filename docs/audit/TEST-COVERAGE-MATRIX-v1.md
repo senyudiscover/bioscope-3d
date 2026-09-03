@@ -1,5 +1,7 @@
 # BioScope Test Coverage Matrix v1
 
+> ⚠️ SNAPSHOT（历史快照）：基准 commit 为 night-shift 验收（2026-09-03），测试文件数与覆盖数字随测试增长漂移，不承诺持续维护。见 docs/audit/README.md。
+
 > Deep Assurance #002 · Track B 产出（2026-09-03）。
 > 不是传统行覆盖率，而是「关键行为 × 测试」矩阵。判定基于对全部 10 个测试文件
 > 与被测模块的通读（含 #001 NS-1 review 与本轮 Track C/D/E/F/H 的新增）。

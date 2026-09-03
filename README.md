@@ -59,14 +59,16 @@
 
 Windows 可双击 启动网站.cmd（自动 build + preview）。
 
-### 生产构建
+### 生产构建（PRODUCTION DEPLOYMENT NOT VERIFIED）
 
     npm run build   # vinext build（Cloudflare + RSC）
     npm run start   # wrangler dev
 
-> 注意（2026-09-03 审计）：生产路径的 `public/models/` 为空——vinext 链路下人体模型
-> 会 404，完整体验目前只有本地预览（local-build + 手动放置 GLB）可复现；仓库也暂无
-> 自动部署脚本。详见 docs/audit/BUILD-DEPLOYMENT-RISK-v1.md。
+> **部署状态（2026-09-03 CEO 决策）**：当前产品事实为 **LOCAL DEVELOPMENT /
+> LOCAL PREVIEW VALIDATED · PRODUCTION DEPLOYMENT NOT VERIFIED**。生产路径
+> `public/models/` 为空（人体模型 404）、仓库暂无自动部署脚本、Cloudflare D1/R2
+> 仅为占位配置。完整体验目前只有本地预览可复现（local-build + 手动放置 GLB）。
+> 详见 docs/audit/BUILD-DEPLOYMENT-RISK-v1.md。
 
 ---
 

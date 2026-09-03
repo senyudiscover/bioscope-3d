@@ -54,8 +54,10 @@ v0.1 试点项目（"AI Company" 的第一个项目）。当前实际状态：
 
 ### 两条构建路径（重要）
 
-1. **生产**：`npm run build` = `vinext build` → Cloudflare（RSC + D1/R2 绑定），
-   `npm run start` = `wrangler dev`。
+1. **生产（PRODUCTION DEPLOYMENT NOT VERIFIED）**：`npm run build` = `vinext build`
+   → Cloudflare（RSC + D1/R2 占位绑定），`npm run start` = `wrangler dev`。
+   当前 CEO 定义部署状态：**本地预览已验证，生产部署未验证**（`public/models/` 为空、
+   无自动部署脚本）。
 2. **本地预览**：`npm run local-build` = `vite build --config vite-spa.config.ts`
    （纯 SPA，`publicDir` 指向 `local-public/`，模型文件在那里），
    `npm run local-start` = `vite preview` @ 127.0.0.1:3000。

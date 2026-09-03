@@ -18,8 +18,9 @@
 
 | 项 | 说明 |
 |---|---|
-| 知识网络反向边 | 当前 `related` 多为单向，严格双向可走需要补回边。已有只读审计基线：`npm run audit:knowledge-chain`（核心链 7 跳中 3 处单向，断点已固化进测试；补边方案见 Night Shift Report，需 CEO 决策） |
+| 知识网络反向边 | 只读审计基线已建（`npm run audit:knowledge-chain`，核心链 7 跳 3 处单向、全图 69 对单向边）。补边方案 = **BIOLOGY REVIEW REQUIRED**，CEO 决定 Biology Review 前不批量改知识内容 |
 | 植物模块 Explore Questions | 人体 6 器官已有，植物节点尚未补 WHY/HOW/WHAT IF |
+| 光合作用键盘可达性（a11y S1） | CEO 已批准（下一 Sprint 给 Task ID + AC）；键盘/读屏用户可到达类囊体层 |
 | 术语系统补 verified | 大量结构名靠单词拼接（unverified），高频器官需人工确认 |
 | picking 可用性问题 | `internal-structures` 命名结构被整体过滤（测试已记录，需产品判断） |
 
@@ -64,6 +65,7 @@
 
 ## WON'T DO / NOT PLANNED（当前明确不做）
 
+- 生产云部署（当前产品事实 = LOCAL PREVIEW VALIDATED · PRODUCTION DEPLOYMENT NOT VERIFIED；无 deploy 脚本、`public/models/` 为空、D1/R2 仅占位）
 - 后端数据库（当前纯前端 + 静态数据；Cloudflare D1/R2 仅部署占位，未实际使用）
 - Knowledge Graph 可视化
 - 多模型同屏比较
