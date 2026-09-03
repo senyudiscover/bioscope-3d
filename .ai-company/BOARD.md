@@ -15,12 +15,16 @@
 
 ---
 
-## READY（待批准后开工）
+## IN PROGRESS（Sprint #002 · 唯一核心 Milestone）
 
-### BIO-002A · Photosynthesis Mechanism Navigation MVP（P1，Stretch）
-- **Owner**：Engineer（可派 subagent）+ Reviewer
-- **依赖**：BIO-006/007/010 完成 + CEO 批准
-- **验收标准**：利用现有 lightReactionSteps 做前后切换 + 当前步骤状态 + 知识/机制内容同步；不做完整动画；独立 Reviewer 检查；验证 MechanismStep 抽象是否够用
+### BIO-002A · Photosynthesis Mechanism Navigation MVP（P1）
+- **Owner**：Codex（Senior Engineer，实施）+ CTO/DSH（独立 Review）
+- **分支**：feature/bio-002a-mechanism-nav（从 master 47faf29 切出）
+- **Task 文件**：.ai-company/tasks/BIO-002A.md（正式交接，含 4 个 Task T1-T4 + AC + 测试标准 + scope 边界）
+- **依赖**：CEO 已批准（2026-09-03）
+- **验收标准**（详见 task 文件 §7）：thylakoid 层 6 步导航真正闭环（步骤切换→状态高亮→mesh 强调→知识同步）；键盘可操作；247 测试全绿；tsc/local-build 通过；data/knowledge 零改动；无 scope 漂移
+
+## READY（待批准后开工）
 
 ### 光合作用键盘可达性（a11y S1）· 已批准
 - **Owner**：Engineer（下一 Sprint 分配 Task ID + AC）

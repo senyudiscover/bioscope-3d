@@ -12,7 +12,7 @@
 | BIO-006 git 首次提交 | 建立版本基线（commit 7dfcc07） | ✅ 完成（2026-09-03） |
 | BIO-007 根目录 README | 面向 human + AI Agent 的项目入口 | ✅ 完成（commit b7fdcca） |
 | BIO-010 AI Handoff Test | 陌生 Agent 仅凭 .ai-company/ 恢复上下文 | ✅ 完成（commit f367db5） |
-| BIO-002A 光合作用机制导航 MVP | Stretch Goal，架构判定 PARTIAL FIT（见 docs/audit/PHOTOSYNTHESIS-ARCHITECTURE-v1.md），仍待 CEO 批准 | 待批准 |
+| BIO-002A 光合作用机制导航 MVP | CEO 已批准为 Sprint #002 唯一核心 Milestone；Task 文件 .ai-company/tasks/BIO-002A.md；分支 feature/bio-002a-mechanism-nav；Owner=Codex + CTO Review | 进行中（Sprint #002） |
 
 ## NEXT（下一个迭代）
 
