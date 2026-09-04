@@ -16,9 +16,11 @@ export type LightReactionStepId =
 export type LightReactionStep = MechanismStep & {
   id: LightReactionStepId;
   meshIds: string[];
+  /** Derived compatibility alias for the knowledge validator. */
+  relatedKnowledgeNodeIds: string[];
 };
 
-export const lightReactionSteps: LightReactionStep[] = [
+const baseLightReactionSteps: Array<Omit<LightReactionStep, 'relatedKnowledgeNodeIds'>> = [
   {
     id: 'photon-absorption',
     titleZh: '光子吸收',
@@ -72,6 +74,10 @@ export const lightReactionSteps: LightReactionStep[] = [
     meshIds: ['photosystem-i'],
   },
 ];
+
+export const lightReactionSteps: LightReactionStep[] = baseLightReactionSteps.map(
+  (step) => ({ ...step, relatedKnowledgeNodeIds: [...step.knowledgeNodeIds] }),
+);
 
 export const photosynthesisScenes: Record<
   PhotosynthesisSceneId,
