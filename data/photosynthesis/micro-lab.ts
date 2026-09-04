@@ -15,8 +15,7 @@ export type LightReactionStepId =
 
 export type LightReactionStep = MechanismStep & {
   id: LightReactionStepId;
-  /** Compatibility alias for early micro-lab UI. */
-  relatedKnowledgeNodeIds: string[];
+  meshIds: string[];
 };
 
 export const lightReactionSteps: LightReactionStep[] = [
@@ -26,8 +25,8 @@ export const lightReactionSteps: LightReactionStep[] = [
     titleEn: 'Photon absorption',
     description:
       '光子被类囊体膜中光系统 II 的光合色素吸收，引发后续电子转移。光不是通过膜运输的物质。',
-    relatedKnowledgeNodeIds: ['light-reactions', 'chloroplast'],
     knowledgeNodeIds: ['light-reactions', 'chloroplast'],
+    meshIds: ['photosystem-ii'],
   },
   {
     id: 'water-oxidation',
@@ -35,8 +34,8 @@ export const lightReactionSteps: LightReactionStep[] = [
     titleEn: 'Water oxidation',
     description:
       '水参与反应并提供电子，同时形成 H⁺并释放 O₂。光合作用释放的氧气主要来源于水。',
-    relatedKnowledgeNodeIds: ['oxygen', 'light-reactions'],
     knowledgeNodeIds: ['oxygen', 'light-reactions'],
+    meshIds: ['thylakoid-lumen'],
   },
   {
     id: 'electron-transport',
@@ -44,24 +43,24 @@ export const lightReactionSteps: LightReactionStep[] = [
     titleEn: 'Electron transport',
     description:
       '电子沿类囊体膜上的电子传递过程移动，能量转换与跨膜质子转运相互耦联。',
-    relatedKnowledgeNodeIds: ['electron-transport-chain', 'light-reactions'],
     knowledgeNodeIds: ['electron-transport-chain', 'light-reactions'],
+    meshIds: ['electron-transport'],
   },
   {
     id: 'proton-gradient',
     titleZh: '质子梯度',
     titleEn: 'Proton gradient',
     description: '类囊体腔内积累较多 H⁺，在类囊体膜两侧形成电化学梯度。',
-    relatedKnowledgeNodeIds: ['light-reactions', 'atp-synthase'],
     knowledgeNodeIds: ['light-reactions', 'atp-synthase'],
+    meshIds: ['thylakoid-lumen'],
   },
   {
     id: 'atp-synthesis',
     titleZh: 'ATP形成',
     titleEn: 'ATP synthesis',
     description: 'H⁺顺梯度通过 ATP 合酶，驱动 ADP 与无机磷酸形成 ATP。',
-    relatedKnowledgeNodeIds: ['atp-synthase', 'atp'],
     knowledgeNodeIds: ['atp-synthase', 'atp'],
+    meshIds: ['atp-synthase'],
   },
   {
     id: 'nadph-formation',
@@ -69,8 +68,8 @@ export const lightReactionSteps: LightReactionStep[] = [
     titleEn: 'NADPH formation',
     description:
       '光系统 I 参与后续电子转移并形成 NADPH。NADPH 为后续碳固定相关反应提供还原力。',
-    relatedKnowledgeNodeIds: ['light-reactions', 'photosynthesis'],
     knowledgeNodeIds: ['light-reactions', 'photosynthesis'],
+    meshIds: ['photosystem-i'],
   },
 ];
 
@@ -117,13 +116,6 @@ export const sceneOrder: PhotosynthesisSceneId[] = [
   'chloroplast',
   'thylakoid',
 ];
-
-export const nextPhotosynthesisScene: Partial<
-  Record<PhotosynthesisSceneId, PhotosynthesisSceneId>
-> = {
-  'mesophyll-cell': 'chloroplast',
-  chloroplast: 'thylakoid',
-};
 
 export const microStructureTerms: Record<
   string,

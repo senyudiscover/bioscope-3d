@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getParentScene, getPrimaryChildScene } from '@/lib/bioscope-core';
+import { getAdjacentMechanismSteps, getParentScene, getPrimaryChildScene } from '@/lib/bioscope-core';
 import { knowledgeNodes } from '@/data/knowledge';
 import { lightReactionSteps } from '@/data/photosynthesis/micro-lab';
 
@@ -69,10 +69,26 @@ describe('lightReactionSteps 数据健全性（BIO-002A 数据基座）', () => 
     }
   });
 
-  it('alias relatedKnowledgeNodeIds 与 knowledgeNodeIds 一致（validator WARNING 的数据面复述）', () => {
+  it('每步 meshIds 非空且来自 viewer 合法 mesh 集合', () => {
+    const validMeshIds = new Set([
+      'photosystem-ii', 'electron-transport', 'photosystem-i',
+      'atp-synthase', 'thylakoid-membrane', 'thylakoid-lumen',
+    ]);
     for (const step of lightReactionSteps) {
-      expect(step.relatedKnowledgeNodeIds).toEqual(step.knowledgeNodeIds);
+      expect(step.meshIds.length, `step "${step.id}"`).toBeGreaterThan(0);
+      for (const meshId of step.meshIds) expect(validMeshIds.has(meshId)).toBe(true);
     }
+  });
+});
+
+describe('机制步骤相邻遍历', () => {
+  it('首/中/末步骤返回正确的单边或双边邻居', () => {
+    const first = lightReactionSteps[0];
+    const middle = lightReactionSteps[2];
+    const last = lightReactionSteps.at(-1)!;
+    expect(getAdjacentMechanismSteps(lightReactionSteps, first.id)).toEqual({ next: lightReactionSteps[1] });
+    expect(getAdjacentMechanismSteps(lightReactionSteps, middle.id)).toEqual({ prev: lightReactionSteps[1], next: lightReactionSteps[3] });
+    expect(getAdjacentMechanismSteps(lightReactionSteps, last.id)).toEqual({ prev: lightReactionSteps[4] });
   });
 });
 
