@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import {
   ArrowLeft,
   ChevronRight,
@@ -87,11 +87,12 @@ export function PhotosynthesisWorkbench({
     setKnowledgeContext({ nodeId: id });
   };
 
-  useEffect(() => {
-    if (scene === 'thylakoid' && activeStep) {
-      chooseKnowledgeNode(activeStep.knowledgeNodeIds[0]);
-    }
-  }, [activeStepId, scene]);
+  const goToStep = (id: string) => {
+    const step = lightReactionSteps.find((item) => item.id === id);
+    if (!step) return;
+    setActiveStepId(step.id);
+    chooseKnowledgeNode(step.knowledgeNodeIds[0]);
+  };
 
   const selectStructure = (id: string | null) => {
     setSelectedId(id);
@@ -108,7 +109,7 @@ export function PhotosynthesisWorkbench({
     setKnowledgeContext({ nodeId });
     setModelContextId(nodeId);
     setCameraOwnership('auto');
-    setActiveStepId(next === 'thylakoid' ? lightReactionSteps[0].id : null);
+    if (next === 'thylakoid') goToStep(lightReactionSteps[0].id);
     setFocusRequestKey((key) => key + 1);
     window.setTimeout(() => setCameraOwnership('manual'), 470);
   };
@@ -154,7 +155,7 @@ export function PhotosynthesisWorkbench({
           selectedId={selectedId}
           activeStep={activeStep}
           activeStepId={activeStepId}
-          setActiveStepId={setActiveStepId}
+          goToStep={goToStep}
           adjacentSteps={adjacentSteps}
           chooseNode={chooseKnowledgeNode}
           enterScene={enterScene}
@@ -320,7 +321,7 @@ function MicroExplorer({
   chooseNode,
   activeStep,
   activeStepId,
-  setActiveStepId,
+  goToStep,
   adjacentSteps,
 }: {
   scene: PhotosynthesisSceneId;
@@ -329,7 +330,7 @@ function MicroExplorer({
   chooseNode: (id: string) => void;
   activeStep?: (typeof lightReactionSteps)[number];
   activeStepId: string | null;
-  setActiveStepId: (id: string) => void;
+  goToStep: (id: string) => void;
   adjacentSteps: { prev?: (typeof lightReactionSteps)[number]; next?: (typeof lightReactionSteps)[number] };
 }) {
   const activeIndex = sceneOrder.indexOf(scene);
@@ -415,7 +416,7 @@ function MicroExplorer({
             </p>
             <div className="mt-2 grid gap-1.5">
               {lightReactionSteps.map((step) => (
-                <button type="button" key={step.id} onClick={() => setActiveStepId(step.id)}
+                <button type="button" key={step.id} onClick={() => goToStep(step.id)}
                   className={cn('rounded-md border px-2 py-1.5 text-left', activeStepId === step.id ? 'border-[#aabd9b]/45 bg-[#9caf8a]/10 text-zinc-100' : 'border-white/8 text-zinc-500 hover:text-zinc-200')}>
                   <span className="block text-[10px]">{step.titleZh}</span>
                   <span className="mt-0.5 block text-[9px] leading-3 text-zinc-600">{step.description}</span>
@@ -424,8 +425,8 @@ function MicroExplorer({
             </div>
             <p className="mt-2 text-[10px] leading-4 text-zinc-500">{activeStep?.description}</p>
             <div className="mt-2 flex gap-1.5">
-              <Button size="sm" variant="ghost" disabled={!adjacentSteps.prev} onClick={() => adjacentSteps.prev && setActiveStepId(adjacentSteps.prev.id)}>上一步</Button>
-              <Button size="sm" variant="ghost" disabled={!adjacentSteps.next} onClick={() => adjacentSteps.next && setActiveStepId(adjacentSteps.next.id)}>下一步</Button>
+              <Button size="sm" variant="ghost" disabled={!adjacentSteps.prev} onClick={() => adjacentSteps.prev && goToStep(adjacentSteps.prev.id)}>上一步</Button>
+              <Button size="sm" variant="ghost" disabled={!adjacentSteps.next} onClick={() => adjacentSteps.next && goToStep(adjacentSteps.next.id)}>下一步</Button>
             </div>
           </div>
           )}
