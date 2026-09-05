@@ -15,6 +15,7 @@ type PhotosynthesisViewerProps = {
   scene: PhotosynthesisSceneId;
   selectedId: string | null;
   hoveredId: string | null;
+  emphasizedIds?: string[];
   focusRequestKey: number;
   onHover: (id: string | null) => void;
   onSelect: (id: string | null) => void;
@@ -595,6 +596,7 @@ function ProteinPlaceholder({
   x,
   color,
   selected,
+  emphasized,
   onHover,
   onSelect,
   head = 'disc',
@@ -603,6 +605,7 @@ function ProteinPlaceholder({
   x: number;
   color: string;
   selected: boolean;
+  emphasized: boolean;
   onHover: PhotosynthesisViewerProps['onHover'];
   onSelect: PhotosynthesisViewerProps['onSelect'];
   head?: 'disc' | 'sphere';
@@ -613,8 +616,8 @@ function ProteinPlaceholder({
         <cylinderGeometry args={[0.28, 0.34, 0.86, 24]} />
         <meshStandardMaterial
           color={color}
-          emissive={selected ? color : '#070807'}
-          emissiveIntensity={selected ? 0.32 : 0.04}
+          emissive={selected || emphasized ? (emphasized ? '#f1c96b' : color) : '#070807'}
+          emissiveIntensity={selected ? 0.32 : emphasized ? 0.72 : 0.04}
           roughness={0.58}
         />
       </mesh>
@@ -624,7 +627,7 @@ function ProteinPlaceholder({
         ) : (
           <cylinderGeometry args={[0.46, 0.38, 0.2, 28]} />
         )}
-        <meshStandardMaterial color={color} roughness={0.54} />
+        <meshStandardMaterial color={emphasized ? '#e2bd68' : color} roughness={0.54} />
       </mesh>
       <mesh position={[0, -0.53, 0]}>
         <cylinderGeometry args={[0.2, 0.25, 0.25, 20]} />
@@ -635,6 +638,7 @@ function ProteinPlaceholder({
 }
 
 function ThylakoidScene(props: PhotosynthesisViewerProps) {
+  const emphasized = (id: string) => props.emphasizedIds?.includes(id) ?? false;
   return (
     <group rotation={[-0.08, 0.08, 0]}>
       <RoundedBox
@@ -655,7 +659,7 @@ function ThylakoidScene(props: PhotosynthesisViewerProps) {
       >
         <meshStandardMaterial
           color={
-            props.selectedId === 'thylakoid-membrane' ? '#738f64' : '#536d4d'
+            emphasized('thylakoid-membrane') ? '#d0b866' : props.selectedId === 'thylakoid-membrane' ? '#738f64' : '#536d4d'
           }
           roughness={0.7}
         />
@@ -671,7 +675,7 @@ function ThylakoidScene(props: PhotosynthesisViewerProps) {
         <meshPhysicalMaterial
           color="#557781"
           transparent
-          opacity={props.selectedId === 'thylakoid-lumen' ? 0.22 : 0.11}
+          opacity={emphasized('thylakoid-lumen') ? 0.3 : props.selectedId === 'thylakoid-lumen' ? 0.22 : 0.11}
           roughness={0.52}
         />
         <Edges color="#4f6972" threshold={14} />
@@ -680,7 +684,7 @@ function ThylakoidScene(props: PhotosynthesisViewerProps) {
         id="photosystem-ii"
         x={-2.5}
         color="#81727f"
-        selected={props.selectedId === 'photosystem-ii'}
+        selected={props.selectedId === 'photosystem-ii'} emphasized={emphasized('photosystem-ii')}
         onHover={props.onHover}
         onSelect={props.onSelect}
       />
@@ -693,7 +697,7 @@ function ThylakoidScene(props: PhotosynthesisViewerProps) {
             <cylinderGeometry args={[0.18, 0.22, 0.58 + index * 0.12, 20]} />
             <meshStandardMaterial
               color={
-                props.selectedId === 'electron-transport'
+                emphasized('electron-transport') ? '#e0bb63' : props.selectedId === 'electron-transport'
                   ? '#b88e55'
                   : '#886947'
               }
@@ -706,7 +710,7 @@ function ThylakoidScene(props: PhotosynthesisViewerProps) {
         id="photosystem-i"
         x={0.85}
         color="#617f7b"
-        selected={props.selectedId === 'photosystem-i'}
+        selected={props.selectedId === 'photosystem-i'} emphasized={emphasized('photosystem-i')}
         onHover={props.onHover}
         onSelect={props.onSelect}
       />
@@ -714,7 +718,7 @@ function ThylakoidScene(props: PhotosynthesisViewerProps) {
         id="atp-synthase"
         x={2.5}
         color="#b0a078"
-        selected={props.selectedId === 'atp-synthase'}
+        selected={props.selectedId === 'atp-synthase'} emphasized={emphasized('atp-synthase')}
         onHover={props.onHover}
         onSelect={props.onSelect}
         head="sphere"

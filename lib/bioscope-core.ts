@@ -39,6 +39,18 @@ export type MechanismStep = {
   visualState?: Record<string, string | number | boolean>;
 };
 
+export function getAdjacentMechanismSteps<T extends MechanismStep>(
+  steps: readonly T[],
+  id: string,
+): { prev?: T; next?: T } {
+  const index = steps.findIndex((step) => step.id === id);
+  if (index < 0) return {};
+  return {
+    prev: index > 0 ? steps[index - 1] : undefined,
+    next: index < steps.length - 1 ? steps[index + 1] : undefined,
+  };
+}
+
 export type ModuleShellProps = {
   moduleSelector: ReactNode;
 };

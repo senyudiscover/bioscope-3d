@@ -22,6 +22,7 @@ import {
 import {
   getParentScene,
   getPrimaryChildScene,
+  getAdjacentMechanismSteps,
   type KnowledgeContext,
   type VisualContext,
 } from '@/lib/bioscope-core';
@@ -54,6 +55,7 @@ export function PhotosynthesisWorkbench({
   const [cameraOwnership, setCameraOwnership] = useState<'auto' | 'manual'>(
     'manual',
   );
+  const [activeStepId, setActiveStepId] = useState<string | null>(null);
 
   const scene = visualContext.sceneId;
   const currentNode =
@@ -73,12 +75,23 @@ export function PhotosynthesisWorkbench({
     photosynthesisScenes[scene],
     photosynthesisScenes,
   );
+  const activeStep = lightReactionSteps.find((step) => step.id === activeStepId);
+  const adjacentSteps = activeStep
+    ? getAdjacentMechanismSteps(lightReactionSteps, activeStep.id)
+    : {};
 
   const chooseKnowledgeNode = (id: string) => {
     if (!knowledgeNodes[id]) return;
     if (id !== knowledgeContext.nodeId)
       setKnowledgeHistory((items) => [...items, knowledgeContext.nodeId]);
     setKnowledgeContext({ nodeId: id });
+  };
+
+  const goToStep = (id: string) => {
+    const step = lightReactionSteps.find((item) => item.id === id);
+    if (!step) return;
+    setActiveStepId(step.id);
+    chooseKnowledgeNode(step.knowledgeNodeIds[0]);
   };
 
   const selectStructure = (id: string | null) => {
@@ -96,6 +109,7 @@ export function PhotosynthesisWorkbench({
     setKnowledgeContext({ nodeId });
     setModelContextId(nodeId);
     setCameraOwnership('auto');
+    if (next === 'thylakoid') goToStep(lightReactionSteps[0].id);
     setFocusRequestKey((key) => key + 1);
     window.setTimeout(() => setCameraOwnership('manual'), 470);
   };
@@ -114,6 +128,7 @@ export function PhotosynthesisWorkbench({
     setKnowledgeContext({ nodeId: 'mesophyll-cell' });
     setModelContextId('mesophyll-cell');
     setKnowledgeHistory([]);
+    setActiveStepId(null);
     setCameraOwnership('auto');
     setFocusRequestKey((key) => key + 1);
     window.setTimeout(() => setCameraOwnership('manual'), 470);
@@ -138,8 +153,12 @@ export function PhotosynthesisWorkbench({
       explorer={<MicroExplorer
           scene={scene}
           selectedId={selectedId}
-          enterScene={enterScene}
+          activeStep={activeStep}
+          activeStepId={activeStepId}
+          goToStep={goToStep}
+          adjacentSteps={adjacentSteps}
           chooseNode={chooseKnowledgeNode}
+          enterScene={enterScene}
       />}
       visual={<section className="relative order-1 min-h-[650px] overflow-hidden bg-[radial-gradient(circle_at_50%_46%,#1b211c_0%,#101311_52%,#090b0a_82%)] lg:order-2 lg:min-h-0">
           <div className="absolute left-4 right-4 top-3 z-20 flex items-start justify-between gap-4">
@@ -169,6 +188,7 @@ export function PhotosynthesisWorkbench({
               scene={scene}
               selectedId={selectedId}
               hoveredId={hoveredId}
+              emphasizedIds={scene === 'thylakoid' ? activeStep?.meshIds : undefined}
               focusRequestKey={focusRequestKey}
               onHover={setHoveredId}
               onSelect={selectStructure}
@@ -299,11 +319,19 @@ function MicroExplorer({
   selectedId,
   enterScene,
   chooseNode,
+  activeStep,
+  activeStepId,
+  goToStep,
+  adjacentSteps,
 }: {
   scene: PhotosynthesisSceneId;
   selectedId: string | null;
   enterScene: (scene: PhotosynthesisSceneId) => void;
   chooseNode: (id: string) => void;
+  activeStep?: (typeof lightReactionSteps)[number];
+  activeStepId: string | null;
+  goToStep: (id: string) => void;
+  adjacentSteps: { prev?: (typeof lightReactionSteps)[number]; next?: (typeof lightReactionSteps)[number] };
 }) {
   const activeIndex = sceneOrder.indexOf(scene);
   return (
@@ -381,15 +409,27 @@ function MicroExplorer({
               )}
             </div>
           </div>
-          <div className="mt-5 rounded-lg border border-white/8 bg-white/[0.015] p-3">
+          {scene === 'thylakoid' && (
+          <div className="mt-5 rounded-lg border border-[#9caf8a]/20 bg-white/[0.015] p-3">
             <p className="font-mono text-[8px] tracking-[0.14em] text-zinc-700">
-              MECHANISM / PHASE 2
+              LIGHT REACTION · {activeStep ? `${lightReactionSteps.findIndex((step) => step.id === activeStep.id) + 1} / ${lightReactionSteps.length}` : ''}
             </p>
-            <p className="mt-2 text-[10px] leading-4 text-zinc-600">
-              已预留 {lightReactionSteps.length}{' '}
-              个光反应步骤。本阶段不播放粒子或反应动画。
-            </p>
+            <div className="mt-2 grid gap-1.5">
+              {lightReactionSteps.map((step) => (
+                <button type="button" key={step.id} onClick={() => goToStep(step.id)}
+                  className={cn('rounded-md border px-2 py-1.5 text-left', activeStepId === step.id ? 'border-[#aabd9b]/45 bg-[#9caf8a]/10 text-zinc-100' : 'border-white/8 text-zinc-500 hover:text-zinc-200')}>
+                  <span className="block text-[10px]">{step.titleZh}</span>
+                  <span className="mt-0.5 block text-[9px] leading-3 text-zinc-600">{step.description}</span>
+                </button>
+              ))}
+            </div>
+            <p className="mt-2 text-[10px] leading-4 text-zinc-500">{activeStep?.description}</p>
+            <div className="mt-2 flex gap-1.5">
+              <Button size="sm" variant="ghost" disabled={!adjacentSteps.prev} onClick={() => adjacentSteps.prev && goToStep(adjacentSteps.prev.id)}>上一步</Button>
+              <Button size="sm" variant="ghost" disabled={!adjacentSteps.next} onClick={() => adjacentSteps.next && goToStep(adjacentSteps.next.id)}>下一步</Button>
+            </div>
           </div>
+          )}
           {selectedId === 'mitochondrion' && (
             <p className="mt-4 rounded-lg border border-[#a87358]/15 bg-[#a87358]/[0.035] p-3 text-[10px] leading-4 text-zinc-500">
               植物细胞同时通过线粒体进行细胞呼吸。
@@ -592,7 +632,7 @@ function MicroKnowledgePanel({
           )}
           <div className="mt-5 border-t border-white/10 pt-4 text-[10px] leading-5 text-zinc-700">
             <p>教学示意模型：数量、颜色与比例经过简化。</p>
-            <p>本阶段不包含光反应粒子和化学过程动画。</p>
+            <p>步骤导航连接当前知识与模型中的对应结构。</p>
           </div>
         </div>
       </ScrollArea>
