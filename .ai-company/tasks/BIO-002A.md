@@ -153,16 +153,19 @@
 
 ---
 
-## 7. CTO 验收清单（Codex 不用填，CTO 会逐项打勾）
+## 7. CTO 验收清单（2026-09-04 独立验收结果：APPROVE）
 
-- [ ] diff 只涉及 4 个文件的预期范围，无 scope 漂移
-- [ ] `data/knowledge/*` 零改动
-- [ ] 247 个既有测试全绿，新增测试有意义（非恒真断言）
-- [ ] tsc / local-build 通过
-- [ ] 现有 selectedId/hoveredId 高亮行为无回归
-- [ ] thylakoid 层 6 步导航真正闭环：步骤切换 → 状态高亮 → mesh 强调 → 知识同步
-- [ ] 键盘可操作（Tab 可达 + Enter 触发）
-- [ ] 无「本阶段不播放动画」残留文案
+- [x] diff 只涉及 4 个文件的预期范围，无 scope 漂移（4 源码文件 + 1 测试文件，无 data/knowledge）
+- [x] `data/knowledge/*` 零改动
+- [x] 247 个既有测试全绿，新增测试有意义（meshIds 合法性对集中合法集合断言；首/中/末遍历）
+- [x] tsc / local-build 通过
+- [x] 现有 selectedId/hoveredId 高亮行为无回归（emphasizedIds 缺省时全部表达式回落原值）
+- [x] thylakoid 层 6 步导航真正闭环：步骤切换 → 状态高亮 → mesh 强调 → 知识同步
+- [x] 键盘可操作（Tab 可达 + Enter 触发；6 步列表与上一步/下一步均为真 button）
+- [x] 无「本阶段不播放动画」残留文案
+
+验收小注（不阻塞）：`1504bc3` 为空 commit（无 diff）；步骤描述双重展示（列表项 + 摘要行）；
+活跃步骤无 aria-current（超出 AC，并入 a11y S1）。收编：merge `b6cc11f`（--no-ff，2026-09-04）。
 
 ---
 

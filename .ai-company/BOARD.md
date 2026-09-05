@@ -15,14 +15,9 @@
 
 ---
 
-## IN PROGRESS（Sprint #002 · 唯一核心 Milestone）
+## IN PROGRESS
 
-### BIO-002A · Photosynthesis Mechanism Navigation MVP（P1）
-- **Owner**：Codex（Senior Engineer，实施）+ CTO/DSH（独立 Review）
-- **分支**：feature/bio-002a-mechanism-nav（从 master 47faf29 切出）
-- **Task 文件**：.ai-company/tasks/BIO-002A.md（正式交接，含 4 个 Task T1-T4 + AC + 测试标准 + scope 边界）
-- **依赖**：CEO 已批准（2026-09-03）
-- **验收标准**（详见 task 文件 §7）：thylakoid 层 6 步导航真正闭环（步骤切换→状态高亮→mesh 强调→知识同步）；键盘可操作；247 测试全绿；tsc/local-build 通过；data/knowledge 零改动；无 scope 漂移
+（无进行中任务）
 
 ## READY（待批准后开工）
 
@@ -92,6 +87,13 @@
 ---
 
 ## DONE
+
+### BIO-002A · Photosynthesis Mechanism Navigation MVP（P1）
+- **Owner**：Codex（实施）+ CTO/DSH（独立验收）
+- **分支**：feature/bio-002a-mechanism-nav（基于 master 4dda7d2 切出，6 commits；Task 文件 .ai-company/tasks/BIO-002A.md）
+- **收编**：--no-ff merge 至 master，merge commit `b6cc11f`（2026-09-04）；pre tag `bioscope-pre-bio-002a-2026-09-04`；accepted tag `bioscope-bio-002a-accepted-2026-09-04`
+- **验收结论**：**APPROVE** —— T1~T4 AC 全部达成；tsc 0 错；248/248 tests；validate errors:0；local-build exit 0；lint 0 新增；selectedId/hoveredId/emphasizedIds 无回归；6 步导航闭环（切换→状态高亮→mesh 强调→知识同步）；步骤/上下步均为真 button（Tab+Enter 可操作）；无「本阶段不播放」残留文案；data/knowledge 零改动、无 scope 漂移
+- **验收小注**：commit `1504bc3` 为空 commit（无 diff，仅 message）；步骤描述在列表项与下方摘要重复展示；活跃步骤无 aria-current（超出 AC，可并入 a11y S1）
 
 ### BIO-001 · 修复 defaultKnowledgeNodeId 值不一致
 - **Owner**：CTO
