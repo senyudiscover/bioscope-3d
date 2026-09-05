@@ -21,6 +21,7 @@
 | 知识网络反向边 | 只读审计基线已建（`npm run audit:knowledge-chain`，核心链 7 跳 3 处单向、全图 69 对单向边）。补边方案 = **BIOLOGY REVIEW REQUIRED**，CEO 决定 Biology Review 前不批量改知识内容 |
 | 植物模块 Explore Questions | 人体 6 器官已有，植物节点尚未补 WHY/HOW/WHAT IF |
 | 光合作用键盘可达性（a11y S1） | CEO 已批准（下一 Sprint 给 Task ID + AC）；键盘/读屏用户可到达类囊体层 |
+| BIO-013A Synapse Lab（Spike） | PRD READY（D1-D3 已拍板）；Astra Spike 任务包就绪，待 Astra 额度恢复后派发；P0 = 步骤 2/3/4/5/6 |
 | 术语系统补 verified | 大量结构名靠单词拼接（unverified），高频器官需人工确认 |
 | picking 可用性问题 | `internal-structures` 命名结构被整体过滤（测试已记录，需产品判断） |
 

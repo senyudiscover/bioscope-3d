@@ -21,6 +21,13 @@
 
 ## READY（待批准后开工）
 
+### BIO-013A · Synapse Lab 突触传递机制 MVP（Spike 待 Astra 额度）
+- **Owner**：Astra（Experimental 3D Engineer，实施）+ CTO/DSH（Review）
+- **状态**：PRD READY（D1-D3 CEO 已拍板：模块局部轻量知识 / 阻断后保留全因果链 / 逐结构 hide-isolate）；**Astra Spike 任务包就绪，待 Astra 额度恢复后派发**
+- **PRD/Task**：.ai-company/tasks/BIO-013A.md + .ai-company/tasks/BIO-013A-SPIKE-ASTRA.md
+- **Spike Scope**：静态 synapse GLB 场景 + 3 交互（空间检查 / 逐结构 hide-isolate / Ca²⁺ 通道阻断 v0）；不碰机制导航、知识图、正式教学文案
+- **红线**：正式教学文案进入 master 前必须完成 Biology Review（ChatGPT 学习/研究侧）；科学范围不含 NMDA/HH/扩散模拟
+
 ### 光合作用键盘可达性（a11y S1）· 已批准
 - **Owner**：Engineer（下一 Sprint 分配 Task ID + AC）
 - **状态**：CEO 已批准为正式工程/产品质量任务（2026-09-03）；本轮 merge 前不启动
