@@ -1133,6 +1133,8 @@ function VisualWorkspace(props: WorkspaceProps) {
         <ViewerControls
           selected={!!selectedStructure}
           hidden={hiddenIds.length > 0}
+          fadeActive={viewer.isolation?.mode === 'parent-context'}
+          isolateActive={viewer.isolation?.mode === 'selected'}
           focus={focusSelected}
           fade={() =>
             selectedStructure &&
@@ -1255,6 +1257,8 @@ function CandidateMenu({
 function ViewerControls({
   selected,
   hidden,
+  fadeActive,
+  isolateActive,
   focus,
   fade,
   isolate,
@@ -1264,6 +1268,8 @@ function ViewerControls({
 }: {
   selected: boolean;
   hidden: boolean;
+  fadeActive: boolean;
+  isolateActive: boolean;
   focus: () => void;
   fade: () => void;
   isolate: () => void;
@@ -1277,11 +1283,31 @@ function ViewerControls({
         <Focus />
         聚焦
       </Button>
-      <Button variant="ghost" size="sm" onClick={fade} disabled={!selected}>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={fade}
+        disabled={!selected}
+        aria-pressed={fadeActive}
+        className={cn(
+          fadeActive &&
+            'bg-coral/15 text-coral ring-1 ring-coral/50 hover:bg-coral/25 hover:text-coral',
+        )}
+      >
         <Sparkles />
         保留语境
       </Button>
-      <Button variant="ghost" size="sm" onClick={isolate} disabled={!selected}>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={isolate}
+        disabled={!selected}
+        aria-pressed={isolateActive}
+        className={cn(
+          isolateActive &&
+            'bg-coral/15 text-coral ring-1 ring-coral/50 hover:bg-coral/25 hover:text-coral',
+        )}
+      >
         <Box />
         隔离
       </Button>
