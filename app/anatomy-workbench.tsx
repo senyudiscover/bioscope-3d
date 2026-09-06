@@ -1367,9 +1367,13 @@ function KnowledgePanel({
         <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-coral">
           03 / Knowledge
         </p>
-        <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">
-          {node.nameZh}
-        </h2>
+        <div
+          key={node.id}
+          className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-300"
+        >
+          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">
+            {node.nameZh}
+          </h2>
         <p className="mt-1 text-[10px] tracking-[0.1em] text-zinc-600">
           {node.nameEn}
         </p>
@@ -1426,9 +1430,13 @@ function KnowledgePanel({
             </span>
           </div>
         )}
+        </div>
       </div>
       <ScrollArea className="min-h-0 flex-1">
-        <div className="p-5">
+        <div
+          key={node.id}
+          className="p-5 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-300"
+        >
           <KnowledgeSection index="01" title="WHAT IS IT?" zh="它是什么？">
             <p>{node.summary}</p>
           </KnowledgeSection>
