@@ -62,6 +62,22 @@ import {
 import { resolvePickCandidates } from '@/lib/picking-manager';
 
 const atlasLoader = createOfficialHumanAtlas();
+// VanatomeViewer 依赖 appearance 的对象 identity 决定是否重跑全模型材质刷新
+// （内部 useEffect → model.traverse 遍历约 984 个 mesh）。内容是静态的，
+// 必须保持稳定引用，否则每次交互渲染都会触发一次全模型 traverse。
+const vanatomeAppearance = {
+  bodyShellId: '__neutral_shell__',
+  skeletonId: '__neutral_skeleton__',
+  defaultOpacity: 0.72,
+  xrayOpacity: 0.2,
+  ghostOpacity: 0.1,
+  parentContextOpacity: 0.12,
+  hoverEmissiveIntensity: 0.55,
+  selectedEmissiveIntensity: 0.9,
+};
+// VanatomeViewer 内部以 identity 判断 visibleLayers 是否变化；内联空数组会让
+// 可见性集合（约 984 项）在每次渲染时全部重建，并连带重跑全模型材质刷新。
+const NO_VISIBLE_LAYERS: string[] = [];
 const systemOrder = [
   'cardiovascular',
   'digestive',
@@ -1065,7 +1081,7 @@ function VisualWorkspace(props: WorkspaceProps) {
             selectedId={viewer.selectedId}
             hoveredId={emphasisId}
             isolation={viewer.isolation}
-            visibleLayers={[]}
+            visibleLayers={NO_VISIBLE_LAYERS}
             hiddenIds={hiddenIds}
             displayMode={
               displayLayer === 'mixed' && activeSystem !== 'all'
@@ -1081,16 +1097,7 @@ function VisualWorkspace(props: WorkspaceProps) {
             minDistance={0.18}
             maxDistance={38}
             cameraAnimationDuration={380}
-            appearance={{
-              bodyShellId: '__neutral_shell__',
-              skeletonId: '__neutral_skeleton__',
-              defaultOpacity: 0.72,
-              xrayOpacity: 0.2,
-              ghostOpacity: 0.1,
-              parentContextOpacity: 0.12,
-              hoverEmissiveIntensity: 0.55,
-              selectedEmissiveIntensity: 0.9,
-            }}
+            appearance={vanatomeAppearance}
             onHover={handleHover}
             onSelect={selectStructure}
             onInteractionStart={onCameraInteraction}
