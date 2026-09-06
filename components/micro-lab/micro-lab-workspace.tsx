@@ -20,7 +20,7 @@ export function MicroLabWorkspace({
   return (
     <main className="flex min-h-screen flex-col overflow-hidden bg-[#090b0a] text-zinc-100">
       {header}
-      <div className="grid min-h-0 flex-1 grid-cols-1 grid-rows-[auto_auto_auto_auto] lg:grid-cols-[250px_minmax(500px,1fr)_350px] lg:grid-rows-[minmax(0,1fr)_108px]">
+      <div className="grid min-h-0 flex-1 grid-cols-1 grid-rows-[auto_auto_auto_auto] lg:grid-cols-[250px_minmax(300px,1fr)_350px] lg:grid-rows-[minmax(0,1fr)_108px] xl:grid-cols-[250px_minmax(500px,1fr)_350px]">
         {explorer}
         {visual}
         {knowledge}
