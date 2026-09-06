@@ -981,9 +981,15 @@ function VisualWorkspace(props: WorkspaceProps) {
     hoveredStructure?.id ?? (displayLayer === 'mixed' ? systemRootId : null);
   const hoverTimer = useRef<number | null>(null);
   const [pointer, setPointer] = useState({ x: 36, y: 150 });
+  // 悬停提示 / 候选菜单只需要每帧一次位置更新；pointermove 事件频率可远高于
+  // 刷新率，直接 setState 会让整个 VisualWorkspace（含 3D 子树协调）按输入
+  // 频率重渲染。坐标先进 ref，rAF 合并为每帧最多一次渲染。
+  const pendingPointer = useRef({ x: 36, y: 150 });
+  const pointerRaf = useRef<number | null>(null);
   useEffect(
     () => () => {
       if (hoverTimer.current !== null) window.clearTimeout(hoverTimer.current);
+      if (pointerRaf.current !== null) window.cancelAnimationFrame(pointerRaf.current);
     },
     [],
   );
@@ -1001,10 +1007,16 @@ function VisualWorkspace(props: WorkspaceProps) {
       onDoubleClick={focusSelected}
       onPointerMove={(event) => {
         const bounds = event.currentTarget.getBoundingClientRect();
-        setPointer({
+        pendingPointer.current = {
           x: event.clientX - bounds.left,
           y: event.clientY - bounds.top,
-        });
+        };
+        if (pointerRaf.current === null) {
+          pointerRaf.current = window.requestAnimationFrame(() => {
+            pointerRaf.current = null;
+            setPointer(pendingPointer.current);
+          });
+        }
       }}
     >
       <div className="absolute left-4 top-3 z-20 right-4 space-y-2">
