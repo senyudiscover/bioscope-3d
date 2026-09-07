@@ -21,6 +21,12 @@
 
 ## READY（待批准后开工）
 
+### BIO-014 · Camera Patch Fresh-Install Reproducibility 修复（P0 维护）
+- **Owner**：Engineer（可派 subagent）+ CTO Review
+- **状态**：READY（CTO 判定 A，已取证复现：fresh `npm ci` postinstall 失败，硬阻塞 fresh clone/新设备/CI/Astra 新环境）
+- **Task**：.ai-company/tasks/BIO-014.md
+- **核心**：0.1.6 tarball 已变（新 bundle 无 shrink 锚点）→ 需重写 patch 锚点而非仅锁版；主树 node_modules 暂勿重装
+
 ### BIO-013A · Synapse Lab 突触传递机制 MVP（Spike 待 Astra 额度）
 - **Owner**：Astra（Experimental 3D Engineer，实施）+ CTO/DSH（Review）
 - **状态**：PRD READY（D1-D3 CEO 已拍板：模块局部轻量知识 / 阻断后保留全因果链 / 逐结构 hide-isolate）；**Astra Spike 任务包就绪，待 Astra 额度恢复后派发**
