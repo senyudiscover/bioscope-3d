@@ -27,9 +27,17 @@
 - **Task**：.ai-company/tasks/BIO-014.md
 - **核心**：0.1.6 tarball 已变（新 bundle 无 shrink 锚点）→ 需重写 patch 锚点而非仅锁版；主树 node_modules 暂勿重装
 
+### BIO-015 · Brain Workbench（独立懒加载模块）
+- **Owner**：Codex（implementation）+ DSH/CTO（Review）；Astra 不参与
+- **状态**：CEO 决策已冻结（D-016 / D-017 / D-018，2026-09-07）；**NOT STARTED**；执行顺序 BIO-014 APPROVE 后启动
+- **Task**：.ai-company/tasks/BIO-015.md
+- **产品形态**：独立 lazy-loaded Brain Workbench + Anatomy deep-link；不作为 Anatomy 默认深层
+- **License**：CC BY-SA 4.0；可见 attribution + 资产旁 NOTICE；禁 NC/ND；衍生资产 ShareAlike；公开发布前确认 SA 分发策略
+- **核心**：437 结构 brain.glb（bx_id 唯一键）→ Pick/Select/Focus/Fade/Isolate 复用 + 性能护栏；spike 证据见 `spike/brain-atlas-cto` CTO 报告
+
 ### BIO-013A · Synapse Lab 突触传递机制 MVP（Spike 待 Astra 额度）
 - **Owner**：Astra（Experimental 3D Engineer，实施）+ CTO/DSH（Review）
-- **状态**：PRD READY（D1-D3 CEO 已拍板：模块局部轻量知识 / 阻断后保留全因果链 / 逐结构 hide-isolate）；**Astra Spike 任务包就绪，待 Astra 额度恢复后派发**
+- **状态**：PRD READY（D1-D3 CEO 已拍板：模块局部轻量知识 / 阻断后保留全因果链 / 逐结构 hide-isolate）；**Astra Spike 任务包就绪，待 Astra 额度恢复后派发；Astra 保留给本任务，不参与 BIO-015**
 - **PRD/Task**：.ai-company/tasks/BIO-013A.md + .ai-company/tasks/BIO-013A-SPIKE-ASTRA.md
 - **Spike Scope**：静态 synapse GLB 场景 + 3 交互（空间检查 / 逐结构 hide-isolate / Ca²⁺ 通道阻断 v0）；不碰机制导航、知识图、正式教学文案
 - **红线**：正式教学文案进入 master 前必须完成 Biology Review（ChatGPT 学习/研究侧）；科学范围不含 NMDA/HH/扩散模拟

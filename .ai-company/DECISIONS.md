@@ -98,3 +98,29 @@
 - **Reason**：CEO 当前希望本地优先；远程仓库/CI 属 Future Infrastructure Decision。
 - **Impact**：不得自行创建 GitHub repo、push remote、配置云 CI；护栏资产的价值依赖本地 git 历史 + 本次 merge/tag。
 - **Revisit when**：CEO 决定启用远程仓库时。
+
+## D-016 · Brain Atlas 产品形态：独立 lazy-loaded Brain Workbench + Anatomy deep-link
+- **Date**：2026-09-07（CEO 决策，基于 CTO spike `spike/brain-atlas-cto`）
+- **Decision**：采用独立 lazy-loaded **Brain Workbench** 模块；由现有 Anatomy 提供 deep-link 进入；**不作为** Anatomy 默认深层直接嵌入。
+- **Reason**：brain.glb 是 437 结构扁平场景，与 anatomy 的 vanatome 父子语义/`picking-manager` 假设冲突；独立模块可隔离 license、性能与加载成本。
+- **Impact**：BIO-015 注册为第三个正式模块；anatomy / vanatome / `picking-manager` 不动；进入模块时才加载 brain.glb。
+- **Revisit when**：BIO-015 验收后如需"尺度连续性"体验再评估入口扩展（Hybrid 第二阶段）。
+
+## D-017 · Brain 资产 License / Attribution 策略（CEO 已批准）
+- **Date**：2026-09-07（CEO 决策）
+- **Decision**：
+  1. 模块内保留可见 attribution；明确标注 3D 资产为 **CC BY-SA 4.0**。
+  2. 禁止混入 NC / ND 资产。
+  3. 对修改后的 Brain 衍生资产遵守相应 **ShareAlike** 义务（衍生 GLB 保持 CC BY-SA 4.0 + 署名）。
+  4. **正式公开发布前，单独确认 SA 分发策略**。
+- **Reason**：brain.glb 来源链为 Z-Anatomy / BodyParts3D / DBCLS（CC BY-SA 4.0）+ 注册 atlas（CC BY / CC BY-SA）；义务清晰且可履行，但公开发布涉及 SA 策略需 CEO 最终确认。
+- **Impact**：BIO-015 必须包含 About/Credits + 资产旁 NOTICE + README 文档署名；新增 atlas 资产前必须先过 license gate；每次上游资产更新重新核验。
+- **Revisit when**：正式公开发布决策时，或引入新 Brain 数据源时。
+
+## D-018 · BIO-014 / BIO-015 执行顺序与 Owner 约束
+- **Date**：2026-09-07（CEO 决策）
+- **Decision**：执行顺序固定为 **BIO-014 → Codex implementation → DSH Review → APPROVE → BIO-015 → Codex implementation → DSH Review**。当前不启动 BIO-015 implementation。**Astra 暂不用于 Brain Workbench，保留给 BIO-013A Synapse 3D Spike**。
+- **Reason**：BIO-014 阻塞 fresh clone/CI/Astra 环境，必须先修；BIO-015 决策已冻结但排队；避免 Astra 资源与 BIO-013A 计划冲突。
+- **Impact**：BOARD 与 Task 均标记 BIO-015 NOT STARTED（BIO-014 APPROVE 前不得开工）；BIO-013A 继续等待 Astra 额度。
+- **Revisit when**：BIO-014 APPROVE 后进入 BIO-015；或 BIO-014 出现新的 Scope / Architecture / License 冲突时上报 CEO。
+
