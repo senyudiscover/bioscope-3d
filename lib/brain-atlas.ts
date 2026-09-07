@@ -56,6 +56,47 @@ export type BrainAppearance = {
   highlighted: boolean;
 };
 
+export type BrainExplodeOffset = {
+  category: readonly [number, number, number];
+  structure: readonly [number, number, number];
+};
+
+export const BRAIN_CATEGORY_PALETTE: Readonly<Record<string, string>> = {
+  cortex: '#d99a86',
+  cranial_nerves: '#f3c96b',
+  brainstem: '#c47b67',
+  tracts: '#79b9c5',
+  diencephalon: '#aa82bd',
+  arteries: '#d75d58',
+  white_matter: '#d5cab9',
+  veins_sinuses: '#657eb6',
+  cerebellum: '#b98670',
+  deep_grey: '#9c78a9',
+  ventricles: '#5fb9ca',
+  meninges_dura: '#d8aa72',
+};
+
+/**
+ * Anatomical fallback directions are used only when a category centroid is too
+ * close to the whole-brain centroid to supply a stable radial direction.
+ */
+export const BRAIN_CATEGORY_DIRECTIONS: Readonly<
+  Record<string, readonly [number, number, number]>
+> = {
+  cortex: [0, 0.25, 1],
+  cranial_nerves: [0, -0.9, 0.45],
+  brainstem: [0, -1, -0.15],
+  tracts: [0, -0.15, 1],
+  diencephalon: [0, 0.15, 0.65],
+  arteries: [0, -0.35, 0.85],
+  white_matter: [0, 0.4, -0.9],
+  veins_sinuses: [0, 0.85, -0.35],
+  cerebellum: [0, -0.7, -0.75],
+  deep_grey: [0, 0.2, -0.65],
+  ventricles: [0, 0.9, 0],
+  meninges_dura: [0, 1, 0.2],
+};
+
 const BX_ID_KEYS = ['bx_id', 'bxId'] as const;
 
 /** GLB extras live on either a mesh or one of its parent groups. */
@@ -142,6 +183,35 @@ export function getBrainAppearance(
     opacity = Math.min(opacity, 0.12);
   }
   return { visible: opacity > 0.05, opacity, highlighted };
+}
+
+function smoothstep(edge0: number, edge1: number, value: number): number {
+  const normalized = Math.min(
+    1,
+    Math.max(0, (value - edge0) / (edge1 - edge0)),
+  );
+  return normalized * normalized * (3 - 2 * normalized);
+}
+
+/** Category separation leads; structure separation starts after roughly 1/3. */
+export function getBrainExplodePhases(progress: number) {
+  const normalized = Math.min(1, Math.max(0, progress / 100));
+  return {
+    category: smoothstep(0, 0.58, normalized),
+    structure: smoothstep(0.32, 1, normalized),
+  };
+}
+
+export function resolveBrainExplodeOffset(
+  offset: BrainExplodeOffset,
+  progress: number,
+): [number, number, number] {
+  const phases = getBrainExplodePhases(progress);
+  return [0, 1, 2].map(
+    (axis) =>
+      offset.category[axis] * phases.category +
+      offset.structure[axis] * phases.structure,
+  ) as [number, number, number];
 }
 
 export function filterBrainNodes(

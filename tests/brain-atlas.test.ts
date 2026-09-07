@@ -6,7 +6,9 @@ import {
   filterBrainNodes,
   findBrainMetadataOwner,
   getBrainAppearance,
+  getBrainExplodePhases,
   getBrainStructureId,
+  resolveBrainExplodeOffset,
   validateBrainManifest,
   type BrainManifest,
   type BrainVisualState,
@@ -187,5 +189,30 @@ describe('Brain list filtering contract', () => {
     const results = filterBrainNodes(manifest.nodes, 'caudate', 'deep_grey');
     expect(results.map((node) => node.id)).toEqual([49, 50]);
     expect(filterBrainNodes(manifest.nodes, '285', null)[0]?.id).toBe(285);
+  });
+});
+
+describe('Brain hierarchical explode contract', () => {
+  const offset = {
+    category: [10, 0, 0] as const,
+    structure: [0, 4, 0] as const,
+  };
+
+  it('is assembled at zero and resolves the full cached offset at 100', () => {
+    expect(resolveBrainExplodeOffset(offset, 0)).toEqual([0, 0, 0]);
+    expect(resolveBrainExplodeOffset(offset, 100)).toEqual([10, 4, 0]);
+  });
+
+  it('separates categories before structures and clamps external input', () => {
+    expect(getBrainExplodePhases(25).category).toBeGreaterThan(0);
+    expect(getBrainExplodePhases(25).structure).toBe(0);
+    expect(getBrainExplodePhases(-5)).toEqual({ category: 0, structure: 0 });
+    expect(getBrainExplodePhases(120)).toEqual({ category: 1, structure: 1 });
+  });
+
+  it('is deterministic for the same cached plan and slider value', () => {
+    expect(resolveBrainExplodeOffset(offset, 67)).toEqual(
+      resolveBrainExplodeOffset(offset, 67),
+    );
   });
 });

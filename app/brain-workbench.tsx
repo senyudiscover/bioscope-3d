@@ -21,6 +21,7 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import manifestJson from '@/data/brain/manifest.json';
 import {
+  BRAIN_CATEGORY_PALETTE,
   DEFAULT_HIDDEN_BRAIN_CATEGORIES,
   filterBrainNodes,
   indexBrainManifest,
@@ -54,6 +55,7 @@ export function BrainWorkbench({
   const [fadeOthers, setFadeOthers] = useState(false);
   const [isolateSelected, setIsolateSelected] = useState(false);
   const [cortexOpacity, setCortexOpacity] = useState(0.38);
+  const [explodeProgress, setExplodeProgress] = useState(0);
   const [focusNonce, setFocusNonce] = useState(0);
   const [resetNonce, setResetNonce] = useState(0);
   const [ready, setReady] = useState(false);
@@ -94,6 +96,7 @@ export function BrainWorkbench({
     setFadeOthers(false);
     setIsolateSelected(false);
     setCortexOpacity(0.38);
+    setExplodeProgress(0);
     setResetNonce((value) => value + 1);
   };
 
@@ -181,11 +184,12 @@ export function BrainWorkbench({
           </ScrollArea>
         </aside>
 
-        <section className="relative min-h-[420px] overflow-hidden bg-[radial-gradient(circle_at_50%_42%,#25171a_0%,#0c0a10_48%,#08070b_100%)]">
+        <section className="relative min-h-[420px] overflow-hidden bg-[radial-gradient(ellipse_at_50%_38%,#27212d_0%,#121018_44%,#07070a_100%)] before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(115deg,rgba(94,144,167,0.06),transparent_38%,rgba(213,100,80,0.055))]">
           {!loadError && (
             <BrainViewer
               nodesById={nodesById}
               visualState={visualState}
+              explodeProgress={explodeProgress}
               focusNonce={focusNonce}
               resetNonce={resetNonce}
               onSelect={select}
@@ -275,11 +279,57 @@ export function BrainWorkbench({
 
           <div
             data-testid="brain-runtime-stats"
-            className="absolute bottom-3 left-3 rounded-full border border-white/10 bg-black/55 px-3 py-1.5 font-mono text-[9px] text-zinc-500 backdrop-blur"
+            className="absolute right-3 top-3 hidden rounded-full border border-white/10 bg-black/55 px-3 py-1.5 font-mono text-[9px] text-zinc-500 backdrop-blur sm:block"
           >
-            {stats.structures}/437 structures · {stats.meshes} meshes ·{' '}
-            {stats.fps || '—'} fps · {stats.draws} draws · {stats.raycastMs} ms
-            pick
+            {stats.structures}/437 · {stats.meshes} meshes · {stats.fps || '—'}
+            {' fps · '}
+            {stats.draws} draws · {stats.raycastMs} ms pick
+          </div>
+
+          <div
+            data-testid="brain-explode-control"
+            data-explode-progress={explodeProgress}
+            className="absolute bottom-4 left-1/2 w-[min(82%,480px)] -translate-x-1/2 rounded-2xl border border-white/10 bg-[#0a0910]/80 px-4 py-3 shadow-[0_18px_50px_rgba(0,0,0,0.38)] backdrop-blur-xl"
+          >
+            <div className="mb-2 flex items-center justify-between font-mono text-[9px] tracking-[0.15em]">
+              <span
+                className={
+                  explodeProgress === 0 ? 'text-coral' : 'text-zinc-500'
+                }
+              >
+                ASSEMBLED
+              </span>
+              <output
+                htmlFor="brain-explode-slider"
+                className="rounded-full bg-white/[0.06] px-2 py-0.5 text-zinc-300"
+              >
+                {explodeProgress}%
+              </output>
+              <span
+                className={
+                  explodeProgress === 100 ? 'text-coral' : 'text-zinc-500'
+                }
+              >
+                EXPLODED
+              </span>
+            </div>
+            <input
+              id="brain-explode-slider"
+              data-testid="brain-explode-slider"
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value={explodeProgress}
+              onChange={(event) =>
+                setExplodeProgress(Number(event.target.value))
+              }
+              className="block h-2 w-full cursor-ew-resize accent-[#ff745c]"
+              aria-label="Explode brain structures"
+              aria-valuetext={`${explodeProgress}% ${
+                explodeProgress === 0 ? 'assembled' : 'exploded'
+              }`}
+            />
           </div>
         </section>
 
@@ -292,7 +342,10 @@ export function BrainWorkbench({
                 </p>
                 {selected ? (
                   <>
-                    <h2 className="text-xl font-semibold leading-tight">
+                    <h2
+                      data-testid="brain-selected-label"
+                      className="text-xl font-semibold leading-tight text-[#f3d8cd]"
+                    >
                       {selected.label}
                     </h2>
                     <p className="mt-2 font-mono text-[10px] text-zinc-600">
@@ -346,7 +399,17 @@ export function BrainWorkbench({
                         onClick={() => toggleCategory(id)}
                         className="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left text-[11px] text-zinc-400 hover:bg-white/5"
                       >
-                        <span className="truncate">{item.label}</span>
+                        <span className="flex min-w-0 items-center gap-2">
+                          <span
+                            aria-hidden="true"
+                            className="size-2 shrink-0 rounded-full shadow-[0_0_10px_currentColor]"
+                            style={{
+                              backgroundColor:
+                                BRAIN_CATEGORY_PALETTE[id] ?? '#9f8c85',
+                            }}
+                          />
+                          <span className="truncate">{item.label}</span>
+                        </span>
                         <span className="ml-2 font-mono text-[9px] text-zinc-600">
                           {visible ? 'ON' : 'OFF'} · {item.count}
                         </span>
