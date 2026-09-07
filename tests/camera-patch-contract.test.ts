@@ -12,7 +12,8 @@ import { describe, expect, it } from 'vitest';
 // 脆弱的关键资产：上游版本一变，patch anchor 即失效。
 //
 // 本文件验证「patch 已生效且契约满足」三层：
-//   1. 存在性 —— 4 个 sentinel 标记都在、旧的缩小 maxDistance 令牌已消失
+//   1. 存在性 —— focus guard + 当前 bundle 的全局 distance contract 均在，
+//                旧的缩小 maxDistance 令牌已消失
 //   2. 语义顺序 —— focus guard 必须先于 selectedId 判断（否则行为反转）
 //   3. 幂等重跑 —— 对已 patch 的安装再次执行脚本必须 exit 0 且逐字节不变
 //   4. 版本契约 —— 安装的 vanatome-react/atlas 版本满足根 package.json 范围
@@ -42,13 +43,15 @@ function satisfiesCaret(version: string, range: string): boolean {
 }
 
 describe('camera patch 契约（@vixotic/vanatome-react 安装态）', () => {
-  it('存在性：4 个 sentinel 标记全部在编译产物中', () => {
+  it('存在性：focus guard 与当前全局 distance contract 均在编译产物中', () => {
     const source = readViewerSource();
 
     expect(source).toContain('const previousFocusKey = useRef(focusRequestKey);');
     expect(source).toContain('if (previousFocusKey.current === focusRequestKey)');
-    expect(source).toContain('max: maxDistance,');
-    expect(source).toContain('minDistance: distanceLimits.min, maxDistance: distanceLimits.max');
+    expect(source).toContain(
+      'minimumDistance: focusDistance,\n            minDistance,\n            maxDistance,\n        });',
+    );
+    expect(source).toContain('minDistance: minDistance, maxDistance: maxDistance');
   });
 
   it('存在性：旧的动态缩小 maxDistance 令牌必须已消失', () => {
