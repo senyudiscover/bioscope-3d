@@ -58,5 +58,13 @@ export function BioScopeWorkspace() {
   );
   const ActiveModule = activeModule.component;
 
-  return <ActiveModule moduleSelector={moduleSelector} />;
+  // 模块整体切换时以轻量淡入给出「已进入新工作台」的状态反馈。
+  return (
+    <div
+      key={moduleContext.moduleId}
+      className="motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300"
+    >
+      <ActiveModule moduleSelector={moduleSelector} />
+    </div>
+  );
 }

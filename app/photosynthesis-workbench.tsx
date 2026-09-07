@@ -416,7 +416,11 @@ function MicroExplorer({
             </p>
             <div className="mt-2 grid gap-1.5">
               {lightReactionSteps.map((step) => (
-                <button type="button" key={step.id} onClick={() => goToStep(step.id)}
+                <button
+                  type="button"
+                  key={step.id}
+                  onClick={() => goToStep(step.id)}
+                  aria-current={activeStepId === step.id ? 'step' : undefined}
                   className={cn('rounded-md border px-2 py-1.5 text-left', activeStepId === step.id ? 'border-[#aabd9b]/45 bg-[#9caf8a]/10 text-zinc-100' : 'border-white/8 text-zinc-500 hover:text-zinc-200')}>
                   <span className="block text-[10px]">{step.titleZh}</span>
                   <span className="mt-0.5 block text-[9px] leading-3 text-zinc-600">{step.description}</span>
@@ -533,38 +537,46 @@ function MicroKnowledgePanel({
         <p className="font-mono text-[9px] tracking-[0.18em] text-[#9caf8a]">
           03 / KNOWLEDGE
         </p>
-        <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">
-          {node.nameZh}
-        </h2>
-        <p className="mt-1 text-[10px] tracking-[0.1em] text-zinc-600">
-          {node.nameEn}
-        </p>
-        <p className="mt-2 text-xs text-zinc-500">
-          {node.typeZh} · {node.typeEn}
-        </p>
-        {node.id !== modelContextNode.id && (
-          <div className="mt-3 rounded-lg border border-[#9caf8a]/20 bg-[#9caf8a]/[0.035] px-3 py-2">
-            <p className="text-[9px] tracking-[0.12em] text-[#9caf8a]">
-              当前模型语境
-            </p>
-            <p className="mt-1 text-xs text-zinc-200">
-              {modelContextNode.nameZh}
-            </p>
-          </div>
-        )}
-        {history.length > 0 && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={goBack}
-            className="mt-3 text-[10px]"
-          >
-            <ArrowLeft className="size-3" />
-            返回上一知识
-          </Button>
-        )}
+        <div
+          key={node.id}
+          className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-300"
+        >
+          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">
+            {node.nameZh}
+          </h2>
+          <p className="mt-1 text-[10px] tracking-[0.1em] text-zinc-600">
+            {node.nameEn}
+          </p>
+          <p className="mt-2 text-xs text-zinc-500">
+            {node.typeZh} · {node.typeEn}
+          </p>
+          {node.id !== modelContextNode.id && (
+            <div className="mt-3 rounded-lg border border-[#9caf8a]/20 bg-[#9caf8a]/[0.035] px-3 py-2">
+              <p className="text-[9px] tracking-[0.12em] text-[#9caf8a]">
+                当前模型语境
+              </p>
+              <p className="mt-1 text-xs text-zinc-200">
+                {modelContextNode.nameZh}
+              </p>
+            </div>
+          )}
+          {history.length > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={goBack}
+              className="mt-3 text-[10px]"
+            >
+              <ArrowLeft className="size-3" />
+              返回上一知识
+            </Button>
+          )}
+        </div>
       </div>
-      <ScrollArea className="min-h-0 flex-1">
+      <ScrollArea
+        key={node.id}
+        className="min-h-0 flex-1 motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300"
+      >
         <div className="p-5">
           <KnowledgeSection index="01" zh="它是什么？" en="WHAT IS IT?">
             <p>{node.summary}</p>
@@ -690,7 +702,10 @@ function MicroRelatedKnowledge({
           </p>
           <p className="mt-1 text-[10px] text-zinc-600">关联知识</p>
         </div>
-        <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto">
+        <div
+          key={node.id}
+          className="flex min-w-0 flex-1 gap-2 overflow-x-auto motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300"
+        >
           {related.map(({ relationType, reason, node: item }) => (
             <button
               type="button"

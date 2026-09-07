@@ -152,3 +152,10 @@ body {
     height: 100dvh;
   }
 }
+
+/* 键盘焦点可见性：原生 button/summary 等没有组件级 focus ring，
+   统一补一个 coral 焦点环（非 layer 规则，覆盖 shadcn base 的 outline 重置）。 */
+:is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-coral);
+  outline-offset: 2px;
+}
