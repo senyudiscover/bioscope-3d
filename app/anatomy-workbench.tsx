@@ -9,9 +9,12 @@ import {
   type ReactNode,
 } from 'react';
 import {
+  createVanatomeHierarchy,
+  getVanatomeDescendantIds,
   VanatomeViewer,
   useVanatomeController,
   type VanatomeAtlas,
+  type VanatomeIsolationState,
   type VanatomeStructure,
 } from '@vixotic/vanatome-react';
 import {
@@ -60,6 +63,11 @@ import {
   getSystemTerm,
 } from '@/lib/anatomy-terminology';
 import { resolvePickCandidates } from '@/lib/picking-manager';
+import {
+  planDeselect,
+  planIsolationToggle,
+  planStructureSelect,
+} from '@/lib/anatomy-interaction-state';
 
 const atlasLoader = createOfficialHumanAtlas();
 const systemOrder = [
@@ -106,7 +114,6 @@ export function AnatomyWorkbench({
   const [currentNodeId, setCurrentNodeId] = useState('human');
   const [modelContextId, setModelContextId] = useState('human');
   const [knowledgeHistory, setKnowledgeHistory] = useState<string[]>([]);
-  const [focusedId, setFocusedId] = useState<string | null>(null);
   const [cameraLevel, setCameraLevel] = useState<
     'whole' | 'system' | 'structure'
   >('whole');
@@ -141,6 +148,19 @@ export function AnatomyWorkbench({
   const structureMap = useMemo(
     () => new Map(atlas?.structures.map((item) => [item.id, item]) ?? []),
     [atlas],
+  );
+  const structureHierarchy = useMemo(
+    () => (atlas ? createVanatomeHierarchy(atlas.structures) : []),
+    [atlas],
+  );
+  const isolatedBranchIds = useMemo(
+    () =>
+      new Set(
+        viewer.isolation
+          ? getVanatomeDescendantIds(structureHierarchy, viewer.isolation.id)
+          : [],
+      ),
+    [structureHierarchy, viewer.isolation],
   );
   const selectedStructure = viewer.selectedId
     ? structureMap.get(viewer.selectedId)
@@ -204,6 +224,9 @@ export function AnatomyWorkbench({
       queueMicrotask(() => {
         setCameraOwnership('auto');
         selectAtlasStructure(id);
+        setCameraLevel(
+          structureMap.get(id)?.kind === 'system' ? 'system' : 'structure',
+        );
         const initNodeId =
           id === 'heart' || id.startsWith('heart-') ? 'heart' : `model:${id}`;
         setCurrentNodeId(initNodeId);
@@ -214,14 +237,34 @@ export function AnatomyWorkbench({
       });
   }, [atlas, selectAtlasStructure, structureMap]);
 
+  const applyIsolationPlan = useCallback(
+    (next: VanatomeIsolationState | null) => {
+      if (
+        (next?.id ?? null) === (viewer.isolation?.id ?? null) &&
+        (next?.mode ?? null) === (viewer.isolation?.mode ?? null)
+      )
+        return;
+      viewer.isolate(next ? next.id : null, next?.mode);
+    },
+    [viewer],
+  );
+
   const selectStructure = useCallback(
     (id: string | null) => {
-      if (id) setCameraOwnership('auto');
-      selectAtlasStructure(id);
       const url = new URL(window.location.href);
       if (id) {
         const structure = structureMap.get(id);
-        setCameraLevel(structure?.kind === 'system' ? 'system' : 'structure');
+        const plan = planStructureSelect({
+          kind: structure?.kind,
+          isolation: viewer.isolation,
+          withinIsolatedBranch: isolatedBranchIds.has(id),
+        });
+        // 先退出旧 isolation，再完成新的 selection / focus：
+        // 分支外选择若保留隔离，新结构不可见、相机拒绝构图。
+        applyIsolationPlan(plan.isolation);
+        setCameraOwnership('auto');
+        selectAtlasStructure(id);
+        setCameraLevel(plan.cameraLevel);
         url.searchParams.set('anatomy', id);
         const nodeId =
           id === 'heart' || id.startsWith('heart-') ? 'heart' : `model:${id}`;
@@ -231,14 +274,25 @@ export function AnatomyWorkbench({
           setExpandedSystems((value) => new Set(value).add(structure.system));
         }
       } else {
-        setCameraLevel('whole');
+        // 解除选择本身不移动相机：isolation 必须随之退出（其全部管理入口
+        // 都以选中为前提，残留即死局）；cameraLevel 保持不变，不得谎报 WHOLE BODY。
+        if (planDeselect({ isolation: viewer.isolation }).exitIsolation) {
+          applyIsolationPlan(null);
+        }
+        selectAtlasStructure(null);
         url.searchParams.delete('anatomy');
         setCurrentNodeId('human');
         setModelContextId('human');
       }
       window.history.replaceState({}, '', url);
     },
-    [selectAtlasStructure, structureMap],
+    [
+      applyIsolationPlan,
+      isolatedBranchIds,
+      selectAtlasStructure,
+      structureMap,
+      viewer.isolation,
+    ],
   );
 
   useEffect(() => {
@@ -324,7 +378,6 @@ export function AnatomyWorkbench({
     if (viewer.selectedId) {
       setCameraOwnership('auto');
       viewer.focus();
-      setFocusedId(viewer.selectedId);
       setCameraLevel(
         structureMap.get(viewer.selectedId)?.kind === 'system'
           ? 'system'
@@ -337,6 +390,17 @@ export function AnatomyWorkbench({
       setHiddenIds((ids) => [...new Set([...ids, viewer.selectedId!])]);
       selectStructure(null);
     }
+  };
+  // 保留语境 / 隔离按钮：同一结构重复同一模式 = 退出该隔离（显式开关语义）。
+  const toggleIsolation = (mode: 'selected' | 'parent-context') => {
+    if (!selectedStructure) return;
+    const plan = planIsolationToggle({
+      selectedId: viewer.selectedId,
+      isolation: viewer.isolation,
+      id: selectedStructure.id,
+      mode,
+    });
+    applyIsolationPlan(plan.isolation);
   };
   const changeSystem = (system: AnatomySystemFilter) => {
     setActiveSystem(system);
@@ -424,7 +488,6 @@ export function AnatomyWorkbench({
     setDisplayLayer('mixed');
     setActiveSystem('all');
     setHoveredId(null);
-    setFocusedId(null);
     setCameraLevel('whole');
     setCameraOwnership('auto');
     setCandidateIds([]);
@@ -496,7 +559,7 @@ export function AnatomyWorkbench({
           restoreHidden={() => setHiddenIds([])}
           reset={resetAll}
           retry={retryAtlas}
-          focusedId={focusedId}
+          toggleIsolation={toggleIsolation}
           candidateIds={candidateIds}
           resolvePick={resolveModelPick}
           structureMap={structureMap}
@@ -505,6 +568,8 @@ export function AnatomyWorkbench({
             selectStructure(id);
           }}
           dismissCandidates={() => setCandidateIds([])}
+          fadeActive={viewer.isolation?.mode === 'parent-context'}
+          isolateActive={viewer.isolation?.mode === 'selected'}
         />
         <KnowledgePanel
           node={currentNode}
@@ -520,10 +585,8 @@ export function AnatomyWorkbench({
           chooseNode={chooseKnowledgeNode}
           goBack={goBackKnowledge}
           focusSelected={focusSelected}
-          isolate={() =>
-            selectedStructure &&
-            viewer.isolate(selectedStructure.id, 'parent-context')
-          }
+          isolate={() => toggleIsolation('parent-context')}
+          fadeActive={viewer.isolation?.mode === 'parent-context'}
         />
         <RelatedKnowledgeDock
           node={currentNode}
@@ -929,8 +992,10 @@ type WorkspaceProps = {
   restoreHidden: () => void;
   reset: () => void;
   retry: () => void;
-  focusedId: string | null;
+  toggleIsolation: (mode: 'selected' | 'parent-context') => void;
   candidateIds: string[];
+  fadeActive: boolean;
+  isolateActive: boolean;
   resolvePick: (id: string | null) => ReturnType<typeof resolvePickCandidates>;
   structureMap: Map<string, VanatomeStructure>;
   chooseCandidate: (id: string) => void;
@@ -965,7 +1030,10 @@ function VisualWorkspace(props: WorkspaceProps) {
     restoreHidden,
     reset,
     retry,
+    toggleIsolation,
     candidateIds,
+    fadeActive,
+    isolateActive,
     resolvePick,
     structureMap,
     chooseCandidate,
@@ -1133,15 +1201,11 @@ function VisualWorkspace(props: WorkspaceProps) {
         <ViewerControls
           selected={!!selectedStructure}
           hidden={hiddenIds.length > 0}
+          fadeActive={fadeActive}
+          isolateActive={isolateActive}
           focus={focusSelected}
-          fade={() =>
-            selectedStructure &&
-            viewer.isolate(selectedStructure.id, 'parent-context')
-          }
-          isolate={() =>
-            selectedStructure &&
-            viewer.isolate(selectedStructure.id, 'selected')
-          }
+          fade={() => toggleIsolation('parent-context')}
+          isolate={() => toggleIsolation('selected')}
           hide={hideSelected}
           restore={restoreHidden}
           reset={reset}
@@ -1255,6 +1319,8 @@ function CandidateMenu({
 function ViewerControls({
   selected,
   hidden,
+  fadeActive,
+  isolateActive,
   focus,
   fade,
   isolate,
@@ -1264,6 +1330,8 @@ function ViewerControls({
 }: {
   selected: boolean;
   hidden: boolean;
+  fadeActive: boolean;
+  isolateActive: boolean;
   focus: () => void;
   fade: () => void;
   isolate: () => void;
@@ -1277,11 +1345,31 @@ function ViewerControls({
         <Focus />
         聚焦
       </Button>
-      <Button variant="ghost" size="sm" onClick={fade} disabled={!selected}>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={fade}
+        disabled={!selected}
+        aria-pressed={fadeActive}
+        className={cn(
+          fadeActive &&
+            'bg-coral/15 text-coral ring-1 ring-coral/50 hover:bg-coral/25 hover:text-coral',
+        )}
+      >
         <Sparkles />
         保留语境
       </Button>
-      <Button variant="ghost" size="sm" onClick={isolate} disabled={!selected}>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={isolate}
+        disabled={!selected}
+        aria-pressed={isolateActive}
+        className={cn(
+          isolateActive &&
+            'bg-coral/15 text-coral ring-1 ring-coral/50 hover:bg-coral/25 hover:text-coral',
+        )}
+      >
         <Box />
         隔离
       </Button>
@@ -1322,6 +1410,7 @@ function KnowledgePanel({
   goBack,
   focusSelected,
   isolate,
+  fadeActive,
 }: {
   node: KnowledgeNode;
   modelContextNode: KnowledgeNode;
@@ -1334,6 +1423,7 @@ function KnowledgePanel({
   goBack: () => void;
   focusSelected: () => void;
   isolate: () => void;
+  fadeActive: boolean;
 }) {
   return (
     <aside className="order-3 flex min-h-[600px] flex-col border-t border-white/10 lg:min-h-0 lg:border-l lg:border-t-0">
@@ -1357,7 +1447,12 @@ function KnowledgePanel({
               <Focus />
               Focus
             </Button>
-            <Button variant="outline" size="sm" onClick={isolate}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={isolate}
+              aria-pressed={fadeActive}
+            >
               <Sparkles />
               Fade context
             </Button>
