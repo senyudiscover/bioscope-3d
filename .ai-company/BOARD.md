@@ -19,14 +19,6 @@
 
 （无进行中任务）
 
-## REVIEW
-
-### BIO-014 · Camera Patch Fresh-Install Reproducibility 修复（P0 维护）
-- **Owner**：Engineer（Codex implementation）+ CTO/DSH Review
-- **状态**：REVIEW（branch `fix/bio-014-camera-patch`；fresh `npm ci`、264 tests、tsc、两条 build、Camera Browser QA 已验证）
-- **Task**：.ai-company/tasks/BIO-014.md
-- **核心**：按 bundle shape 验证并 patch：当前 registry 0.1.6 仅补 focus guard，保留上游原生全局 distance contract；legacy 0.1.6 兼容原 maxDistance 修复；重复执行字节不变
-
 ## READY（待批准后开工）
 
 ### BIO-015 · Brain Workbench（独立懒加载模块）
@@ -110,6 +102,12 @@
 ---
 
 ## DONE
+
+### BIO-014 · Camera Patch Fresh-Install Reproducibility 修复（P0 维护）
+- **Owner**：Codex（implementation）+ CTO/DSH（独立验收）
+- **收编**：--no-ff merge 至 master，merge commit `a4afd38`（2026-09-07）；pre tag `bioscope-pre-bio-014-2026-09-07`；accepted tag `bioscope-bio-014-accepted-2026-09-07`
+- **验收结论**：**APPROVE** —— bundle-shape 分类（current/legacy-unpatched/legacy-patched）可靠；current 仅补 focus guard、无错误重注入；legacy 保留 maxDistance 修复语义；唯一锚点 + 未知 shape loudly fail；三种输入幂等；**fresh worktree `npm ci` exit 0** + contract 6/6 + 264/264 + tsc 0 + lint 基线 + local-build 0
+- **验收小注**：legacy-unpatched 幂等为代码级复核（本机已无 legacy-unpatched bundle）；交互式相机 Browser QA（无 rebound / hover 不重聚焦）为代码级 + Codex QA 声称，建议 30s 手动走查确认
 
 ### BIO-002A · Photosynthesis Mechanism Navigation MVP（P1）
 - **Owner**：Codex（实施）+ CTO/DSH（独立验收）
