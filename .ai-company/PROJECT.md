@@ -156,6 +156,11 @@ v0.1 试点项目（"AI Company" 的第一个项目）。当前实际状态：
 1. 相机自动对焦只允许在"新的显式 focus 请求"到来时执行（否则 hover/筛选/知识卡更新会误触对焦）。
 2. `maxDistance` 不再因小器官聚焦而被压缩（这就是"滚轮缩小后弹回原位"的根源）。
 
+BIO-014 后脚本不再仅凭版本和单一旧文本判断：它先识别 registry 当前 0.1.6
+与 legacy 0.1.6 的 camera bundle shape。当前 bundle 已原生保持全局
+`minDistance/maxDistance`，只补 focus guard；legacy bundle 继续修复动态缩小的
+`maxDistance`。所有路径均执行唯一锚点检查、patch 后契约校验并保持幂等。
+
 ---
 
 ## 5. 当前约束
