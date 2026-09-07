@@ -70,6 +70,22 @@ import {
 } from '@/lib/anatomy-interaction-state';
 
 const atlasLoader = createOfficialHumanAtlas();
+// VanatomeViewer 依赖 appearance 的对象 identity 决定是否重跑全模型材质刷新
+// （内部 useEffect → model.traverse 遍历约 984 个 mesh）。内容是静态的，
+// 必须保持稳定引用，否则每次交互渲染都会触发一次全模型 traverse。
+const vanatomeAppearance = {
+  bodyShellId: '__neutral_shell__',
+  skeletonId: '__neutral_skeleton__',
+  defaultOpacity: 0.72,
+  xrayOpacity: 0.2,
+  ghostOpacity: 0.1,
+  parentContextOpacity: 0.12,
+  hoverEmissiveIntensity: 0.55,
+  selectedEmissiveIntensity: 0.9,
+};
+// VanatomeViewer 内部以 identity 判断 visibleLayers 是否变化；内联空数组会让
+// 可见性集合（约 984 项）在每次渲染时全部重建，并连带重跑全模型材质刷新。
+const NO_VISIBLE_LAYERS: string[] = [];
 const systemOrder = [
   'cardiovascular',
   'digestive',
@@ -1049,9 +1065,15 @@ function VisualWorkspace(props: WorkspaceProps) {
     hoveredStructure?.id ?? (displayLayer === 'mixed' ? systemRootId : null);
   const hoverTimer = useRef<number | null>(null);
   const [pointer, setPointer] = useState({ x: 36, y: 150 });
+  // 悬停提示 / 候选菜单只需要每帧一次位置更新；pointermove 事件频率可远高于
+  // 刷新率，直接 setState 会让整个 VisualWorkspace（含 3D 子树协调）按输入
+  // 频率重渲染。坐标先进 ref，rAF 合并为每帧最多一次渲染。
+  const pendingPointer = useRef({ x: 36, y: 150 });
+  const pointerRaf = useRef<number | null>(null);
   useEffect(
     () => () => {
       if (hoverTimer.current !== null) window.clearTimeout(hoverTimer.current);
+      if (pointerRaf.current !== null) window.cancelAnimationFrame(pointerRaf.current);
     },
     [],
   );
@@ -1069,10 +1091,16 @@ function VisualWorkspace(props: WorkspaceProps) {
       onDoubleClick={focusSelected}
       onPointerMove={(event) => {
         const bounds = event.currentTarget.getBoundingClientRect();
-        setPointer({
+        pendingPointer.current = {
           x: event.clientX - bounds.left,
           y: event.clientY - bounds.top,
-        });
+        };
+        if (pointerRaf.current === null) {
+          pointerRaf.current = window.requestAnimationFrame(() => {
+            pointerRaf.current = null;
+            setPointer(pendingPointer.current);
+          });
+        }
       }}
     >
       <div className="absolute left-4 top-3 z-20 right-4 space-y-2">
@@ -1121,7 +1149,7 @@ function VisualWorkspace(props: WorkspaceProps) {
             selectedId={viewer.selectedId}
             hoveredId={emphasisId}
             isolation={viewer.isolation}
-            visibleLayers={[]}
+            visibleLayers={NO_VISIBLE_LAYERS}
             hiddenIds={hiddenIds}
             displayMode={
               displayLayer === 'mixed' && activeSystem !== 'all'
@@ -1137,16 +1165,7 @@ function VisualWorkspace(props: WorkspaceProps) {
             minDistance={0.18}
             maxDistance={38}
             cameraAnimationDuration={380}
-            appearance={{
-              bodyShellId: '__neutral_shell__',
-              skeletonId: '__neutral_skeleton__',
-              defaultOpacity: 0.72,
-              xrayOpacity: 0.2,
-              ghostOpacity: 0.1,
-              parentContextOpacity: 0.12,
-              hoverEmissiveIntensity: 0.55,
-              selectedEmissiveIntensity: 0.9,
-            }}
+            appearance={vanatomeAppearance}
             onHover={handleHover}
             onSelect={selectStructure}
             onInteractionStart={onCameraInteraction}
