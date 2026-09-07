@@ -141,3 +141,35 @@ ZCode / GLM 跑了两轮夜班，生成了 247 个测试、14 份审计文档、
 ### 推荐我掌握到什么深度
 
 理解"验收 = 独立复跑 + 看 diff + 不轻信声称"，以及"tag 是合并的安全网"即可。
+
+---
+
+## L-005 · 相同版本号不一定代表相同安装内容（2026-09-07）
+
+### 这次发生了什么
+
+`@vixotic/vanatome-react@0.1.6` 的 registry tarball 与机器上旧安装的同版本 bundle
+结构不同，导致依赖旧文本锚点的 postinstall patch 在 fresh install 失败。
+
+### 你应该理解的 1–3 个概念
+
+1. **Version pin 不等于内容永远不变**：正常 registry 不应重发同版本内容，但镜像或
+   上游异常仍可能造成同版本不同内容；lockfile integrity 只保证本次下载匹配锁定内容。
+2. **Contract 比字符串更重要**：新 bundle 已原生保持全局 `maxDistance`，旧 shrink
+   字符串消失不是新的错误；真正仍需修的是 focus effect 的触发条件。
+3. **幂等 patch**：第一次执行应用修复，第二次执行必须成功且文件字节不变；未知或
+   模糊结构则应让 postinstall 非零退出，不能静默声称成功。
+
+### 为什么代码这样设计
+
+patch 脚本先识别并验证 camera contract，再按 current / legacy bundle shape 采用最小
+修改，并在写文件前完成 patch 后不变量检查。
+
+### 如果我以后自己修改，应该从哪里看
+
+`scripts/patch-vanatome-camera.mjs`、`tests/camera-patch-contract.test.ts`，以及
+`.ai-company/tasks/BIO-014.md` 的 fresh-install 证据。
+
+### 推荐我掌握到什么深度
+
+理解"版本号只是线索，最终要验证实际代码结构和行为契约"即可。

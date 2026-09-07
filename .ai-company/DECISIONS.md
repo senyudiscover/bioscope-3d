@@ -25,6 +25,9 @@
 - **Reason**：上游包没有暴露控制 focus 触发条件的 API；直接改 node_modules 是当时可行解。
 - **Impact**：修复"滚轮缩小弹回原位"；但产生**版本耦合风险**（升级上游包可能让 patch 失效，脚本会 loudly throw 提醒）。
 - **Revisit when**：升级 @vixotic/vanatome-react 时，或上游提供官方 focus 控制 API 时（届时应移除 patch）。
+- **BIO-014 update（2026-09-07）**：同版本 0.1.6 曾出现不同 registry bundle shape，
+  因此 patch 改为先验证 camera distance contract 再按 shape 应用。当前 bundle 已原生
+  保持全局 `maxDistance`，仅补 focus-request guard；legacy bundle 保留原修复兼容。
 
 ## D-004 · 模块化架构（BioScopeModule）
 - **Date**：2025-09-01（Codex 引入）

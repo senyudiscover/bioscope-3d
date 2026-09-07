@@ -19,13 +19,15 @@
 
 （无进行中任务）
 
-## READY（待批准后开工）
+## REVIEW
 
 ### BIO-014 · Camera Patch Fresh-Install Reproducibility 修复（P0 维护）
-- **Owner**：Engineer（可派 subagent）+ CTO Review
-- **状态**：READY（CTO 判定 A，已取证复现：fresh `npm ci` postinstall 失败，硬阻塞 fresh clone/新设备/CI/Astra 新环境）
+- **Owner**：Engineer（Codex implementation）+ CTO/DSH Review
+- **状态**：REVIEW（branch `fix/bio-014-camera-patch`；fresh `npm ci`、264 tests、tsc、两条 build、Camera Browser QA 已验证）
 - **Task**：.ai-company/tasks/BIO-014.md
-- **核心**：0.1.6 tarball 已变（新 bundle 无 shrink 锚点）→ 需重写 patch 锚点而非仅锁版；主树 node_modules 暂勿重装
+- **核心**：按 bundle shape 验证并 patch：当前 registry 0.1.6 仅补 focus guard，保留上游原生全局 distance contract；legacy 0.1.6 兼容原 maxDistance 修复；重复执行字节不变
+
+## READY（待批准后开工）
 
 ### BIO-015 · Brain Workbench（独立懒加载模块）
 - **Owner**：Codex（implementation）+ DSH/CTO（Review）；Astra 不参与
