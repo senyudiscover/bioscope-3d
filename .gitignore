@@ -39,6 +39,9 @@ next-env.d.ts
 /outputs/
 /work/
 
-# third-party model assets (Z-Anatomy 1.4.0, self-hosted, fetched from upstream)
-# 见 DECISIONS D-009：模型为第三方 immutable 资产，不纳入 git 历史。
-/local-public/models/
+# third-party model assets are self-hosted and never enter git history.
+# Tracked NOTICE files document attribution beside the ignored binaries.
+/local-public/models/**/*.glb
+
+# Generated from the installed, version-locked Three.js package during npm ci.
+/local-public/vendor/draco/

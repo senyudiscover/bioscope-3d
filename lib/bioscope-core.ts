@@ -53,20 +53,44 @@ export function getAdjacentMechanismSteps<T extends MechanismStep>(
 
 export type ModuleShellProps = {
   moduleSelector: ReactNode;
+  onNavigate: (moduleId: BioScopeModuleId) => void;
 };
 
-export type BioScopeModuleId = 'human-anatomy' | 'photosynthesis';
+export type BioScopeModuleId =
+  | 'human-anatomy'
+  | 'photosynthesis'
+  | 'brain-atlas';
 
 export type BioScopeModule = {
   id: BioScopeModuleId;
   titleZh: string;
   titleEn: string;
   description: string;
-  icon: 'human' | 'microscope';
+  icon: 'human' | 'microscope' | 'brain';
   status: 'stable' | 'experimental';
   defaultKnowledgeNodeId: string;
   component: ComponentType<ModuleShellProps>;
 };
+
+const DEFAULT_MODULE_ID: BioScopeModuleId = 'human-anatomy';
+
+export function getModuleIdFromSearch(search: string): BioScopeModuleId {
+  const candidate = new URLSearchParams(search).get('module');
+  return candidate === 'photosynthesis' || candidate === 'brain-atlas'
+    ? candidate
+    : DEFAULT_MODULE_ID;
+}
+
+export function getSearchForModule(
+  search: string,
+  moduleId: BioScopeModuleId,
+): string {
+  const params = new URLSearchParams(search);
+  if (moduleId === DEFAULT_MODULE_ID) params.delete('module');
+  else params.set('module', moduleId);
+  const serialized = params.toString();
+  return serialized ? `?${serialized}` : '';
+}
 
 export function getParentScene<SceneId extends string>(
   scene: VisualScene<SceneId>,

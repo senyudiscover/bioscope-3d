@@ -1,6 +1,13 @@
+import { lazy } from 'react';
 import { AnatomyWorkbench } from '@/app/anatomy-workbench';
 import { PhotosynthesisWorkbench } from '@/app/photosynthesis-workbench';
 import type { BioScopeModule, BioScopeModuleId } from '@/lib/bioscope-core';
+
+const BrainWorkbench = lazy(() =>
+  import('@/app/brain-workbench').then((module) => ({
+    default: module.BrainWorkbench,
+  })),
+);
 
 export const bioscopeModules: Record<BioScopeModuleId, BioScopeModule> = {
   'human-anatomy': {
@@ -11,8 +18,11 @@ export const bioscopeModules: Record<BioScopeModuleId, BioScopeModule> = {
     icon: 'human',
     status: 'stable',
     defaultKnowledgeNodeId: 'human',
-    component: ({ moduleSelector }) => (
-      <AnatomyWorkbench atlasSwitcher={moduleSelector} />
+    component: ({ moduleSelector, onNavigate }) => (
+      <AnatomyWorkbench
+        atlasSwitcher={moduleSelector}
+        onOpenBrain={() => onNavigate('brain-atlas')}
+      />
     ),
   },
   photosynthesis: {
@@ -25,6 +35,18 @@ export const bioscopeModules: Record<BioScopeModuleId, BioScopeModule> = {
     defaultKnowledgeNodeId: 'photosynthesis',
     component: ({ moduleSelector }) => (
       <PhotosynthesisWorkbench atlasSwitcher={moduleSelector} />
+    ),
+  },
+  'brain-atlas': {
+    id: 'brain-atlas',
+    titleZh: '脑图谱',
+    titleEn: 'Brain Workbench',
+    description: '437 个脑结构的交互式图谱',
+    icon: 'brain',
+    status: 'experimental',
+    defaultKnowledgeNodeId: 'brain',
+    component: ({ moduleSelector }) => (
+      <BrainWorkbench atlasSwitcher={moduleSelector} />
     ),
   },
 };
