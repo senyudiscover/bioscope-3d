@@ -9,9 +9,12 @@ import {
   type ReactNode,
 } from 'react';
 import {
+  createVanatomeHierarchy,
+  getVanatomeDescendantIds,
   VanatomeViewer,
   useVanatomeController,
   type VanatomeAtlas,
+  type VanatomeIsolationState,
   type VanatomeStructure,
 } from '@vixotic/vanatome-react';
 import {
@@ -60,8 +63,29 @@ import {
   getSystemTerm,
 } from '@/lib/anatomy-terminology';
 import { resolvePickCandidates } from '@/lib/picking-manager';
+import {
+  planDeselect,
+  planIsolationToggle,
+  planStructureSelect,
+} from '@/lib/anatomy-interaction-state';
 
 const atlasLoader = createOfficialHumanAtlas();
+// VanatomeViewer 依赖 appearance 的对象 identity 决定是否重跑全模型材质刷新
+// （内部 useEffect → model.traverse 遍历约 984 个 mesh）。内容是静态的，
+// 必须保持稳定引用，否则每次交互渲染都会触发一次全模型 traverse。
+const vanatomeAppearance = {
+  bodyShellId: '__neutral_shell__',
+  skeletonId: '__neutral_skeleton__',
+  defaultOpacity: 0.72,
+  xrayOpacity: 0.2,
+  ghostOpacity: 0.1,
+  parentContextOpacity: 0.12,
+  hoverEmissiveIntensity: 0.55,
+  selectedEmissiveIntensity: 0.9,
+};
+// VanatomeViewer 内部以 identity 判断 visibleLayers 是否变化；内联空数组会让
+// 可见性集合（约 984 项）在每次渲染时全部重建，并连带重跑全模型材质刷新。
+const NO_VISIBLE_LAYERS: string[] = [];
 const systemOrder = [
   'cardiovascular',
   'digestive',
@@ -106,7 +130,6 @@ export function AnatomyWorkbench({
   const [currentNodeId, setCurrentNodeId] = useState('human');
   const [modelContextId, setModelContextId] = useState('human');
   const [knowledgeHistory, setKnowledgeHistory] = useState<string[]>([]);
-  const [focusedId, setFocusedId] = useState<string | null>(null);
   const [cameraLevel, setCameraLevel] = useState<
     'whole' | 'system' | 'structure'
   >('whole');
@@ -141,6 +164,19 @@ export function AnatomyWorkbench({
   const structureMap = useMemo(
     () => new Map(atlas?.structures.map((item) => [item.id, item]) ?? []),
     [atlas],
+  );
+  const structureHierarchy = useMemo(
+    () => (atlas ? createVanatomeHierarchy(atlas.structures) : []),
+    [atlas],
+  );
+  const isolatedBranchIds = useMemo(
+    () =>
+      new Set(
+        viewer.isolation
+          ? getVanatomeDescendantIds(structureHierarchy, viewer.isolation.id)
+          : [],
+      ),
+    [structureHierarchy, viewer.isolation],
   );
   const selectedStructure = viewer.selectedId
     ? structureMap.get(viewer.selectedId)
@@ -204,6 +240,9 @@ export function AnatomyWorkbench({
       queueMicrotask(() => {
         setCameraOwnership('auto');
         selectAtlasStructure(id);
+        setCameraLevel(
+          structureMap.get(id)?.kind === 'system' ? 'system' : 'structure',
+        );
         const initNodeId =
           id === 'heart' || id.startsWith('heart-') ? 'heart' : `model:${id}`;
         setCurrentNodeId(initNodeId);
@@ -214,14 +253,34 @@ export function AnatomyWorkbench({
       });
   }, [atlas, selectAtlasStructure, structureMap]);
 
+  const applyIsolationPlan = useCallback(
+    (next: VanatomeIsolationState | null) => {
+      if (
+        (next?.id ?? null) === (viewer.isolation?.id ?? null) &&
+        (next?.mode ?? null) === (viewer.isolation?.mode ?? null)
+      )
+        return;
+      viewer.isolate(next ? next.id : null, next?.mode);
+    },
+    [viewer],
+  );
+
   const selectStructure = useCallback(
     (id: string | null) => {
-      if (id) setCameraOwnership('auto');
-      selectAtlasStructure(id);
       const url = new URL(window.location.href);
       if (id) {
         const structure = structureMap.get(id);
-        setCameraLevel(structure?.kind === 'system' ? 'system' : 'structure');
+        const plan = planStructureSelect({
+          kind: structure?.kind,
+          isolation: viewer.isolation,
+          withinIsolatedBranch: isolatedBranchIds.has(id),
+        });
+        // 先退出旧 isolation，再完成新的 selection / focus：
+        // 分支外选择若保留隔离，新结构不可见、相机拒绝构图。
+        applyIsolationPlan(plan.isolation);
+        setCameraOwnership('auto');
+        selectAtlasStructure(id);
+        setCameraLevel(plan.cameraLevel);
         url.searchParams.set('anatomy', id);
         const nodeId =
           id === 'heart' || id.startsWith('heart-') ? 'heart' : `model:${id}`;
@@ -231,14 +290,25 @@ export function AnatomyWorkbench({
           setExpandedSystems((value) => new Set(value).add(structure.system));
         }
       } else {
-        setCameraLevel('whole');
+        // 解除选择本身不移动相机：isolation 必须随之退出（其全部管理入口
+        // 都以选中为前提，残留即死局）；cameraLevel 保持不变，不得谎报 WHOLE BODY。
+        if (planDeselect({ isolation: viewer.isolation }).exitIsolation) {
+          applyIsolationPlan(null);
+        }
+        selectAtlasStructure(null);
         url.searchParams.delete('anatomy');
         setCurrentNodeId('human');
         setModelContextId('human');
       }
       window.history.replaceState({}, '', url);
     },
-    [selectAtlasStructure, structureMap],
+    [
+      applyIsolationPlan,
+      isolatedBranchIds,
+      selectAtlasStructure,
+      structureMap,
+      viewer.isolation,
+    ],
   );
 
   useEffect(() => {
@@ -324,7 +394,6 @@ export function AnatomyWorkbench({
     if (viewer.selectedId) {
       setCameraOwnership('auto');
       viewer.focus();
-      setFocusedId(viewer.selectedId);
       setCameraLevel(
         structureMap.get(viewer.selectedId)?.kind === 'system'
           ? 'system'
@@ -337,6 +406,17 @@ export function AnatomyWorkbench({
       setHiddenIds((ids) => [...new Set([...ids, viewer.selectedId!])]);
       selectStructure(null);
     }
+  };
+  // 保留语境 / 隔离按钮：同一结构重复同一模式 = 退出该隔离（显式开关语义）。
+  const toggleIsolation = (mode: 'selected' | 'parent-context') => {
+    if (!selectedStructure) return;
+    const plan = planIsolationToggle({
+      selectedId: viewer.selectedId,
+      isolation: viewer.isolation,
+      id: selectedStructure.id,
+      mode,
+    });
+    applyIsolationPlan(plan.isolation);
   };
   const changeSystem = (system: AnatomySystemFilter) => {
     setActiveSystem(system);
@@ -424,7 +504,6 @@ export function AnatomyWorkbench({
     setDisplayLayer('mixed');
     setActiveSystem('all');
     setHoveredId(null);
-    setFocusedId(null);
     setCameraLevel('whole');
     setCameraOwnership('auto');
     setCandidateIds([]);
@@ -454,7 +533,7 @@ export function AnatomyWorkbench({
         cameraLevel={cameraLevel}
         returnToSystem={changeSystem}
       />
-      <div className="grid min-h-0 flex-1 grid-cols-1 grid-rows-[auto_auto_auto_auto] lg:grid-cols-[270px_minmax(460px,1fr)_350px] lg:grid-rows-[minmax(0,1fr)_96px]">
+      <div className="grid min-h-0 flex-1 grid-cols-1 grid-rows-[auto_auto_auto_auto] lg:grid-cols-[270px_minmax(300px,1fr)_350px] lg:grid-rows-[minmax(0,1fr)_96px] xl:grid-cols-[270px_minmax(460px,1fr)_350px]">
         <ExplorerPanel
           systems={systems}
           structuresBySystem={structuresBySystem}
@@ -496,7 +575,7 @@ export function AnatomyWorkbench({
           restoreHidden={() => setHiddenIds([])}
           reset={resetAll}
           retry={retryAtlas}
-          focusedId={focusedId}
+          toggleIsolation={toggleIsolation}
           candidateIds={candidateIds}
           resolvePick={resolveModelPick}
           structureMap={structureMap}
@@ -505,6 +584,8 @@ export function AnatomyWorkbench({
             selectStructure(id);
           }}
           dismissCandidates={() => setCandidateIds([])}
+          fadeActive={viewer.isolation?.mode === 'parent-context'}
+          isolateActive={viewer.isolation?.mode === 'selected'}
         />
         <KnowledgePanel
           node={currentNode}
@@ -520,10 +601,8 @@ export function AnatomyWorkbench({
           chooseNode={chooseKnowledgeNode}
           goBack={goBackKnowledge}
           focusSelected={focusSelected}
-          isolate={() =>
-            selectedStructure &&
-            viewer.isolate(selectedStructure.id, 'parent-context')
-          }
+          isolate={() => toggleIsolation('parent-context')}
+          fadeActive={viewer.isolation?.mode === 'parent-context'}
         />
         <RelatedKnowledgeDock
           node={currentNode}
@@ -929,8 +1008,10 @@ type WorkspaceProps = {
   restoreHidden: () => void;
   reset: () => void;
   retry: () => void;
-  focusedId: string | null;
+  toggleIsolation: (mode: 'selected' | 'parent-context') => void;
   candidateIds: string[];
+  fadeActive: boolean;
+  isolateActive: boolean;
   resolvePick: (id: string | null) => ReturnType<typeof resolvePickCandidates>;
   structureMap: Map<string, VanatomeStructure>;
   chooseCandidate: (id: string) => void;
@@ -965,7 +1046,10 @@ function VisualWorkspace(props: WorkspaceProps) {
     restoreHidden,
     reset,
     retry,
+    toggleIsolation,
     candidateIds,
+    fadeActive,
+    isolateActive,
     resolvePick,
     structureMap,
     chooseCandidate,
@@ -981,9 +1065,15 @@ function VisualWorkspace(props: WorkspaceProps) {
     hoveredStructure?.id ?? (displayLayer === 'mixed' ? systemRootId : null);
   const hoverTimer = useRef<number | null>(null);
   const [pointer, setPointer] = useState({ x: 36, y: 150 });
+  // 悬停提示 / 候选菜单只需要每帧一次位置更新；pointermove 事件频率可远高于
+  // 刷新率，直接 setState 会让整个 VisualWorkspace（含 3D 子树协调）按输入
+  // 频率重渲染。坐标先进 ref，rAF 合并为每帧最多一次渲染。
+  const pendingPointer = useRef({ x: 36, y: 150 });
+  const pointerRaf = useRef<number | null>(null);
   useEffect(
     () => () => {
       if (hoverTimer.current !== null) window.clearTimeout(hoverTimer.current);
+      if (pointerRaf.current !== null) window.cancelAnimationFrame(pointerRaf.current);
     },
     [],
   );
@@ -1001,10 +1091,16 @@ function VisualWorkspace(props: WorkspaceProps) {
       onDoubleClick={focusSelected}
       onPointerMove={(event) => {
         const bounds = event.currentTarget.getBoundingClientRect();
-        setPointer({
+        pendingPointer.current = {
           x: event.clientX - bounds.left,
           y: event.clientY - bounds.top,
-        });
+        };
+        if (pointerRaf.current === null) {
+          pointerRaf.current = window.requestAnimationFrame(() => {
+            pointerRaf.current = null;
+            setPointer(pendingPointer.current);
+          });
+        }
       }}
     >
       <div className="absolute left-4 top-3 z-20 right-4 space-y-2">
@@ -1053,7 +1149,7 @@ function VisualWorkspace(props: WorkspaceProps) {
             selectedId={viewer.selectedId}
             hoveredId={emphasisId}
             isolation={viewer.isolation}
-            visibleLayers={[]}
+            visibleLayers={NO_VISIBLE_LAYERS}
             hiddenIds={hiddenIds}
             displayMode={
               displayLayer === 'mixed' && activeSystem !== 'all'
@@ -1069,16 +1165,7 @@ function VisualWorkspace(props: WorkspaceProps) {
             minDistance={0.18}
             maxDistance={38}
             cameraAnimationDuration={380}
-            appearance={{
-              bodyShellId: '__neutral_shell__',
-              skeletonId: '__neutral_skeleton__',
-              defaultOpacity: 0.72,
-              xrayOpacity: 0.2,
-              ghostOpacity: 0.1,
-              parentContextOpacity: 0.12,
-              hoverEmissiveIntensity: 0.55,
-              selectedEmissiveIntensity: 0.9,
-            }}
+            appearance={vanatomeAppearance}
             onHover={handleHover}
             onSelect={selectStructure}
             onInteractionStart={onCameraInteraction}
@@ -1133,15 +1220,11 @@ function VisualWorkspace(props: WorkspaceProps) {
         <ViewerControls
           selected={!!selectedStructure}
           hidden={hiddenIds.length > 0}
+          fadeActive={fadeActive}
+          isolateActive={isolateActive}
           focus={focusSelected}
-          fade={() =>
-            selectedStructure &&
-            viewer.isolate(selectedStructure.id, 'parent-context')
-          }
-          isolate={() =>
-            selectedStructure &&
-            viewer.isolate(selectedStructure.id, 'selected')
-          }
+          fade={() => toggleIsolation('parent-context')}
+          isolate={() => toggleIsolation('selected')}
           hide={hideSelected}
           restore={restoreHidden}
           reset={reset}
@@ -1255,6 +1338,8 @@ function CandidateMenu({
 function ViewerControls({
   selected,
   hidden,
+  fadeActive,
+  isolateActive,
   focus,
   fade,
   isolate,
@@ -1264,6 +1349,8 @@ function ViewerControls({
 }: {
   selected: boolean;
   hidden: boolean;
+  fadeActive: boolean;
+  isolateActive: boolean;
   focus: () => void;
   fade: () => void;
   isolate: () => void;
@@ -1277,11 +1364,31 @@ function ViewerControls({
         <Focus />
         聚焦
       </Button>
-      <Button variant="ghost" size="sm" onClick={fade} disabled={!selected}>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={fade}
+        disabled={!selected}
+        aria-pressed={fadeActive}
+        className={cn(
+          fadeActive &&
+            'bg-coral/15 text-coral ring-1 ring-coral/50 hover:bg-coral/25 hover:text-coral',
+        )}
+      >
         <Sparkles />
         保留语境
       </Button>
-      <Button variant="ghost" size="sm" onClick={isolate} disabled={!selected}>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={isolate}
+        disabled={!selected}
+        aria-pressed={isolateActive}
+        className={cn(
+          isolateActive &&
+            'bg-coral/15 text-coral ring-1 ring-coral/50 hover:bg-coral/25 hover:text-coral',
+        )}
+      >
         <Box />
         隔离
       </Button>
@@ -1322,6 +1429,7 @@ function KnowledgePanel({
   goBack,
   focusSelected,
   isolate,
+  fadeActive,
 }: {
   node: KnowledgeNode;
   modelContextNode: KnowledgeNode;
@@ -1334,6 +1442,7 @@ function KnowledgePanel({
   goBack: () => void;
   focusSelected: () => void;
   isolate: () => void;
+  fadeActive: boolean;
 }) {
   return (
     <aside className="order-3 flex min-h-[600px] flex-col border-t border-white/10 lg:min-h-0 lg:border-l lg:border-t-0">
@@ -1341,9 +1450,13 @@ function KnowledgePanel({
         <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-coral">
           03 / Knowledge
         </p>
-        <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">
-          {node.nameZh}
-        </h2>
+        <div
+          key={node.id}
+          className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-300"
+        >
+          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">
+            {node.nameZh}
+          </h2>
         <p className="mt-1 text-[10px] tracking-[0.1em] text-zinc-600">
           {node.nameEn}
         </p>
@@ -1357,7 +1470,12 @@ function KnowledgePanel({
               <Focus />
               Focus
             </Button>
-            <Button variant="outline" size="sm" onClick={isolate}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={isolate}
+              aria-pressed={fadeActive}
+            >
               <Sparkles />
               Fade context
             </Button>
@@ -1400,9 +1518,13 @@ function KnowledgePanel({
             </span>
           </div>
         )}
+        </div>
       </div>
       <ScrollArea className="min-h-0 flex-1">
-        <div className="p-5">
+        <div
+          key={node.id}
+          className="p-5 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-300"
+        >
           <KnowledgeSection index="01" title="WHAT IS IT?" zh="它是什么？">
             <p>{node.summary}</p>
           </KnowledgeSection>
