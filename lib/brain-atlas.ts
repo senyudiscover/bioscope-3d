@@ -198,7 +198,9 @@ export function getBrainAppearance(
  *   2. Hiding the category of the currently selected structure clears the
  *      selection and resets isolateSelected + fadeOthers.
  *   3. Isolate / Fade toggles are no-ops without a visible selection.
- *   4. Every action normalizes toward I1-I3, so even an adversarially
+ *   4. select(null) clears the selection AND disarms Fade/Isolate, so a mode
+ *      never survives without a selected structure.
+ *   5. Every action normalizes toward I1-I3, so even an adversarially
  *      constructed state cannot produce a selected-but-invisible structure.
  */
 
@@ -240,7 +242,16 @@ export function reduceBrainVisualState(
 ): BrainVisualState {
   switch (action.type) {
     case 'select': {
-      if (action.id === null) return { ...state, selectedId: null };
+      if (action.id === null) {
+        // Clearing the selection must disarm Fade/Isolate: a mode without a
+        // selected structure would violate "mode ⇒ visible selection" (I2).
+        return {
+          ...state,
+          selectedId: null,
+          fadeOthers: false,
+          isolateSelected: false,
+        };
+      }
       return revealSelectionCategory(
         { ...state, selectedId: action.id },
         nodesById,
