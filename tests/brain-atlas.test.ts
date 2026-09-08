@@ -339,6 +339,38 @@ describe('Brain interaction state reducer contract (BIO-015 pre-merge fixes)', (
     expect(countVisible(faded)).toBeGreaterThan(0);
   });
 
+  it('A: select → fade → select(null) clears selection and disarms fade', () => {
+    let state = reduce(createInitialBrainVisualState(), {
+      type: 'select',
+      id: cortex.id,
+    });
+    state = reduce(state, { type: 'toggle-fade' });
+    expect(state.fadeOthers).toBe(true);
+    const hiddenBefore = new Set(state.hiddenCategories);
+    const opacityBefore = state.cortexOpacity;
+    state = reduce(state, { type: 'select', id: null });
+    expect(state.selectedId).toBeNull();
+    expect(state.fadeOthers).toBe(false);
+    expect(state.isolateSelected).toBe(false);
+    expect(state.hiddenCategories).toEqual(hiddenBefore);
+    expect(state.cortexOpacity).toBe(opacityBefore);
+  });
+
+  it('B: select → isolate → select(null) clears selection and disarms isolate', () => {
+    let state = reduce(createInitialBrainVisualState(), {
+      type: 'select',
+      id: cortex.id,
+    });
+    state = reduce(state, { type: 'toggle-isolate' });
+    expect(state.isolateSelected).toBe(true);
+    const hiddenBefore = new Set(state.hiddenCategories);
+    state = reduce(state, { type: 'select', id: null });
+    expect(state.selectedId).toBeNull();
+    expect(state.isolateSelected).toBe(false);
+    expect(state.fadeOthers).toBe(false);
+    expect(state.hiddenCategories).toEqual(hiddenBefore);
+  });
+
   it('E: property — isolateSelected ⇒ selected visible, scene keeps exactly it, for all 437 structures', () => {
     for (const node of manifest.nodes) {
       let state = reduce(createInitialBrainVisualState(), {
@@ -354,14 +386,17 @@ describe('Brain interaction state reducer contract (BIO-015 pre-merge fixes)', (
     }
   });
 
-  it('E2: deterministic walk keeps I1-I3 after every action', () => {
+  it('E2: deterministic walk keeps I1-I3 after every action (incl. select(null))', () => {
     const categories = Object.keys(manifest.categories);
     let state = createInitialBrainVisualState();
     for (let i = 0; i < 400; i += 1) {
       const pick = i % 4;
       const action: BrainVisualAction =
         pick === 0
-          ? { type: 'select', id: (i * 37) % BRAIN_STRUCTURE_COUNT }
+          ? {
+              type: 'select',
+              id: i % 8 === 7 ? null : (i * 37) % BRAIN_STRUCTURE_COUNT,
+            }
           : pick === 1
             ? {
                 type: 'toggle-category',
@@ -376,6 +411,13 @@ describe('Brain interaction state reducer contract (BIO-015 pre-merge fixes)', (
         expect(state.hiddenCategories.has(selectedNode.category)).toBe(false);
         expect(getBrainAppearance(selectedNode, state).visible).toBe(true);
         expect(countVisible(state)).toBeGreaterThan(0);
+      }
+      // C: any armed mode requires a live, visible selection (I2).
+      if (state.fadeOthers || state.isolateSelected) {
+        expect(state.selectedId).not.toBeNull();
+        const selectedNode = byId.get(state.selectedId!)!;
+        expect(state.hiddenCategories.has(selectedNode.category)).toBe(false);
+        expect(getBrainAppearance(selectedNode, state).visible).toBe(true);
       }
       if (state.isolateSelected) {
         const selectedNode = byId.get(state.selectedId!)!;
