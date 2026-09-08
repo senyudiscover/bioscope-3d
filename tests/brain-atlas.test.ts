@@ -2,15 +2,18 @@ import { describe, expect, it } from 'vitest';
 import manifestJson from '@/data/brain/manifest.json';
 import {
   BRAIN_STRUCTURE_COUNT,
+  createInitialBrainVisualState,
   DEFAULT_HIDDEN_BRAIN_CATEGORIES,
   filterBrainNodes,
   findBrainMetadataOwner,
   getBrainAppearance,
   getBrainExplodePhases,
   getBrainStructureId,
+  reduceBrainVisualState,
   resolveBrainExplodeOffset,
   validateBrainManifest,
   type BrainManifest,
+  type BrainVisualAction,
   type BrainVisualState,
 } from '@/lib/brain-atlas';
 
@@ -146,7 +149,7 @@ describe('Brain visibility interaction contract', () => {
     });
   });
 
-  it('classification filtering takes precedence over selection', () => {
+  it('hides a hidden-category structure even when selected (appearance layer; the state reducer makes this state unreachable)', () => {
     expect(
       getBrainAppearance(cortex, {
         ...baseVisualState,
@@ -213,6 +216,196 @@ describe('Brain hierarchical explode contract', () => {
   it('is deterministic for the same cached plan and slider value', () => {
     expect(resolveBrainExplodeOffset(offset, 67)).toEqual(
       resolveBrainExplodeOffset(offset, 67),
+    );
+  });
+});
+
+describe('Brain interaction state reducer contract (BIO-015 pre-merge fixes)', () => {
+  const reduce = (state: BrainVisualState, action: BrainVisualAction) =>
+    reduceBrainVisualState(state, action, byId);
+  const countVisible = (state: BrainVisualState) =>
+    manifest.nodes.filter((node) => getBrainAppearance(node, state).visible)
+      .length;
+  const cortex = byId.get(284)!;
+  const caudate = byId.get(49)!;
+
+  it('A: selecting a structure of a hidden category auto-shows that category', () => {
+    const hiddenNode = manifest.nodes.find((node) =>
+      (DEFAULT_HIDDEN_BRAIN_CATEGORIES as readonly string[]).includes(
+        node.category,
+      ),
+    )!;
+    const state = createInitialBrainVisualState();
+    expect(state.hiddenCategories.has(hiddenNode.category)).toBe(true);
+    const next = reduce(state, { type: 'select', id: hiddenNode.id });
+    expect(next.selectedId).toBe(hiddenNode.id);
+    expect(next.hiddenCategories.has(hiddenNode.category)).toBe(false);
+    expect(getBrainAppearance(hiddenNode, next).visible).toBe(true);
+  });
+
+  it('B: hiding the selected structure category clears selection, isolate and fade', () => {
+    let state = reduce(createInitialBrainVisualState(), {
+      type: 'select',
+      id: cortex.id,
+    });
+    state = reduce(state, { type: 'toggle-isolate' });
+    state = reduce(state, { type: 'toggle-fade' });
+    expect(state.selectedId).toBe(cortex.id);
+    expect(state.isolateSelected).toBe(false);
+    expect(state.fadeOthers).toBe(true);
+    state = reduce(state, {
+      type: 'toggle-category',
+      category: cortex.category,
+    });
+    expect(state.selectedId).toBeNull();
+    expect(state.isolateSelected).toBe(false);
+    expect(state.fadeOthers).toBe(false);
+    expect(state.hiddenCategories.has(cortex.category)).toBe(true);
+  });
+
+  it('B2: same clear rule applies with isolate still active', () => {
+    let state = reduce(createInitialBrainVisualState(), {
+      type: 'select',
+      id: caudate.id,
+    });
+    state = reduce(state, { type: 'toggle-isolate' });
+    expect(state.isolateSelected).toBe(true);
+    state = reduce(state, {
+      type: 'toggle-category',
+      category: caudate.category,
+    });
+    expect(state.selectedId).toBeNull();
+    expect(state.isolateSelected).toBe(false);
+    expect(state.fadeOthers).toBe(false);
+    expect(countVisible(state)).toBeGreaterThan(0);
+  });
+
+  it('C: pre-fix repro never reaches an empty scene under isolate', () => {
+    let state = reduce(createInitialBrainVisualState(), {
+      type: 'select',
+      id: cortex.id,
+    });
+    state = reduce(state, {
+      type: 'toggle-category',
+      category: cortex.category,
+    });
+    state = reduce(state, { type: 'toggle-isolate' });
+    expect(state.selectedId).toBeNull();
+    expect(state.isolateSelected).toBe(false);
+    expect(countVisible(state)).toBeGreaterThan(0);
+  });
+
+  it('C2: adversarial hidden-selected + isolate is normalized on mode toggle', () => {
+    const adversarial: BrainVisualState = {
+      selectedId: cortex.id,
+      hiddenCategories: new Set([cortex.category]),
+      fadeOthers: false,
+      isolateSelected: true,
+      cortexOpacity: 0.38,
+    };
+    const off = reduce(adversarial, { type: 'toggle-isolate' });
+    expect(off.isolateSelected).toBe(false);
+    const on = reduce(off, { type: 'toggle-isolate' });
+    expect(on.isolateSelected).toBe(true);
+    expect(on.hiddenCategories.has(cortex.category)).toBe(false);
+    expect(getBrainAppearance(cortex, on).visible).toBe(true);
+    expect(countVisible(on)).toBe(1);
+  });
+
+  it('D: hidden selected structure cannot contradict fade', () => {
+    let state = reduce(createInitialBrainVisualState(), {
+      type: 'select',
+      id: cortex.id,
+    });
+    state = reduce(state, {
+      type: 'toggle-category',
+      category: cortex.category,
+    });
+    state = reduce(state, { type: 'toggle-fade' });
+    expect(state.selectedId).toBeNull();
+    expect(state.fadeOthers).toBe(false);
+    const adversarial: BrainVisualState = {
+      selectedId: caudate.id,
+      hiddenCategories: new Set([caudate.category]),
+      fadeOthers: false,
+      isolateSelected: false,
+      cortexOpacity: 0.38,
+    };
+    const faded = reduce(adversarial, { type: 'toggle-fade' });
+    expect(faded.selectedId).toBe(caudate.id);
+    expect(faded.fadeOthers).toBe(true);
+    expect(faded.hiddenCategories.has(caudate.category)).toBe(false);
+    expect(getBrainAppearance(caudate, faded).visible).toBe(true);
+    expect(countVisible(faded)).toBeGreaterThan(0);
+  });
+
+  it('E: property — isolateSelected ⇒ selected visible, scene keeps exactly it, for all 437 structures', () => {
+    for (const node of manifest.nodes) {
+      let state = reduce(createInitialBrainVisualState(), {
+        type: 'select',
+        id: node.id,
+      });
+      expect(state.selectedId).toBe(node.id);
+      expect(state.hiddenCategories.has(node.category)).toBe(false);
+      state = reduce(state, { type: 'toggle-isolate' });
+      expect(state.isolateSelected).toBe(true);
+      expect(getBrainAppearance(node, state).visible).toBe(true);
+      expect(countVisible(state)).toBe(1);
+    }
+  });
+
+  it('E2: deterministic walk keeps I1-I3 after every action', () => {
+    const categories = Object.keys(manifest.categories);
+    let state = createInitialBrainVisualState();
+    for (let i = 0; i < 400; i += 1) {
+      const pick = i % 4;
+      const action: BrainVisualAction =
+        pick === 0
+          ? { type: 'select', id: (i * 37) % BRAIN_STRUCTURE_COUNT }
+          : pick === 1
+            ? {
+                type: 'toggle-category',
+                category: categories[i % categories.length],
+              }
+            : pick === 2
+              ? { type: 'toggle-isolate' }
+              : { type: 'toggle-fade' };
+      state = reduce(state, action);
+      if (state.selectedId !== null) {
+        const selectedNode = byId.get(state.selectedId)!;
+        expect(state.hiddenCategories.has(selectedNode.category)).toBe(false);
+        expect(getBrainAppearance(selectedNode, state).visible).toBe(true);
+        expect(countVisible(state)).toBeGreaterThan(0);
+      }
+      if (state.isolateSelected) {
+        const selectedNode = byId.get(state.selectedId!)!;
+        expect(getBrainAppearance(selectedNode, state).visible).toBe(true);
+        expect(countVisible(state)).toBe(1);
+      }
+    }
+  });
+
+  it('clamps cortex opacity into the pickable range and reset restores defaults', () => {
+    expect(
+      reduce(createInitialBrainVisualState(), {
+        type: 'set-cortex-opacity',
+        value: 0,
+      }).cortexOpacity,
+    ).toBe(0.1);
+    expect(
+      reduce(createInitialBrainVisualState(), {
+        type: 'set-cortex-opacity',
+        value: 2,
+      }).cortexOpacity,
+    ).toBe(1);
+    let state = reduce(createInitialBrainVisualState(), {
+      type: 'select',
+      id: caudate.id,
+    });
+    state = reduce(state, { type: 'toggle-isolate' });
+    state = reduce(state, { type: 'set-cortex-opacity', value: 0.9 });
+    expect(reduce(state, { type: 'reset' })).toEqual(
+      createInitialBrainVisualState(),
     );
   });
 });
