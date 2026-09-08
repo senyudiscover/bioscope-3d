@@ -108,7 +108,8 @@ const displayStructure = (structure: VanatomeStructure) =>
 
 export function AnatomyWorkbench({
   atlasSwitcher,
-}: { atlasSwitcher?: ReactNode } = {}) {
+  onOpenBrain,
+}: { atlasSwitcher?: ReactNode; onOpenBrain?: () => void } = {}) {
   const viewer = useVanatomeController([]);
   const [atlas, setAtlas] = useState<VanatomeAtlas | null>(null);
   const [catalog, setCatalog] = useState<AtlasCatalog | null>(null);
@@ -603,6 +604,7 @@ export function AnatomyWorkbench({
           focusSelected={focusSelected}
           isolate={() => toggleIsolation('parent-context')}
           fadeActive={viewer.isolation?.mode === 'parent-context'}
+          onOpenBrain={onOpenBrain}
         />
         <RelatedKnowledgeDock
           node={currentNode}
@@ -1073,7 +1075,8 @@ function VisualWorkspace(props: WorkspaceProps) {
   useEffect(
     () => () => {
       if (hoverTimer.current !== null) window.clearTimeout(hoverTimer.current);
-      if (pointerRaf.current !== null) window.cancelAnimationFrame(pointerRaf.current);
+      if (pointerRaf.current !== null)
+        window.cancelAnimationFrame(pointerRaf.current);
     },
     [],
   );
@@ -1430,6 +1433,7 @@ function KnowledgePanel({
   focusSelected,
   isolate,
   fadeActive,
+  onOpenBrain,
 }: {
   node: KnowledgeNode;
   modelContextNode: KnowledgeNode;
@@ -1443,6 +1447,7 @@ function KnowledgePanel({
   focusSelected: () => void;
   isolate: () => void;
   fadeActive: boolean;
+  onOpenBrain?: () => void;
 }) {
   return (
     <aside className="order-3 flex min-h-[600px] flex-col border-t border-white/10 lg:min-h-0 lg:border-l lg:border-t-0">
@@ -1457,67 +1462,67 @@ function KnowledgePanel({
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">
             {node.nameZh}
           </h2>
-        <p className="mt-1 text-[10px] tracking-[0.1em] text-zinc-600">
-          {node.nameEn}
-        </p>
-        <p className="mt-2 text-xs text-zinc-500">
-          {node.typeZh} · {node.typeEn}
-          {node.system ? `　${displaySystem(node.system)}` : ''}
-        </p>
-        {primaryModelStructureId(node) && (
-          <div className="mt-3 flex gap-2">
-            <Button variant="outline" size="sm" onClick={focusSelected}>
-              <Focus />
-              Focus
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={isolate}
-              aria-pressed={fadeActive}
-            >
-              <Sparkles />
-              Fade context
-            </Button>
-          </div>
-        )}
-        {hasModelContext && modelContextNode.id !== node.id && (
-          <div className="mt-3 rounded-lg border border-coral/25 bg-coral/[0.04] px-3 py-2">
-            <p className="text-[9px] tracking-[0.12em] text-coral">
-              当前模型语境
-            </p>
-            <div className="mt-1 flex items-center justify-between gap-2">
-              <span className="text-xs text-zinc-200">
-                {modelContextNode.nameZh}
-              </span>
+          <p className="mt-1 text-[10px] tracking-[0.1em] text-zinc-600">
+            {node.nameEn}
+          </p>
+          <p className="mt-2 text-xs text-zinc-500">
+            {node.typeZh} · {node.typeEn}
+            {node.system ? `　${displaySystem(node.system)}` : ''}
+          </p>
+          {primaryModelStructureId(node) && (
+            <div className="mt-3 flex gap-2">
+              <Button variant="outline" size="sm" onClick={focusSelected}>
+                <Focus />
+                Focus
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={isolate}
+                aria-pressed={fadeActive}
+              >
+                <Sparkles />
+                Fade context
+              </Button>
+            </div>
+          )}
+          {hasModelContext && modelContextNode.id !== node.id && (
+            <div className="mt-3 rounded-lg border border-coral/25 bg-coral/[0.04] px-3 py-2">
+              <p className="text-[9px] tracking-[0.12em] text-coral">
+                当前模型语境
+              </p>
+              <div className="mt-1 flex items-center justify-between gap-2">
+                <span className="text-xs text-zinc-200">
+                  {modelContextNode.nameZh}
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => chooseNode(modelContextNode.id)}
+                  className="shrink-0 text-[10px]"
+                >
+                  返回{modelContextNode.nameZh}
+                </Button>
+              </div>
+            </div>
+          )}
+          {history.length > 0 && (
+            <div className="mt-3 flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => chooseNode(modelContextNode.id)}
-                className="shrink-0 text-[10px]"
+                onClick={goBack}
+                className="text-[10px]"
               >
-                返回{modelContextNode.nameZh}
+                <ChevronRight className="size-3 rotate-180" />
+                返回
               </Button>
+              <span className="truncate text-[10px] text-zinc-600">
+                {knowledgeNodes[history[history.length - 1]]?.nameZh ??
+                  '上一知识'}
+              </span>
             </div>
-          </div>
-        )}
-        {history.length > 0 && (
-          <div className="mt-3 flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={goBack}
-              className="text-[10px]"
-            >
-              <ChevronRight className="size-3 rotate-180" />
-              返回
-            </Button>
-            <span className="truncate text-[10px] text-zinc-600">
-              {knowledgeNodes[history[history.length - 1]]?.nameZh ??
-                '上一知识'}
-            </span>
-          </div>
-        )}
+          )}
         </div>
       </div>
       <ScrollArea className="min-h-0 flex-1">
@@ -1658,18 +1663,33 @@ function KnowledgePanel({
               })}
             </section>
           )}
-          <button
-            type="button"
-            disabled
-            className="mt-5 w-full cursor-not-allowed rounded-lg border border-dashed border-white/10 px-3 py-3 text-left"
-          >
-            <span className="block text-xs text-zinc-500">
-              深入下一尺度 · Explore deeper
-            </span>
-            <span className="mt-1 block text-[10px] text-zinc-700">
-              该尺度模型尚未加入
-            </span>
-          </button>
+          {node.id === 'brain' && onOpenBrain ? (
+            <button
+              type="button"
+              onClick={onOpenBrain}
+              className="mt-5 w-full rounded-lg border border-coral/30 bg-coral/[0.05] px-3 py-3 text-left transition-colors hover:bg-coral/10"
+            >
+              <span className="block text-xs text-coral">
+                进入脑图谱 · Open Brain Workbench
+              </span>
+              <span className="mt-1 block text-[10px] text-zinc-500">
+                独立加载 437 个脑结构
+              </span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              disabled
+              className="mt-5 w-full cursor-not-allowed rounded-lg border border-dashed border-white/10 px-3 py-3 text-left"
+            >
+              <span className="block text-xs text-zinc-500">
+                深入下一尺度 · Explore deeper
+              </span>
+              <span className="mt-1 block text-[10px] text-zinc-700">
+                该尺度模型尚未加入
+              </span>
+            </button>
+          )}
           <LicenseNote provenance={provenance} />
         </div>
       </ScrollArea>

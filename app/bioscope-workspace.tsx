@@ -1,8 +1,13 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
 import { bioscopeModuleList, bioscopeModules } from '@/data/modules/registry';
-import type { BioScopeModuleId, ModuleContext } from '@/lib/bioscope-core';
+import {
+  getModuleIdFromSearch,
+  getSearchForModule,
+  type BioScopeModuleId,
+  type ModuleContext,
+} from '@/lib/bioscope-core';
 
 function AtlasSwitcher({
   value,
@@ -46,15 +51,27 @@ export function BioScopeWorkspace() {
   const [moduleContext, setModuleContext] = useState<ModuleContext>({
     moduleId: 'human-anatomy',
   });
+  useEffect(() => {
+    const syncFromLocation = () =>
+      setModuleContext({ moduleId: getModuleIdFromSearch(location.search) });
+    syncFromLocation();
+    window.addEventListener('popstate', syncFromLocation);
+    return () => window.removeEventListener('popstate', syncFromLocation);
+  }, []);
+
+  const navigate = useCallback((moduleId: BioScopeModuleId) => {
+    const search = getSearchForModule(location.search, moduleId);
+    history.pushState(
+      null,
+      '',
+      `${location.pathname}${search}${location.hash}`,
+    );
+    setModuleContext({ moduleId });
+  }, []);
   const activeModule = bioscopeModules[moduleContext.moduleId];
   const moduleSelector = useMemo(
-    () => (
-      <AtlasSwitcher
-        value={moduleContext.moduleId}
-        onChange={(moduleId) => setModuleContext({ moduleId })}
-      />
-    ),
-    [moduleContext.moduleId],
+    () => <AtlasSwitcher value={moduleContext.moduleId} onChange={navigate} />,
+    [moduleContext.moduleId, navigate],
   );
   const ActiveModule = activeModule.component;
 
@@ -64,7 +81,15 @@ export function BioScopeWorkspace() {
       key={moduleContext.moduleId}
       className="motion-safe:animate-in motion-safe:fade-in motion-safe:duration-300"
     >
-      <ActiveModule moduleSelector={moduleSelector} />
+      <Suspense
+        fallback={
+          <div className="grid h-dvh place-items-center bg-[#09080d] font-mono text-xs tracking-[0.14em] text-zinc-500">
+            LOADING WORKBENCH…
+          </div>
+        }
+      >
+        <ActiveModule moduleSelector={moduleSelector} onNavigate={navigate} />
+      </Suspense>
     </div>
   );
 }

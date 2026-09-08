@@ -10,11 +10,12 @@
 
 ## 当前模块
 
-| 模块 | 状态 | 说明 |
-|---|---|---|
-| 人体解剖（human-anatomy） | stable | 完整人体模型，系统/显示层筛选，picking，知识卡 |
-| 光合作用（photosynthesis） | BETA | 叶肉细胞→叶绿体→类囊体膜，机制动画未实现 |
-| 旧植物（plant-workbench） | FROZEN | 已冻结，仅阅读参考，不开发不删除 |
+| 模块                       | 状态   | 说明                                           |
+| -------------------------- | ------ | ---------------------------------------------- |
+| 人体解剖（human-anatomy）  | stable | 完整人体模型，系统/显示层筛选，picking，知识卡 |
+| 脑图谱（brain-atlas）      | BETA   | 独立 lazy-loaded Brain Workbench，437 结构交互 |
+| 光合作用（photosynthesis） | BETA   | 叶肉细胞→叶绿体→类囊体膜，机制动画未实现       |
+| 旧植物（plant-workbench）  | FROZEN | 已冻结，仅阅读参考，不开发不删除               |
 
 ---
 
@@ -35,8 +36,8 @@
 
     npm install
 
-> npm install 会自动运行 postinstall 脚本 scripts/patch-vanatome-camera.mjs，
-> 用于 patch 第三方人体查看器包的相机逻辑（修复「滚轮缩小后弹回原位」）。
+> npm install 会自动 patch 第三方人体查看器包的相机逻辑（修复「滚轮缩小后弹回原位」），
+> 并从锁定安装的 Three.js 包复制、校验 Brain GLB 所需的 Draco runtime。
 
 ### 模型资产（本地运行必需）
 
@@ -47,6 +48,17 @@
     local-public/models/z-anatomy-1.4.0-full-body.glb
 
 模型来源：@vixotic/vanatome-atlas 包（github.com/vixotic/Vanatome）。
+
+Brain Workbench 另需 `brain.glb`（4,650,816 bytes，SHA-256
+`76a49ea4526a4880613aec7a02756bd7301b0b9d0680d7cae33e197b672c5453`），
+放置到：
+
+    local-public/models/brain/brain.glb
+
+该资产来自 `itayinbarr/brainproject`，使用 CC BY-SA 4.0；完整来源与
+ShareAlike 边界见同目录 `NOTICE.md`。GLB 及其衍生版本必须保留 attribution，
+且不得混入 NC/ND 资产。上述 ShareAlike 要求针对 Brain 资产及其衍生物，
+不代表无关的 BioScope application code 必须采用同一许可证。
 
 ---
 
@@ -84,13 +96,13 @@ Windows 可双击 启动网站.cmd（自动 build + preview）。
 
 ## 目录结构
 
-    app/           工作台与页面（anatomy / photosynthesis / plant workbench，workspace）
-    components/    业务组件（photosynthesis-viewer、micro-lab、plant-viewer）+ shadcn ui/
-    data/          数据层（knowledge/anatomy+plants、photosynthesis/micro-lab、modules 注册表）
+    app/           工作台与页面（anatomy / brain / photosynthesis / plant，workspace）
+    components/    业务组件（brain-viewer、photosynthesis-viewer、micro-lab、plant-viewer）+ shadcn ui/
+    data/          数据层（brain manifest、knowledge、photosynthesis、modules 注册表）
     lib/           核心库（picking-manager、anatomy-filters、anatomy-terminology、knowledge-graph-validator、bioscope-core、knowledge-nodes）
     scripts/       构建/守护脚本（patch-vanatome-camera.mjs、validate-knowledge-graph.ts、audit-knowledge-chain.ts）
     tests/         回归基线（picking-manager、anatomy-filters、anatomy-terminology、knowledge-graph、knowledge-chain-audit）
-    local-public/  本地静态资产（模型文件，git 忽略）
+    local-public/  本地静态资产（GLB 忽略；NOTICE 跟踪）
     .ai-company/   项目运行状态与团队规则（见下）
 
 ---
@@ -100,6 +112,7 @@ Windows 可双击 启动网站.cmd（自动 build + preview）。
 v0.1 试点（AI Company 第一个项目）。
 
 - 人体解剖模块功能完整、稳定，有回归测试覆盖 picking。
+- Brain Workbench 为独立 BETA 模块；模型按需加载，不作为人体默认深层嵌入。
 - 光合作用模块为 BETA，机制动画未实现。
 - 已知技术债与下一步见 .ai-company/ROADMAP.md 与 .ai-company/BOARD.md。
 
