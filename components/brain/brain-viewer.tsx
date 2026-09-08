@@ -563,19 +563,32 @@ function BrainScene({
       const id = pick(event.clientX, event.clientY);
       if (id !== null) onSelect(id);
     };
-    const onPointerLeave = () => {
+    const clearDragAndHover = () => {
+      pointerDown.current = null;
       updateHover(null);
       canvas.style.cursor = 'grab';
+    };
+    const onPointerLeave = () => {
+      // A drag may end outside the canvas (no pointerup fires here); clear the
+      // drag latch so hover/cursor resume instead of staying stuck in "grabbing".
+      pointerDown.current = null;
+      updateHover(null);
+      canvas.style.cursor = 'grab';
+    };
+    const onPointerCancel = () => {
+      clearDragAndHover();
     };
     canvas.addEventListener('pointermove', onPointerMove);
     canvas.addEventListener('pointerdown', onPointerDown);
     canvas.addEventListener('pointerup', onPointerUp);
     canvas.addEventListener('pointerleave', onPointerLeave);
+    canvas.addEventListener('pointercancel', onPointerCancel);
     return () => {
       canvas.removeEventListener('pointermove', onPointerMove);
       canvas.removeEventListener('pointerdown', onPointerDown);
       canvas.removeEventListener('pointerup', onPointerUp);
       canvas.removeEventListener('pointerleave', onPointerLeave);
+      canvas.removeEventListener('pointercancel', onPointerCancel);
     };
   }, [gl, onSelect, pick, updateHover]);
 
