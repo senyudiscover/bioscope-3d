@@ -21,14 +21,6 @@
 
 ## READY（待批准后开工）
 
-### BIO-015 · Brain Workbench（独立懒加载模块）
-- **Owner**：Codex（implementation）+ DSH/CTO（Review）；Astra 不参与
-- **状态**：CEO 决策已冻结（D-016 / D-017 / D-018，2026-09-07）；**NOT STARTED**；执行顺序 BIO-014 APPROVE 后启动
-- **Task**：.ai-company/tasks/BIO-015.md
-- **产品形态**：独立 lazy-loaded Brain Workbench + Anatomy deep-link；不作为 Anatomy 默认深层
-- **License**：CC BY-SA 4.0；可见 attribution + 资产旁 NOTICE；禁 NC/ND；衍生资产 ShareAlike；公开发布前确认 SA 分发策略
-- **核心**：437 结构 brain.glb（bx_id 唯一键）→ Pick/Select/Focus/Fade/Isolate 复用 + 性能护栏；spike 证据见 `spike/brain-atlas-cto` CTO 报告
-
 ### BIO-013A · Synapse Lab 突触传递机制 MVP（Spike 待 Astra 额度）
 - **Owner**：Astra（Experimental 3D Engineer，实施）+ CTO/DSH（Review）
 - **状态**：PRD READY（D1-D3 CEO 已拍板：模块局部轻量知识 / 阻断后保留全因果链 / 逐结构 hide-isolate）；**Astra Spike 任务包就绪，待 Astra 额度恢复后派发；Astra 保留给本任务，不参与 BIO-015**
@@ -102,6 +94,13 @@
 ---
 
 ## DONE
+
+### BIO-015 · Brain Workbench（独立懒加载模块）
+- **Owner**：Codex（implementation）+ CTO/DSH（独立验收）；Astra 不参与（保留 BIO-013A）
+- **分支**：feature/bio-015-brain-workbench（基于 master `007fde7` 切出，9 个 semantic commits 未 squash；Task .ai-company/tasks/BIO-015.md；实现报告 .ai-company/reports/BIO-015-BRAIN-WORKBENCH-IMPLEMENTATION-REPORT.md）
+- **收编**：--no-ff merge 至 master，merge commit `9f9fd5e`（2026-09-08）；pre tag `bioscope-pre-bio-015-2026-09-08`；accepted tag `bioscope-bio-015-accepted-2026-09-08`
+- **验收结论**：**APPROVE** —— Codex Final Reviewer：APPROVE / Can merge master: Yes / CEO Decision Required: No。437/437 结构 bx_id↔manifest 注册 + 独立 lazy-loaded Brain Workbench（进入模块才加载 brain.glb，独立 `brain-workbench-*.js` chunk）；select(null) deterministic coverage 修复并防回归（select 100 / select(null) 50 / select(id) 50）；state invariants I1–I3 PASS；master 复验：14 files / 294 tests PASS、tsc 0 错、lint 无新增（基线 19 既有不变）、local-build exit 0
+- **验收小注**：P1 deferred 项保持 Deferred 不处理（Finding ≠ Task）：deep/small Focus occlusion、Fade transparency overdraw、Atlas Wall、BVH、GPU batching、Explode v2、Biological Concept、metadata cleanup
 
 ### BIO-014 · Camera Patch Fresh-Install Reproducibility 修复（P0 维护）
 - **Owner**：Codex（implementation）+ CTO/DSH（独立验收）
