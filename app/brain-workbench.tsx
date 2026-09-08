@@ -1,6 +1,12 @@
 'use client';
 
-import { useCallback, useMemo, useState, type ReactNode } from 'react';
+import {
+  useCallback,
+  useMemo,
+  useReducer,
+  useState,
+  type ReactNode,
+} from 'react';
 import {
   Brain,
   Eye,
@@ -22,11 +28,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import manifestJson from '@/data/brain/manifest.json';
 import {
   BRAIN_CATEGORY_PALETTE,
-  DEFAULT_HIDDEN_BRAIN_CATEGORIES,
+  createInitialBrainVisualState,
   filterBrainNodes,
   indexBrainManifest,
+  reduceBrainVisualState,
   validateBrainManifest,
   type BrainManifest,
+  type BrainVisualAction,
   type BrainVisualState,
 } from '@/lib/brain-atlas';
 
@@ -46,15 +54,22 @@ export function BrainWorkbench({
 }: {
   atlasSwitcher?: ReactNode;
 }) {
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const nodesById = useMemo(() => indexBrainManifest(manifest), []);
+  const [visualState, dispatchVisual] = useReducer(
+    (state: BrainVisualState, action: BrainVisualAction) =>
+      reduceBrainVisualState(state, action, nodesById),
+    undefined,
+    () => createInitialBrainVisualState(),
+  );
+  const {
+    selectedId,
+    hiddenCategories,
+    fadeOthers,
+    isolateSelected,
+    cortexOpacity,
+  } = visualState;
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<string | null>(null);
-  const [hiddenCategories, setHiddenCategories] = useState<Set<string>>(
-    new Set(DEFAULT_HIDDEN_BRAIN_CATEGORIES),
-  );
-  const [fadeOthers, setFadeOthers] = useState(false);
-  const [isolateSelected, setIsolateSelected] = useState(false);
-  const [cortexOpacity, setCortexOpacity] = useState(0.38);
   const [explodeProgress, setExplodeProgress] = useState(0);
   const [focusNonce, setFocusNonce] = useState(0);
   const [resetNonce, setResetNonce] = useState(0);
@@ -64,26 +79,17 @@ export function BrainWorkbench({
   );
   const [stats, setStats] = useState(initialStats);
 
-  const nodesById = useMemo(() => indexBrainManifest(manifest), []);
   const selected =
     selectedId === null ? null : (nodesById.get(selectedId) ?? null);
+  const selectionVisible =
+    selected !== null && !hiddenCategories.has(selected.category);
   const filtered = useMemo(
     () => filterBrainNodes(manifest.nodes, query, category).slice(0, 100),
     [category, query],
   );
-  const visualState: BrainVisualState = useMemo(
-    () => ({
-      selectedId,
-      hiddenCategories,
-      fadeOthers,
-      isolateSelected,
-      cortexOpacity,
-    }),
-    [cortexOpacity, fadeOthers, hiddenCategories, isolateSelected, selectedId],
-  );
 
   const select = useCallback((id: number) => {
-    setSelectedId(id);
+    dispatchVisual({ type: 'select', id });
   }, []);
   const markReady = useCallback((next: BrainRuntimeStats) => {
     setStats(next);
@@ -91,22 +97,13 @@ export function BrainWorkbench({
   }, []);
 
   const reset = () => {
-    setSelectedId(null);
-    setHiddenCategories(new Set(DEFAULT_HIDDEN_BRAIN_CATEGORIES));
-    setFadeOthers(false);
-    setIsolateSelected(false);
-    setCortexOpacity(0.38);
+    dispatchVisual({ type: 'reset' });
     setExplodeProgress(0);
     setResetNonce((value) => value + 1);
   };
 
   const toggleCategory = (id: string) => {
-    setHiddenCategories((current) => {
-      const next = new Set(current);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+    dispatchVisual({ type: 'toggle-category', category: id });
   };
 
   return (
@@ -235,7 +232,7 @@ export function BrainWorkbench({
             <button
               type="button"
               data-testid="brain-focus"
-              disabled={selectedId === null}
+              disabled={!selectionVisible}
               onClick={() => setFocusNonce((value) => value + 1)}
               className="rounded-full border border-white/10 bg-black/55 px-3 py-2 text-[10px] text-zinc-300 backdrop-blur disabled:opacity-35"
             >
@@ -244,12 +241,9 @@ export function BrainWorkbench({
             <button
               type="button"
               data-testid="brain-fade"
-              disabled={selectedId === null}
+              disabled={!selectionVisible}
               aria-pressed={fadeOthers}
-              onClick={() => {
-                setFadeOthers((value) => !value);
-                setIsolateSelected(false);
-              }}
+              onClick={() => dispatchVisual({ type: 'toggle-fade' })}
               className="rounded-full border border-white/10 bg-black/55 px-3 py-2 text-[10px] text-zinc-300 backdrop-blur disabled:opacity-35"
             >
               <Eye className="mr-1.5 inline size-3" /> Fade
@@ -257,12 +251,9 @@ export function BrainWorkbench({
             <button
               type="button"
               data-testid="brain-isolate"
-              disabled={selectedId === null}
+              disabled={!selectionVisible}
               aria-pressed={isolateSelected}
-              onClick={() => {
-                setIsolateSelected((value) => !value);
-                setFadeOthers(false);
-              }}
+              onClick={() => dispatchVisual({ type: 'toggle-isolate' })}
               className="rounded-full border border-white/10 bg-black/55 px-3 py-2 text-[10px] text-zinc-300 backdrop-blur disabled:opacity-35"
             >
               <EyeOff className="mr-1.5 inline size-3" /> Isolate
@@ -426,7 +417,10 @@ export function BrainWorkbench({
                     step="0.05"
                     value={cortexOpacity}
                     onChange={(event) =>
-                      setCortexOpacity(Number(event.target.value))
+                      dispatchVisual({
+                        type: 'set-cortex-opacity',
+                        value: Number(event.target.value),
+                      })
                     }
                     className="mt-2 w-full accent-[#ff6b52]"
                   />

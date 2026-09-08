@@ -185,6 +185,116 @@ export function getBrainAppearance(
   return { visible: opacity > 0.05, opacity, highlighted };
 }
 
+/**
+ * Interaction-state contract.
+ *
+ * The Workbench state layer — not getBrainAppearance — guarantees:
+ *   I1  selectedId !== null  ⇒  its category is visible (never hidden)
+ *   I2  isolateSelected / fadeOthers ⇒ selected structure is visible
+ *   I3  selectedId !== null  ⇒  at least one mesh is visible in the scene
+ *
+ * Rules implemented here (per DSH CTO review, BIO-015 pre-merge fixes):
+ *   1. Selecting a structure whose category is hidden auto-shows that category.
+ *   2. Hiding the category of the currently selected structure clears the
+ *      selection and resets isolateSelected + fadeOthers.
+ *   3. Isolate / Fade toggles are no-ops without a visible selection.
+ *   4. Every action normalizes toward I1-I3, so even an adversarially
+ *      constructed state cannot produce a selected-but-invisible structure.
+ */
+
+export type BrainVisualAction =
+  | { type: 'select'; id: number | null }
+  | { type: 'toggle-category'; category: string }
+  | { type: 'toggle-fade' }
+  | { type: 'toggle-isolate' }
+  | { type: 'set-cortex-opacity'; value: number }
+  | { type: 'reset' };
+
+export function createInitialBrainVisualState(): BrainVisualState {
+  return {
+    selectedId: null,
+    hiddenCategories: new Set(DEFAULT_HIDDEN_BRAIN_CATEGORIES),
+    fadeOthers: false,
+    isolateSelected: false,
+    cortexOpacity: 0.38,
+  };
+}
+
+/** Auto-shows the category of the current selection when it is hidden. */
+function revealSelectionCategory(
+  state: BrainVisualState,
+  nodesById: ReadonlyMap<number, Pick<BrainManifestNode, 'category'>>,
+): BrainVisualState {
+  if (state.selectedId === null) return state;
+  const category = nodesById.get(state.selectedId)?.category;
+  if (!category || !state.hiddenCategories.has(category)) return state;
+  const hiddenCategories = new Set(state.hiddenCategories);
+  hiddenCategories.delete(category);
+  return { ...state, hiddenCategories };
+}
+
+export function reduceBrainVisualState(
+  state: BrainVisualState,
+  action: BrainVisualAction,
+  nodesById: ReadonlyMap<number, Pick<BrainManifestNode, 'category'>>,
+): BrainVisualState {
+  switch (action.type) {
+    case 'select': {
+      if (action.id === null) return { ...state, selectedId: null };
+      return revealSelectionCategory(
+        { ...state, selectedId: action.id },
+        nodesById,
+      );
+    }
+    case 'toggle-category': {
+      const hiddenCategories = new Set(state.hiddenCategories);
+      if (hiddenCategories.has(action.category)) {
+        hiddenCategories.delete(action.category);
+        return { ...state, hiddenCategories };
+      }
+      hiddenCategories.add(action.category);
+      const selectedCategory =
+        state.selectedId === null
+          ? undefined
+          : nodesById.get(state.selectedId)?.category;
+      if (state.selectedId !== null && selectedCategory === action.category) {
+        return {
+          ...state,
+          hiddenCategories,
+          selectedId: null,
+          isolateSelected: false,
+          fadeOthers: false,
+        };
+      }
+      return { ...state, hiddenCategories };
+    }
+    case 'toggle-fade': {
+      const visible = revealSelectionCategory(state, nodesById);
+      if (visible.selectedId === null) return state;
+      return {
+        ...visible,
+        fadeOthers: !visible.fadeOthers,
+        isolateSelected: false,
+      };
+    }
+    case 'toggle-isolate': {
+      const visible = revealSelectionCategory(state, nodesById);
+      if (visible.selectedId === null && !visible.isolateSelected) return state;
+      return {
+        ...visible,
+        isolateSelected: !visible.isolateSelected,
+        fadeOthers: false,
+      };
+    }
+    case 'set-cortex-opacity': {
+      const cortexOpacity = Math.min(1, Math.max(0.1, action.value));
+      return { ...state, cortexOpacity };
+    }
+    case 'reset':
+      return createInitialBrainVisualState();
+  }
+}
+
 function smoothstep(edge0: number, edge1: number, value: number): number {
   const normalized = Math.min(
     1,
