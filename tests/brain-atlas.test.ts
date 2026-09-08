@@ -389,13 +389,19 @@ describe('Brain interaction state reducer contract (BIO-015 pre-merge fixes)', (
   it('E2: deterministic walk keeps I1-I3 after every action (incl. select(null))', () => {
     const categories = Object.keys(manifest.categories);
     let state = createInitialBrainVisualState();
+    let selectNullCount = 0;
     for (let i = 0; i < 400; i += 1) {
       const pick = i % 4;
       const action: BrainVisualAction =
         pick === 0
           ? {
+              // pick === 0 forces i % 4 === 0, so i % 8 can only be 0 or 4.
+              // The old residue 7 was therefore unreachable and select(null)
+              // never ran here. Residue 4 clears the selection on i ≡ 4
+              // (mod 8) — a real select(null) on 50 of the 400 steps, tracked
+              // by selectNullCount below so this hole cannot silently return.
               type: 'select',
-              id: i % 8 === 7 ? null : (i * 37) % BRAIN_STRUCTURE_COUNT,
+              id: i % 8 === 4 ? null : (i * 37) % BRAIN_STRUCTURE_COUNT,
             }
           : pick === 1
             ? {
@@ -406,6 +412,14 @@ describe('Brain interaction state reducer contract (BIO-015 pre-merge fixes)', (
               ? { type: 'toggle-isolate' }
               : { type: 'toggle-fade' };
       state = reduce(state, action);
+      if (action.type === 'select' && action.id === null) {
+        selectNullCount += 1;
+        // Every executed clear-selection must disarm both modes (I2), which
+        // also proves the branch was not just reached but exercised.
+        expect(state.selectedId).toBeNull();
+        expect(state.fadeOthers).toBe(false);
+        expect(state.isolateSelected).toBe(false);
+      }
       if (state.selectedId !== null) {
         const selectedNode = byId.get(state.selectedId)!;
         expect(state.hiddenCategories.has(selectedNode.category)).toBe(false);
@@ -425,6 +439,9 @@ describe('Brain interaction state reducer contract (BIO-015 pre-merge fixes)', (
         expect(countVisible(state)).toBe(1);
       }
     }
+    // Coverage guard: the walk must have genuinely dispatched select(null)
+    // (i ≡ 4 (mod 8) ⇒ exactly 50 of the 400 steps), not merely claim it.
+    expect(selectNullCount).toBeGreaterThan(0);
   });
 
   it('clamps cortex opacity into the pickable range and reset restores defaults', () => {
