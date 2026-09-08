@@ -78,7 +78,6 @@ if (baseUrl) {
   const probeGlb = async () => {
     const response = await fetch(`${baseUrl}/models/brain/brain.glb`);
     const contentType = response.headers.get('content-type') ?? '';
-    const contentLength = Number(response.headers.get('content-length') ?? 0);
     if (response.status !== 200) {
       throw new Error(`GET /models/brain/brain.glb -> HTTP ${response.status}`);
     }
