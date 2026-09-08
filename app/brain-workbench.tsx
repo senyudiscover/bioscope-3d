@@ -118,7 +118,7 @@ export function BrainWorkbench({
               Brain Workbench
             </h1>
             <p className="font-mono text-[9px] tracking-[0.16em] text-zinc-600">
-              437-STRUCTURE INTERACTIVE ATLAS
+              437 结构交互图谱
             </p>
           </div>
         </div>
@@ -133,18 +133,18 @@ export function BrainWorkbench({
               <Input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search structure, region, or ID"
+                placeholder="搜索结构、区域或 ID"
                 className="border-white/10 bg-white/[0.035] pl-9 text-xs"
-                aria-label="Search brain structures"
+                aria-label="搜索脑结构"
               />
             </div>
             <select
               value={category ?? ''}
               onChange={(event) => setCategory(event.target.value || null)}
               className="h-9 w-full rounded-md border border-white/10 bg-[#15131b] px-3 text-xs text-zinc-300"
-              aria-label="Filter structure list by classification"
+              aria-label="按分类筛选结构列表"
             >
-              <option value="">All classifications</option>
+              <option value="">全部分类</option>
               {Object.entries(manifest.categories).map(([id, item]) => (
                 <option key={id} value={id}>
                   {item.label} ({item.count})
@@ -155,7 +155,7 @@ export function BrainWorkbench({
           <ScrollArea className="min-h-0 flex-1">
             <div className="p-2">
               <p className="px-2 py-2 font-mono text-[9px] tracking-[0.14em] text-zinc-600">
-                {filtered.length} OF {manifest.nodes.length} STRUCTURES
+                {filtered.length} / {manifest.nodes.length} 个结构
               </p>
               {filtered.map((node) => (
                 <button
@@ -236,7 +236,7 @@ export function BrainWorkbench({
               onClick={() => setFocusNonce((value) => value + 1)}
               className="rounded-full border border-white/10 bg-black/55 px-3 py-2 text-[10px] text-zinc-300 backdrop-blur disabled:opacity-35"
             >
-              <Focus className="mr-1.5 inline size-3" /> Focus
+              <Focus className="mr-1.5 inline size-3" /> 聚焦
             </button>
             <button
               type="button"
@@ -246,7 +246,7 @@ export function BrainWorkbench({
               onClick={() => dispatchVisual({ type: 'toggle-fade' })}
               className="rounded-full border border-white/10 bg-black/55 px-3 py-2 text-[10px] text-zinc-300 backdrop-blur disabled:opacity-35"
             >
-              <Eye className="mr-1.5 inline size-3" /> Fade
+              <Eye className="mr-1.5 inline size-3" /> 淡化上下文
             </button>
             <button
               type="button"
@@ -256,7 +256,7 @@ export function BrainWorkbench({
               onClick={() => dispatchVisual({ type: 'toggle-isolate' })}
               className="rounded-full border border-white/10 bg-black/55 px-3 py-2 text-[10px] text-zinc-300 backdrop-blur disabled:opacity-35"
             >
-              <EyeOff className="mr-1.5 inline size-3" /> Isolate
+              <EyeOff className="mr-1.5 inline size-3" /> 隔离
             </button>
             <button
               type="button"
@@ -264,7 +264,7 @@ export function BrainWorkbench({
               onClick={reset}
               className="rounded-full border border-white/10 bg-black/55 px-3 py-2 text-[10px] text-zinc-300 backdrop-blur"
             >
-              <RotateCcw className="mr-1.5 inline size-3" /> Reset
+              <RotateCcw className="mr-1.5 inline size-3" /> 重置
             </button>
           </div>
 
@@ -272,9 +272,9 @@ export function BrainWorkbench({
             data-testid="brain-runtime-stats"
             className="absolute right-3 top-3 hidden rounded-full border border-white/10 bg-black/55 px-3 py-1.5 font-mono text-[9px] text-zinc-500 backdrop-blur sm:block"
           >
-            {stats.structures}/437 · {stats.meshes} meshes · {stats.fps || '—'}
+            {stats.structures}/437 · {stats.meshes} 网格 · {stats.fps || '—'}
             {' fps · '}
-            {stats.draws} draws · {stats.raycastMs} ms pick
+            {stats.draws} 绘制 · {stats.raycastMs} ms 拾取
           </div>
 
           <div
@@ -288,7 +288,7 @@ export function BrainWorkbench({
                   explodeProgress === 0 ? 'text-coral' : 'text-zinc-500'
                 }
               >
-                ASSEMBLED
+                已组装
               </span>
               <output
                 htmlFor="brain-explode-slider"
@@ -301,7 +301,7 @@ export function BrainWorkbench({
                   explodeProgress === 100 ? 'text-coral' : 'text-zinc-500'
                 }
               >
-                EXPLODED
+                已分解
               </span>
             </div>
             <input
@@ -316,9 +316,9 @@ export function BrainWorkbench({
                 setExplodeProgress(Number(event.target.value))
               }
               className="block h-2 w-full cursor-ew-resize accent-[#ff745c]"
-              aria-label="Explode brain structures"
+              aria-label="分解脑结构"
               aria-valuetext={`${explodeProgress}% ${
-                explodeProgress === 0 ? 'assembled' : 'exploded'
+                explodeProgress === 0 ? '已组装' : '已分解'
               }`}
             />
           </div>
@@ -329,7 +329,7 @@ export function BrainWorkbench({
             <div className="space-y-6 p-5">
               <section>
                 <p className="mb-2 font-mono text-[9px] tracking-[0.14em] text-coral">
-                  SELECTED STRUCTURE
+                  已选结构
                 </p>
                 {selected ? (
                   <>
@@ -344,19 +344,19 @@ export function BrainWorkbench({
                     </p>
                     <dl className="mt-5 space-y-3 text-xs">
                       <div>
-                        <dt className="text-zinc-600">Region</dt>
+                        <dt className="text-zinc-600">区域</dt>
                         <dd className="mt-1 text-zinc-300">
                           {selected.region}
                         </dd>
                       </div>
                       <div>
-                        <dt className="text-zinc-600">Source metadata</dt>
+                        <dt className="text-zinc-600">来源元数据</dt>
                         <dd className="mt-1 text-zinc-300">
                           {selected.source}
                         </dd>
                       </div>
                       <div>
-                        <dt className="text-zinc-600">Hierarchy</dt>
+                        <dt className="text-zinc-600">层级</dt>
                         <dd className="mt-1 leading-5 text-zinc-400">
                           {selected.ta2.join(' › ')}
                         </dd>
@@ -365,18 +365,17 @@ export function BrainWorkbench({
                   </>
                 ) : (
                   <p className="text-xs leading-5 text-zinc-500">
-                    Pick a structure in 3D or select one from the indexed list.
+                    请在 3D 场景中拾取结构，或从左侧列表中选择。
                   </p>
                 )}
               </section>
 
               <section className="border-t border-white/10 pt-5">
                 <p className="mb-3 font-mono text-[9px] tracking-[0.14em] text-zinc-600">
-                  CLASSIFICATION VISIBILITY
+                  分类可见性
                 </p>
                 <p className="mb-3 text-[10px] leading-4 text-zinc-600">
-                  Vascular and cranial-nerve layers start hidden for a clearer,
-                  lower-draw overview.
+                  血管与脑神经等图层默认隐藏，以获得更清晰、更低绘制量的总览。
                 </p>
                 <div className="space-y-1.5">
                   {Object.entries(manifest.categories).map(([id, item]) => {
@@ -402,14 +401,14 @@ export function BrainWorkbench({
                           <span className="truncate">{item.label}</span>
                         </span>
                         <span className="ml-2 font-mono text-[9px] text-zinc-600">
-                          {visible ? 'ON' : 'OFF'} · {item.count}
+                          {visible ? '开' : '关'} · {item.count}
                         </span>
                       </button>
                     );
                   })}
                 </div>
                 <label className="mt-4 block text-[11px] text-zinc-500">
-                  Cortex opacity · {Math.round(cortexOpacity * 100)}%
+                  皮层不透明度 · {Math.round(cortexOpacity * 100)}%
                   <input
                     type="range"
                     min="0.1"
