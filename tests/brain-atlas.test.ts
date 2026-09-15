@@ -236,6 +236,16 @@ describe('Brain list filtering contract', () => {
     expect(
       filterBrainNodes(manifest.nodes, '腺垂体', null).map((node) => node.id),
     ).toEqual([10]);
+    expect(
+      filterBrainNodes(manifest.nodes, '皮质延髓束', null).map(
+        (node) => node.id,
+      ),
+    ).toEqual([75, 76]);
+    expect(
+      filterBrainNodes(manifest.nodes, 'Corticobulbar tract', null).map(
+        (node) => node.id,
+      ),
+    ).toEqual([75, 76]);
   });
 
   it('searches by English category key and Chinese category name', () => {
@@ -301,7 +311,7 @@ describe('Brain zh-CN terminology contract', () => {
             .length,
         ]),
       ),
-    ).toEqual({ verified: 5, needs_review: 143, unavailable: 89 });
+    ).toEqual({ verified: 5, needs_review: 232, unavailable: 0 });
     expect(
       brainTerminologyReview
         .flatMap((entry) => entry.atlasIds)
@@ -345,8 +355,34 @@ describe('Brain zh-CN terminology contract', () => {
       status: 'needs_review',
     });
     expect(resolveBrainStructureTerm(byId.get(2)!)).toMatchObject({
-      primaryLabel: 'Abducens nerve (VI)',
-      chineseLabel: null,
+      primaryLabel: '外展神经（VI）',
+      chineseLabel: '外展神经（VI）',
+      candidateChinese: '外展神经（VI）',
+      status: 'needs_review',
+    });
+  });
+
+  it('gives all 437 structures a Chinese primary label and preserves English', () => {
+    for (const node of manifest.nodes) {
+      const term = resolveBrainStructureTerm(node);
+      expect(term.primaryLabel).not.toBe(node.label);
+      expect(term.englishLabel).toBe(node.label);
+      expect(term.chineseLabel).toBeTruthy();
+    }
+  });
+
+  it('uses an explicit placeholder for an unknown label without inventing a term', () => {
+    expect(
+      resolveBrainStructureTerm({
+        id: 999,
+        label: 'Unknown atlas label',
+        category: 'brainstem',
+        side: 'median',
+      }),
+    ).toMatchObject({
+      primaryLabel: '中文名称待整理',
+      chineseLabel: '中文名称待整理',
+      englishLabel: 'Unknown atlas label',
       candidateChinese: null,
       status: 'unavailable',
     });
