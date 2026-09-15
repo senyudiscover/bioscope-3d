@@ -39,6 +39,8 @@ import {
 } from '@/lib/brain-atlas';
 import {
   getBrainCategoryNameZh,
+  getBrainRegionNameZh,
+  localizeBrainHierarchy,
   resolveBrainStructureTerm,
 } from '@/lib/brain-terminology';
 
@@ -368,7 +370,7 @@ export function BrainWorkbench({
                       <div>
                         <dt className="text-zinc-600">区域</dt>
                         <dd className="mt-1 text-zinc-300">
-                          {selected.region}
+                          {getBrainRegionNameZh(selected.region)}
                         </dd>
                       </div>
                       <div>
@@ -380,7 +382,7 @@ export function BrainWorkbench({
                       <div>
                         <dt className="text-zinc-600">层级</dt>
                         <dd className="mt-1 leading-5 text-zinc-400">
-                          {selected.ta2.join(' › ')}
+                          {localizeBrainHierarchy(selected.ta2).join(' › ')}
                         </dd>
                       </div>
                     </dl>

@@ -43,6 +43,35 @@ export const BRAIN_SIDE_NAMES_ZH = {
   median: '正中',
 } as const;
 
+export const BRAIN_HIERARCHY_NAMES_ZH: Readonly<Record<string, string>> = {
+  Brain: '脑',
+  Brainstem: '脑干',
+  'Central nervous system': '中枢神经系统',
+  Cerebellum: '小脑',
+  Cerebrum: '大脑',
+  Diencephalon: '间脑',
+  'Frontal lobe': '额叶',
+  Head: '头部',
+  Insula: '岛叶',
+  'Left cerebral hemisphere': '左侧大脑半球',
+  'Limbic lobe': '边缘叶',
+  'Main divisions': '主要分区',
+  Mesencephalon: '中脑',
+  'Nervous system': '神经系统',
+  'Occipital lobe': '枕叶',
+  'Parietal lobe': '顶叶',
+  'Regions of human body': '人体区域',
+  'Right cerebral hemisphere': '右侧大脑半球',
+  Telencephalon: '端脑',
+  'Temporal lobe': '颞叶',
+  'White matter of diencephalon': '间脑白质',
+} as const;
+
+export const BRAIN_HIERARCHY_TECHNICAL_NODES = new Set([
+  'Bonus collection',
+  'Scene Collection',
+]);
+
 export const brainTerminologyReview =
   reviewJson as BrainTerminologyReviewEntry[];
 
@@ -59,6 +88,18 @@ export function getBrainCategoryNameZh(category: string): string | null {
 
 export function getBrainSideNameZh(side: BrainTermInput['side']): string {
   return BRAIN_SIDE_NAMES_ZH[side];
+}
+
+export function getBrainRegionNameZh(region: string): string {
+  return (
+    BRAIN_HIERARCHY_NAMES_ZH[region] ?? getBrainCategoryNameZh(region) ?? region
+  );
+}
+
+export function localizeBrainHierarchy(hierarchy: readonly string[]): string[] {
+  return hierarchy
+    .filter((node) => !BRAIN_HIERARCHY_TECHNICAL_NODES.has(node))
+    .map((node) => BRAIN_HIERARCHY_NAMES_ZH[node] ?? node);
 }
 
 export function resolveBrainStructureTerm(node: BrainTermInput) {

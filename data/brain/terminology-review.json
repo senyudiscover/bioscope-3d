@@ -28,10 +28,10 @@
   },
   {
     "englishLabel": "Accessory nucleus of oculomotor nerve",
-    "candidateChinese": "副核动眼神经",
+    "candidateChinese": "动眼神经副核",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [6, 7]
   },
@@ -127,10 +127,10 @@
   },
   {
     "englishLabel": "Anterior nuclei of thalamus",
-    "candidateChinese": "前核丘脑",
+    "candidateChinese": "丘脑前核群",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [24, 25]
   },
@@ -172,10 +172,10 @@
   },
   {
     "englishLabel": "Aqueduct of midbrain",
-    "candidateChinese": "导水管中脑",
+    "candidateChinese": "中脑水管",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 1,
     "atlasIds": [34]
   },
@@ -352,10 +352,10 @@
   },
   {
     "englishLabel": "Circular sulcus of insula",
-    "candidateChinese": "环形沟岛",
+    "candidateChinese": "岛环状沟",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [70, 71]
   },
@@ -532,10 +532,10 @@
   },
   {
     "englishLabel": "Folium of vermis",
-    "candidateChinese": "叶蚓部",
+    "candidateChinese": "蚓叶",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 1,
     "atlasIds": [106]
   },
@@ -730,10 +730,10 @@
   },
   {
     "englishLabel": "Insula (Subcentral gyrus and ant. and post. sulci)",
-    "candidateChinese": "岛中央下回及前及后沟",
+    "candidateChinese": "岛叶（中央下回及前、后沟）",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [145, 146]
   },
@@ -838,10 +838,10 @@
   },
   {
     "englishLabel": "Lateral occipital gyrus (Middle occipital gyrus)",
-    "candidateChinese": "外侧枕回中枕回",
+    "candidateChinese": "外侧枕回（枕中回）",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [167, 168]
   },
@@ -892,10 +892,10 @@
   },
   {
     "englishLabel": "Lingula of cerebellum",
-    "candidateChinese": "小舌小脑",
+    "candidateChinese": "小脑小舌",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 1,
     "atlasIds": [179]
   },
@@ -946,10 +946,10 @@
   },
   {
     "englishLabel": "Medial occipitotemporal gyrus (Parahippocampal)",
-    "candidateChinese": "内侧枕颞回海马旁",
+    "candidateChinese": "内侧枕颞回（海马旁回）",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [190, 191]
   },
@@ -1072,10 +1072,10 @@
   },
   {
     "englishLabel": "Motor nucleus of facial nerve",
-    "candidateChinese": "运动核面神经",
+    "candidateChinese": "面神经运动核",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [214, 215]
   },
@@ -1099,10 +1099,10 @@
   },
   {
     "englishLabel": "Nodule of vermis",
-    "candidateChinese": "结节蚓部",
+    "candidateChinese": "蚓小结",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 1,
     "atlasIds": [219]
   },
@@ -1117,19 +1117,19 @@
   },
   {
     "englishLabel": "Nucleus of abducens nerve",
-    "candidateChinese": "核外展神经",
+    "candidateChinese": "外展神经核",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [222, 223]
   },
   {
     "englishLabel": "Nucleus of oculomotor nerve",
-    "candidateChinese": "核动眼神经",
+    "candidateChinese": "动眼神经核",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [224, 225]
   },
@@ -1243,10 +1243,10 @@
   },
   {
     "englishLabel": "Orbital gyri (Frontomarginal gyrus and sulcus)",
-    "candidateChinese": "眶回额缘回及沟",
+    "candidateChinese": "眶回（额缘回及额缘沟）",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [249, 250]
   },
@@ -1261,10 +1261,10 @@
   },
   {
     "englishLabel": "Orbital part of inferior frontal gyrus",
-    "candidateChinese": "眶部下额回",
+    "candidateChinese": "额下回眶部",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [253, 254]
   },
@@ -1279,10 +1279,10 @@
   },
   {
     "englishLabel": "Orbital sulci (Lateral Orbital sulcus)",
-    "candidateChinese": "眶沟外侧眶沟",
+    "candidateChinese": "眶沟（外侧眶沟）",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [257, 258]
   },
@@ -1315,10 +1315,10 @@
   },
   {
     "englishLabel": "Peduncle of flocculus",
-    "candidateChinese": "脚绒球",
+    "candidateChinese": "绒球脚",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [265, 266]
   },
@@ -1504,10 +1504,10 @@
   },
   {
     "englishLabel": "Opercular part of inferior frontal gyrus",
-    "candidateChinese": "盖部下额回",
+    "candidateChinese": "额下回盖部",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [305, 306]
   },
@@ -1612,19 +1612,19 @@
   },
   {
     "englishLabel": "Pyramid of medulla oblongata",
-    "candidateChinese": "锥体髓质延髓",
+    "candidateChinese": "延髓锥体",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [327, 328]
   },
   {
     "englishLabel": "Pyramis of vermis",
-    "candidateChinese": "锥体蚓部",
+    "candidateChinese": "蚓锥体",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 1,
     "atlasIds": [329]
   },
@@ -1657,10 +1657,10 @@
   },
   {
     "englishLabel": "Straight gyrus (Gyrus rectus)",
-    "candidateChinese": "直回回直",
+    "candidateChinese": "直回",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [335, 336]
   },
@@ -1675,10 +1675,10 @@
   },
   {
     "englishLabel": "Stria medullaris thalami",
-    "candidateChinese": "纹髓质丘脑",
+    "candidateChinese": "丘脑髓纹",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [338, 339]
   },
@@ -1945,10 +1945,10 @@
   },
   {
     "englishLabel": "Tonsil of cerebellum",
-    "candidateChinese": "扁桃体小脑",
+    "candidateChinese": "小脑扁桃体",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [397, 398]
   },
@@ -1990,10 +1990,10 @@
   },
   {
     "englishLabel": "Triangular part of inferior frontal gyrus",
-    "candidateChinese": "三角部下额回",
+    "candidateChinese": "额下回三角部",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [407, 408]
   },
@@ -2017,10 +2017,10 @@
   },
   {
     "englishLabel": "Tuber of vermis",
-    "candidateChinese": "结节蚓部",
+    "candidateChinese": "蚓结节",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 1,
     "atlasIds": [413]
   },
@@ -2044,10 +2044,10 @@
   },
   {
     "englishLabel": "Uvula of vermis",
-    "candidateChinese": "小舌蚓部",
+    "candidateChinese": "蚓垂",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 1,
     "atlasIds": [418]
   },
@@ -2116,19 +2116,19 @@
   },
   {
     "englishLabel": "White matter of telencephalon",
-    "candidateChinese": "白质端脑",
+    "candidateChinese": "端脑白质",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [433, 434]
   },
   {
     "englishLabel": "Wing of central lobule",
-    "candidateChinese": "翼中央小叶",
+    "candidateChinese": "中央小叶翼",
     "status": "needs_review",
-    "source": "lib/anatomy-terminology.ts:composed-rules",
-    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "source": "manual high-confidence terminology correction",
+    "note": "修正机械直译的词序或结构词位置；仍需术语审核，保留 needs_review。",
     "occurrences": 2,
     "atlasIds": [435, 436]
   }

@@ -18,8 +18,12 @@ import {
 } from '@/lib/brain-atlas';
 import {
   BRAIN_CATEGORY_NAMES_ZH,
+  BRAIN_HIERARCHY_NAMES_ZH,
+  BRAIN_HIERARCHY_TECHNICAL_NODES,
   BRAIN_SIDE_NAMES_ZH,
   brainTerminologyReview,
+  getBrainRegionNameZh,
+  localizeBrainHierarchy,
   resolveBrainStructureTerm,
 } from '@/lib/brain-terminology';
 import { getStructureTerm } from '@/lib/anatomy-terminology';
@@ -385,6 +389,72 @@ describe('Brain zh-CN terminology contract', () => {
       englishLabel: 'Unknown atlas label',
       candidateChinese: null,
       status: 'unavailable',
+    });
+  });
+
+  it('localizes hierarchy display while preserving raw manifest metadata', () => {
+    const stria = byId.get(338)!;
+    expect(stria.ta2).toEqual([
+      'Bonus collection',
+      'Brain',
+      'Central nervous system',
+      'Cerebrum',
+      'Diencephalon',
+      'Head',
+      'Main divisions',
+      'Nervous system',
+      'Regions of human body',
+      'Scene Collection',
+      'White matter of diencephalon',
+    ]);
+    expect(localizeBrainHierarchy(stria.ta2)).toEqual([
+      '脑',
+      '中枢神经系统',
+      '大脑',
+      '间脑',
+      '头部',
+      '主要分区',
+      '神经系统',
+      '人体区域',
+      '间脑白质',
+    ]);
+    expect(getBrainRegionNameZh(stria.region)).toBe('间脑');
+  });
+
+  it('centralizes known hierarchy names and filters only scene metadata', () => {
+    expect(BRAIN_HIERARCHY_NAMES_ZH).toMatchObject({
+      Brain: '脑',
+      'Central nervous system': '中枢神经系统',
+      Cerebrum: '大脑',
+      Diencephalon: '间脑',
+      'Nervous system': '神经系统',
+      'White matter of diencephalon': '间脑白质',
+      Head: '头部',
+      'Main divisions': '主要分区',
+      'Regions of human body': '人体区域',
+    });
+    expect([...BRAIN_HIERARCHY_TECHNICAL_NODES]).toEqual([
+      'Bonus collection',
+      'Scene Collection',
+    ]);
+    expect(localizeBrainHierarchy(['Unknown anatomical parent'])).toEqual([
+      'Unknown anatomical parent',
+    ]);
+  });
+
+  it('keeps the corrected thalamic stria candidate in needs-review state', () => {
+    expect(
+      brainTerminologyReview.find(
+        (entry) => entry.englishLabel === 'Stria medullaris thalami',
+      ),
+    ).toMatchObject({
+      candidateChinese: '丘脑髓纹',
+      status: 'needs_review',
+    });
+    expect(resolveBrainStructureTerm(byId.get(338)!)).toMatchObject({
+      primaryLabel: '丘脑髓纹',
+      englishLabel: 'Stria medullaris thalami',
+      status: 'needs_review',
     });
   });
 });
