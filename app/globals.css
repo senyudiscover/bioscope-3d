@@ -159,3 +159,26 @@ body {
   outline: 2px solid var(--color-coral);
   outline-offset: 2px;
 }
+
+/* Brain Workbench 3D 舞台底衬 —— 浅色、克制、带轻微空间感的科学可视化背景。
+   全部由 CSS 分层渐变实现，零 GPU/显存成本：无实时阴影、无 AO、无 postprocessing。
+   最亮处是极浅冷灰而非纯白，避免白质/脑神经等浅色结构与背景交融；
+   四角以冷灰轻微收敛制造纵深，底部用极弱椭圆暗示空间平面。 */
+.brain-stage {
+  background-color: #edf1f6;
+  background-image:
+    /* 底部极弱的地面 / 空间平面暗示 */
+    radial-gradient(
+      66% 15% at 50% 101%,
+      rgba(120, 142, 170, 0.16) 0%,
+      rgba(120, 142, 170, 0) 72%
+    ),
+    /* 克制的冷灰 vignette：中心留白、四角轻微加深 */
+    radial-gradient(
+      104% 96% at 50% 40%,
+      rgba(255, 255, 255, 0) 55%,
+      rgba(146, 168, 196, 0.3) 100%
+    ),
+    /* 极淡的冷蓝灰垂直渐变（studio 背景板） */
+    linear-gradient(180deg, #f1f5fa 0%, #e9eff6 56%, #dfe6ef 100%);
+}

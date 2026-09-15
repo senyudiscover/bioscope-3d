@@ -199,7 +199,7 @@ export function BrainWorkbench({
           </ScrollArea>
         </aside>
 
-        <section className="relative min-h-[420px] overflow-hidden bg-[radial-gradient(ellipse_at_50%_38%,#27212d_0%,#121018_44%,#07070a_100%)] before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(115deg,rgba(94,144,167,0.06),transparent_38%,rgba(213,100,80,0.055))]">
+        <section className="brain-stage relative min-h-[420px] overflow-hidden">
           {!loadError && (
             <BrainViewer
               nodesById={nodesById}
@@ -214,10 +214,10 @@ export function BrainWorkbench({
             />
           )}
           {!ready && !loadError && (
-            <div className="pointer-events-none absolute inset-0 grid place-items-center bg-[#09080d]/75">
+            <div className="pointer-events-none absolute inset-0 grid place-items-center bg-[#edf1f6]/88">
               <div className="text-center">
                 <LoaderCircle className="mx-auto mb-3 size-6 animate-spin text-coral" />
-                <p className="font-mono text-[10px] tracking-[0.16em] text-zinc-400">
+                <p className="font-mono text-[10px] tracking-[0.16em] text-zinc-500">
                   LOADING BRAIN ATLAS
                 </p>
               </div>
@@ -227,7 +227,7 @@ export function BrainWorkbench({
             <div className="absolute inset-0 grid place-items-center p-8">
               <div
                 role="alert"
-                className="max-w-md rounded-2xl border border-red-400/20 bg-red-950/20 p-6 text-center"
+                className="max-w-md rounded-2xl border border-red-400/25 bg-[#1e1013]/95 p-6 text-center"
               >
                 <p className="mb-2 text-sm font-semibold text-red-200">
                   Brain atlas unavailable
