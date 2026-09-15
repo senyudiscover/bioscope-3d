@@ -523,7 +523,7 @@ export function AnatomyWorkbench({
   };
 
   return (
-    <main className="flex min-h-screen flex-col overflow-hidden bg-[#0a0a09] text-zinc-100">
+    <main className="anatomy-shell flex min-h-screen flex-col overflow-hidden bg-[#f4f6f8] text-zinc-800">
       <TopNavigation
         atlasSwitcher={atlasSwitcher}
         currentNode={currentNode}
@@ -647,31 +647,31 @@ function TopNavigation({
           ? ['人体']
           : ['人体', currentNode.nameZh];
   return (
-    <header className="grid min-h-16 shrink-0 grid-cols-[auto_1fr_auto] items-center gap-5 border-b border-white/10 px-4 lg:px-6">
+    <header className="grid min-h-16 shrink-0 grid-cols-[auto_1fr_auto] items-center gap-5 border-b border-zinc-200 bg-white px-4 lg:px-6">
       <div className="flex items-center gap-3">
         <div className="grid size-8 place-items-center rounded-full border border-coral/50 bg-coral/10 font-mono text-[10px] font-semibold text-coral">
           BIO
         </div>
         <div>
           <p className="text-sm font-semibold">BioScope</p>
-          <p className="hidden font-mono text-[8px] tracking-[0.18em] text-zinc-600 sm:block">
+          <p className="hidden font-mono text-[8px] tracking-[0.18em] text-zinc-400 sm:block">
             VISUAL BIOLOGY EXPLORER
           </p>
         </div>
       </div>
       <div className="hidden min-w-0 items-center justify-center gap-4 lg:flex">
         <div className="relative w-full max-w-64">
-          <Search className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-zinc-600" />
+          <Search className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-zinc-400" />
           <Input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="搜索结构、器官或系统"
-            className="h-8 border-white/10 bg-white/[0.025] pl-8 text-xs"
+            className="h-8 border-zinc-200 bg-zinc-100 pl-8 text-xs text-zinc-800 placeholder:text-zinc-400 dark:bg-zinc-100"
           />
         </div>
         <nav
           aria-label="当前位置"
-          className="flex shrink-0 items-center gap-1 text-[11px] text-zinc-600"
+          className="flex shrink-0 items-center gap-1 text-[11px] text-zinc-500"
         >
           {breadcrumb.map((item, index) => (
             <span className="flex items-center gap-1" key={`${item}-${index}`}>
@@ -680,7 +680,7 @@ function TopNavigation({
                 <button
                   type="button"
                   onClick={reset}
-                  className="hover:text-zinc-300"
+                  className="hover:text-zinc-700"
                 >
                   {item}
                 </button>
@@ -697,14 +697,14 @@ function TopNavigation({
                         : (selectedStructure.system as AnatomySystemFilter),
                     )
                   }
-                  className="hover:text-zinc-300"
+                  className="hover:text-zinc-700"
                 >
                   {item}
                 </button>
               ) : (
                 <span
                   className={
-                    index === breadcrumb.length - 1 ? 'text-zinc-300' : ''
+                    index === breadcrumb.length - 1 ? 'text-zinc-700' : ''
                   }
                 >
                   {item}
@@ -715,7 +715,7 @@ function TopNavigation({
         </nav>
       </div>
       <div className="flex items-center gap-4">
-        {atlasSwitcher}
+        <div className="anatomy-nav shrink-0">{atlasSwitcher}</div>
         <ScaleNavigator current={currentNode.scale} />
         <Button variant="ghost" size="icon-sm" onClick={reset} title="重置视图">
           <RotateCcw />
@@ -730,7 +730,7 @@ function ScaleNavigator({ current }: { current: KnowledgeNode['scale'] }) {
     <div className="hidden items-center xl:flex">
       {scaleLabels.map((scale, index) => (
         <div className="flex items-center" key={scale.id}>
-          {index > 0 && <span className="mx-1.5 h-px w-3 bg-white/10" />}
+          {index > 0 && <span className="mx-1.5 h-px w-3 bg-zinc-200" />}
           <button
             type="button"
             disabled={!scale.enabled}
@@ -743,7 +743,7 @@ function ScaleNavigator({ current }: { current: KnowledgeNode['scale'] }) {
                 ? 'text-coral'
                 : scale.enabled
                   ? 'text-zinc-500'
-                  : 'cursor-not-allowed text-zinc-800',
+                  : 'cursor-not-allowed text-zinc-400',
             )}
           >
             {scale.en}
@@ -797,18 +797,18 @@ function ExplorerPanel({
         ? ['muscular', 'skeletal']
         : [activeSystem];
   return (
-    <aside className="order-2 flex min-h-[540px] flex-col border-white/10 lg:order-1 lg:min-h-0 lg:border-r">
-      <div className="border-b border-white/10 p-4">
+    <aside className="order-2 flex min-h-[540px] flex-col border-zinc-200 bg-white lg:order-1 lg:min-h-0 lg:border-r">
+      <div className="border-b border-zinc-200 p-4">
         <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.18em] text-coral">
           01 / Explorer
         </p>
         <div className="relative lg:hidden">
-          <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-600" />
+          <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-400" />
           <Input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="搜索结构、器官或系统"
-            className="h-9 bg-white/[0.025] pl-9"
+            className="h-9 bg-zinc-100 pl-9 text-zinc-800 placeholder:text-zinc-400 dark:bg-zinc-100"
           />
           {query && (
             <button
@@ -820,7 +820,7 @@ function ExplorerPanel({
             </button>
           )}
         </div>
-        <p className="mt-3 font-mono text-[8px] tracking-[0.16em] text-zinc-700">
+        <p className="mt-3 font-mono text-[8px] tracking-[0.16em] text-zinc-400">
           解剖结构
         </p>
       </div>
@@ -846,17 +846,17 @@ function ExplorerPanel({
                 className={cn(
                   'flex w-full items-center gap-2 px-4 py-2.5 text-left',
                   activeSystem === 'all'
-                    ? 'text-white'
-                    : 'text-zinc-400 hover:text-white',
+                    ? 'text-zinc-900'
+                    : 'text-zinc-600 hover:text-zinc-900',
                 )}
               >
                 <ChevronDown className="size-3.5" />
                 <span className="text-sm">人体</span>
-                <span className="ml-auto text-[10px] text-zinc-600">
+                <span className="ml-auto text-[10px] text-zinc-500">
                   Human Body
                 </span>
               </button>
-              <div className="ml-5 border-l border-white/10 pb-2">
+              <div className="ml-5 border-l border-zinc-200 pb-2">
                 {visibleSystems.map((system) => {
                   const expanded = expandedSystems.has(system);
                   const list = structuresBySystem.get(system) ?? [];
@@ -870,13 +870,13 @@ function ExplorerPanel({
                             (activeSystem === 'musculoskeletal' &&
                               (system === 'muscular' ||
                                 system === 'skeletal'))) &&
-                            'bg-white/[0.025]',
+                            'bg-zinc-100',
                         )}
                       >
                         <button
                           type="button"
                           onClick={() => toggle(system)}
-                          className="flex min-w-0 flex-1 items-center gap-2 px-3 py-2 text-left text-zinc-400 hover:text-white"
+                          className="flex min-w-0 flex-1 items-center gap-2 px-3 py-2 text-left text-zinc-600 hover:text-zinc-900"
                         >
                           {expanded ? (
                             <ChevronDown className="size-3 shrink-0" />
@@ -888,7 +888,7 @@ function ExplorerPanel({
                               {term.zh ?? term.en}
                             </span>
                             {term.zh && (
-                              <span className="block truncate text-[9px] text-zinc-700">
+                              <span className="block truncate text-[9px] text-zinc-400">
                                 {term.en}
                               </span>
                             )}
@@ -903,13 +903,13 @@ function ExplorerPanel({
                                 : (system as AnatomySystemFilter),
                             )
                           }
-                          className="text-[10px] text-zinc-700 hover:text-coral"
+                          className="text-[10px] text-zinc-400 hover:text-coral"
                         >
                           显示
                         </button>
                       </div>
                       {expanded && (
-                        <div className="ml-5 border-l border-white/10">
+                        <div className="ml-5 border-l border-zinc-200">
                           {list.slice(0, 36).map((structure) => (
                             <TreeStructure
                               key={structure.id}
@@ -920,7 +920,7 @@ function ExplorerPanel({
                             />
                           ))}
                           {list.length > 36 && (
-                            <p className="px-4 py-2 text-[10px] text-zinc-700">
+                            <p className="px-4 py-2 text-[10px] text-zinc-400">
                               搜索以浏览其余 {list.length - 36} 个结构
                             </p>
                           )}
@@ -957,15 +957,15 @@ function TreeStructure({
       className={cn(
         'flex w-full items-center gap-2 border-l px-3 py-1.5 text-left transition-colors',
         selected
-          ? 'border-coral bg-coral/[0.08] text-white'
-          : 'border-transparent text-zinc-500 hover:text-zinc-100',
+          ? 'border-coral bg-coral/10 text-zinc-900'
+          : 'border-transparent text-zinc-600 hover:text-zinc-900',
       )}
       style={{ paddingLeft: 12 + depth * 8 }}
     >
       <span
         className={cn(
           'size-1 shrink-0 rounded-full',
-          selected ? 'bg-coral' : 'bg-zinc-700',
+          selected ? 'bg-coral' : 'bg-zinc-300',
         )}
       />
       <span className="min-w-0 flex-1">
@@ -973,7 +973,7 @@ function TreeStructure({
           {displayStructure(structure)}
         </span>
         {term.level === 'major' && term.zh && (
-          <span className="block truncate text-[9px] text-zinc-700">
+          <span className="block truncate text-[9px] text-zinc-400">
             {term.en}
           </span>
         )}
@@ -1090,7 +1090,7 @@ function VisualWorkspace(props: WorkspaceProps) {
   );
   return (
     <section
-      className="relative order-1 min-h-[650px] overflow-hidden bg-[radial-gradient(circle_at_50%_48%,#242321_0%,#111210_48%,#0a0a09_78%)] lg:order-2 lg:min-h-0"
+      className="anatomy-stage relative order-1 min-h-[650px] overflow-hidden lg:order-2 lg:min-h-0"
       onDoubleClick={focusSelected}
       onPointerMove={(event) => {
         const bounds = event.currentTarget.getBoundingClientRect();
@@ -1109,10 +1109,10 @@ function VisualWorkspace(props: WorkspaceProps) {
       <div className="absolute left-4 top-3 z-20 right-4 space-y-2">
         <div className="flex items-center justify-between">
           <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-600">
+            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-zinc-500">
               02 / Visual Workspace
             </p>
-            <p className="mt-1 text-[10px] text-zinc-600">
+            <p className="mt-1 text-[10px] text-zinc-500">
               系统决定生物学归属 · 显示层决定结构类型
             </p>
             <p className="mt-1 font-mono text-[9px] tracking-[0.14em] text-coral/70">
@@ -1125,14 +1125,14 @@ function VisualWorkspace(props: WorkspaceProps) {
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap gap-2 rounded-xl border border-white/10 bg-black/55 p-2 backdrop-blur-md">
+        <div className="flex flex-wrap gap-2 rounded-xl border border-zinc-200 bg-white/85 p-2 backdrop-blur-md">
           <FilterControl
             label="系统"
             options={systemFilterOptions}
             value={activeSystem}
             onChange={(value) => changeSystem(value as AnatomySystemFilter)}
           />
-          <span className="hidden h-7 w-px bg-white/10 md:block" />
+          <span className="hidden h-7 w-px bg-zinc-200 md:block" />
           <FilterControl
             label="显示层"
             options={displayLayerOptions}
@@ -1200,8 +1200,8 @@ function VisualWorkspace(props: WorkspaceProps) {
           }}
         >
           <span className="h-px w-7 bg-coral/50" />
-          <div className="rounded-lg border border-white/10 bg-black/75 px-3 py-2 backdrop-blur">
-            <p className="text-xs text-white">
+          <div className="rounded-lg border border-zinc-200 bg-white/90 px-3 py-2 backdrop-blur">
+            <p className="text-xs text-zinc-900">
               {displayStructure(hoveredStructure)}
             </p>
             <p className="mt-0.5 text-[10px] text-zinc-500">
@@ -1252,7 +1252,7 @@ function FilterControl({
 }) {
   return (
     <div className="flex min-w-0 items-center gap-1.5">
-      <span className="mr-1 shrink-0 text-[9px] text-zinc-600">{label}</span>
+      <span className="mr-1 shrink-0 text-[9px] text-zinc-500">{label}</span>
       <div className="flex min-w-0 flex-wrap gap-1">
         {options.map((option) => {
           const available = !enabled || enabled.has(option.id);
@@ -1270,10 +1270,10 @@ function FilterControl({
               className={cn(
                 'rounded-md px-2 py-1 text-[9px] transition-colors',
                 value === option.id
-                  ? 'bg-zinc-200 text-zinc-950'
+                  ? 'bg-coral/15 text-coral ring-1 ring-coral/40'
                   : available
-                    ? 'bg-white/[0.035] text-zinc-500 hover:bg-white/[0.08] hover:text-white'
-                    : 'cursor-not-allowed bg-transparent text-zinc-800 line-through',
+                    ? 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 hover:text-zinc-900'
+                    : 'cursor-not-allowed bg-transparent text-zinc-400 line-through',
               )}
             >
               {option.label}
@@ -1299,7 +1299,7 @@ function CandidateMenu({
 }) {
   return (
     <div
-      className="absolute z-30 w-56 rounded-xl border border-white/10 bg-[#111210]/95 p-2 shadow-2xl backdrop-blur"
+      className="absolute z-30 w-56 rounded-xl border border-zinc-200 bg-white/95 p-2 shadow-[0_18px_50px_rgba(15,23,42,0.14)] backdrop-blur"
       style={{
         left: Math.min(point.x + 14, 500),
         top: Math.max(116, point.y + 14),
@@ -1310,7 +1310,7 @@ function CandidateMenu({
         <button
           type="button"
           onClick={close}
-          className="text-zinc-600 hover:text-white"
+          className="text-zinc-500 hover:text-zinc-900"
         >
           <X className="size-3.5" />
         </button>
@@ -1324,12 +1324,12 @@ function CandidateMenu({
             type="button"
             key={id}
             onClick={() => choose(id)}
-            className="w-full rounded-lg px-2 py-2 text-left hover:bg-white/[0.06]"
+            className="w-full rounded-lg px-2 py-2 text-left hover:bg-zinc-100"
           >
-            <span className="block text-xs text-zinc-300">
+            <span className="block text-xs text-zinc-700">
               {displayStructure(item)}
             </span>
-            <span className="text-[10px] text-zinc-600">
+            <span className="text-[10px] text-zinc-500">
               {term.en} · {displaySystem(item.system)}
             </span>
           </button>
@@ -1362,7 +1362,7 @@ function ViewerControls({
   reset: () => void;
 }) {
   return (
-    <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1 rounded-xl border border-white/10 bg-black/65 p-1.5 backdrop-blur">
+    <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-1 rounded-xl border border-zinc-200 bg-white/85 p-1.5 backdrop-blur">
       <Button variant="ghost" size="sm" onClick={focus} disabled={!selected}>
         <Focus />
         聚焦
@@ -1450,8 +1450,8 @@ function KnowledgePanel({
   onOpenBrain?: () => void;
 }) {
   return (
-    <aside className="order-3 flex min-h-[600px] flex-col border-t border-white/10 lg:min-h-0 lg:border-l lg:border-t-0">
-      <div className="border-b border-white/10 p-5">
+    <aside className="order-3 flex min-h-[600px] flex-col border-t border-zinc-200 bg-white lg:min-h-0 lg:border-l lg:border-t-0">
+      <div className="border-b border-zinc-200 p-5">
         <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-coral">
           03 / Knowledge
         </p>
@@ -1462,7 +1462,7 @@ function KnowledgePanel({
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em]">
             {node.nameZh}
           </h2>
-          <p className="mt-1 text-[10px] tracking-[0.1em] text-zinc-600">
+          <p className="mt-1 text-[10px] tracking-[0.1em] text-zinc-500">
             {node.nameEn}
           </p>
           <p className="mt-2 text-xs text-zinc-500">
@@ -1487,12 +1487,12 @@ function KnowledgePanel({
             </div>
           )}
           {hasModelContext && modelContextNode.id !== node.id && (
-            <div className="mt-3 rounded-lg border border-coral/25 bg-coral/[0.04] px-3 py-2">
+            <div className="mt-3 rounded-lg border border-coral/25 bg-coral/10 px-3 py-2">
               <p className="text-[9px] tracking-[0.12em] text-coral">
                 当前模型语境
               </p>
               <div className="mt-1 flex items-center justify-between gap-2">
-                <span className="text-xs text-zinc-200">
+                <span className="text-xs text-zinc-800">
                   {modelContextNode.nameZh}
                 </span>
                 <Button
@@ -1517,7 +1517,7 @@ function KnowledgePanel({
                 <ChevronRight className="size-3 rotate-180" />
                 返回
               </Button>
-              <span className="truncate text-[10px] text-zinc-600">
+              <span className="truncate text-[10px] text-zinc-500">
                 {knowledgeNodes[history[history.length - 1]]?.nameZh ??
                   '上一知识'}
               </span>
@@ -1577,14 +1577,14 @@ function KnowledgePanel({
                     }}
                     key={item.nameEn ?? item.nameZh}
                     className={cn(
-                      'rounded-lg border border-white/10 p-2 text-left',
+                      'rounded-lg border border-zinc-200 p-2 text-left',
                       hasModel || hasKnowledge
-                        ? 'hover:border-coral/40 hover:bg-coral/[0.05]'
+                        ? 'hover:border-coral/40 hover:bg-coral/10'
                         : 'cursor-default opacity-50',
                     )}
                   >
                     <span className="block text-[11px]">{item.nameZh}</span>
-                    <span className="text-[10px] text-zinc-600">
+                    <span className="text-[10px] text-zinc-500">
                       {item.nameEn}
                       {!hasModel && !hasKnowledge && ' · 暂无模型'}
                       {hasKnowledge && !hasModel && ' · 了解'}
@@ -1593,7 +1593,7 @@ function KnowledgePanel({
                 );
               })}
               {!node.keyStructures?.length && (
-                <p className="col-span-2 text-zinc-600">
+                <p className="col-span-2 text-zinc-500">
                   暂无可映射的关键结构。
                 </p>
               )}
@@ -1610,8 +1610,8 @@ function KnowledgePanel({
             </p>
           </KnowledgeSection>
           {node.exploreQuestions && (
-            <section className="mt-6 border-t border-white/10 pt-5">
-              <p className="mb-3 font-mono text-[9px] tracking-[0.16em] text-zinc-600">
+            <section className="mt-6 border-t border-zinc-200 pt-5">
+              <p className="mb-3 font-mono text-[9px] tracking-[0.16em] text-zinc-500">
                 EXPLORE / 探索问题
               </p>
               {(
@@ -1626,13 +1626,13 @@ function KnowledgePanel({
                 return (
                   <details
                     key={kind}
-                    className="group border-b border-white/10 py-2"
+                    className="group border-b border-zinc-200 py-2"
                   >
                     <summary className="flex cursor-pointer list-none items-center gap-3 text-xs">
                       <span className="w-12 shrink-0 font-mono text-[9px] uppercase text-coral">
                         {en}
                       </span>
-                      <span className="text-zinc-400 group-open:text-white">
+                      <span className="text-zinc-600 group-open:text-zinc-900">
                         {question.question}
                       </span>
                     </summary>
@@ -1649,7 +1649,7 @@ function KnowledgePanel({
                               type="button"
                               key={id}
                               onClick={() => chooseNode(id)}
-                              className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] text-zinc-400 hover:border-coral/40 hover:text-white"
+                              className="rounded-full border border-zinc-200 px-2 py-0.5 text-[10px] text-zinc-600 hover:border-coral/40 hover:text-zinc-900"
                             >
                               {target.nameZh}
                               <ChevronRight className="ml-0.5 inline size-3" />
@@ -1667,7 +1667,7 @@ function KnowledgePanel({
             <button
               type="button"
               onClick={onOpenBrain}
-              className="mt-5 w-full rounded-lg border border-coral/30 bg-coral/[0.05] px-3 py-3 text-left transition-colors hover:bg-coral/10"
+              className="mt-5 w-full rounded-lg border border-coral/30 bg-coral/10 px-3 py-3 text-left transition-colors hover:bg-coral/15"
             >
               <span className="block text-xs text-coral">
                 进入脑图谱 · Open Brain Workbench
@@ -1680,12 +1680,12 @@ function KnowledgePanel({
             <button
               type="button"
               disabled
-              className="mt-5 w-full cursor-not-allowed rounded-lg border border-dashed border-white/10 px-3 py-3 text-left"
+              className="mt-5 w-full cursor-not-allowed rounded-lg border border-dashed border-zinc-200 px-3 py-3 text-left"
             >
               <span className="block text-xs text-zinc-500">
                 深入下一尺度 · Explore deeper
               </span>
-              <span className="mt-1 block text-[10px] text-zinc-700">
+              <span className="mt-1 block text-[10px] text-zinc-400">
                 该尺度模型尚未加入
               </span>
             </button>
@@ -1710,17 +1710,17 @@ function KnowledgeSection({
   return (
     <details
       open={index === '01' || index === '03' || index === '04'}
-      className="group border-b border-white/10 py-3"
+      className="group border-b border-zinc-200 py-3"
     >
       <summary className="flex cursor-pointer list-none items-center gap-2">
         <span className="font-mono text-[9px] text-coral">{index}</span>
-        <span className="text-xs text-zinc-200">{zh}</span>
-        <span className="ml-auto font-mono text-[8px] tracking-[0.1em] text-zinc-600">
+        <span className="text-xs text-zinc-800">{zh}</span>
+        <span className="ml-auto font-mono text-[8px] tracking-[0.1em] text-zinc-500">
           {title}
         </span>
-        <ChevronDown className="size-3 text-zinc-700 transition-transform group-open:rotate-180" />
+        <ChevronDown className="size-3 text-zinc-400 transition-transform group-open:rotate-180" />
       </summary>
-      <div className="pt-3 text-xs leading-5 text-zinc-400 [&_li]:ml-4 [&_li]:list-disc">
+      <div className="pt-3 text-xs leading-5 text-zinc-600 [&_li]:ml-4 [&_li]:list-disc">
         {children}
       </div>
     </details>
@@ -1728,12 +1728,12 @@ function KnowledgeSection({
 }
 function LicenseNote({ provenance }: { provenance: AtlasProvenance | null }) {
   return (
-    <div className="mt-5 flex gap-2 border-t border-white/10 pt-4 text-[10px] leading-4 text-zinc-700">
+    <div className="mt-5 flex gap-2 border-t border-zinc-200 pt-4 text-[10px] leading-4 text-zinc-400">
       <Info className="mt-0.5 size-3.5 shrink-0" />
       <div>
         <p>仅供生命科学学习，不用于诊断或治疗决策。</p>
         <a
-          className="hover:text-zinc-400"
+          className="hover:text-zinc-600"
           href={
             provenance?.licenseUrl ??
             'https://creativecommons.org/licenses/by-sa/4.0/'
@@ -1764,13 +1764,13 @@ function RelatedKnowledgeDock({
     .filter((item): item is NonNullable<typeof item> => item !== null)
     .slice(0, 5);
   return (
-    <section className="order-4 border-t border-white/10 bg-[#0d0e0c] px-4 py-3 lg:col-span-3 lg:row-start-2 lg:px-6">
+    <section className="order-4 border-t border-zinc-200 bg-white px-4 py-3 lg:col-span-3 lg:row-start-2 lg:px-6">
       <div className="flex h-full items-center gap-4">
         <div className="w-28 shrink-0">
           <p className="font-mono text-[9px] tracking-[0.16em] text-coral">
             RELATED
           </p>
-          <p className="mt-1 text-[10px] text-zinc-600">关联知识</p>
+          <p className="mt-1 text-[10px] text-zinc-500">关联知识</p>
         </div>
         <div className="flex min-w-0 flex-1 gap-2 overflow-x-auto">
           {related.map(({ relationType, reason, node: item }) => (
@@ -1778,18 +1778,18 @@ function RelatedKnowledgeDock({
               type="button"
               onClick={() => chooseNode(item.id)}
               key={item.id}
-              className="group min-w-44 flex-1 rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 text-left transition-colors hover:border-coral/30 hover:bg-coral/[0.04]"
+              className="group min-w-44 flex-1 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-2 text-left transition-colors hover:border-coral/30 hover:bg-coral/10"
             >
               <div className="flex items-start justify-between gap-2">
-                <span className="text-xs text-zinc-300 group-hover:text-white">
+                <span className="text-xs text-zinc-700 group-hover:text-zinc-900">
                   {item.nameZh}
                 </span>
-                <ChevronRight className="size-3 shrink-0 text-zinc-700" />
+                <ChevronRight className="size-3 shrink-0 text-zinc-400" />
               </div>
-              <p className="mt-1 text-[10px] text-zinc-600">
+              <p className="mt-1 text-[10px] text-zinc-500">
                 {item.nameEn} · {item.typeZh}
               </p>
-              <p className="mt-1.5 flex items-start gap-1.5 border-t border-white/5 pt-1.5">
+              <p className="mt-1.5 flex items-start gap-1.5 border-t border-zinc-100 pt-1.5">
                 <span className="shrink-0 rounded bg-coral/10 px-1 py-0.5 text-[9px] text-coral">
                   {relationTypeLabels[relationType]}
                 </span>
@@ -1800,7 +1800,7 @@ function RelatedKnowledgeDock({
             </button>
           ))}
           {!related.length && (
-            <p className="text-xs text-zinc-700">
+            <p className="text-xs text-zinc-400">
               关联节点将在知识整理后出现。
             </p>
           )}
@@ -1816,13 +1816,13 @@ function ModelLoading({ progress }: { progress: number }) {
       <div className="w-56 text-center">
         <LoaderCircle className="mx-auto size-7 animate-spin text-coral" />
         <p className="mt-3 text-sm">正在装配可视化模型</p>
-        <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/10">
+        <div className="mt-3 h-1 overflow-hidden rounded-full bg-zinc-200">
           <div
             className="h-full bg-coral transition-all"
             style={{ width: `${Math.max(6, progress)}%` }}
           />
         </div>
-        <p className="mt-2 font-mono text-[10px] text-zinc-600">
+        <p className="mt-2 font-mono text-[10px] text-zinc-500">
           {progress ? `${progress}%` : '读取本地模型…'}
         </p>
       </div>
@@ -1839,9 +1839,9 @@ function LoadFailure({
   return (
     <div className="grid size-full place-items-center p-8">
       <div className="max-w-sm text-center">
-        <CircleAlert className="mx-auto mb-3 text-red-300" />
+        <CircleAlert className="mx-auto mb-3 text-red-500" />
         <p>模型加载失败</p>
-        <p className="mt-2 text-xs text-zinc-600">{message}</p>
+        <p className="mt-2 text-xs text-zinc-500">{message}</p>
         <Button className="mt-4" onClick={retry}>
           重新加载
         </Button>

@@ -208,3 +208,54 @@ body {
   background-color: #e4e4e7;
   color: #18181b;
 }
+
+/* Anatomy Workbench 亮色 3D 舞台 —— 与 .brain-stage 同一组冷蓝灰，保证两个
+   工作台属于同一产品家族。VanatomeViewer 的 Canvas 是透明的（实测像素与 <section>
+   的 CSS 渐变端点逐值吻合），因此换底同样是纯 CSS，零 GPU/显存成本：
+   无实时阴影 / contact shadow / SSAO / HDRI / bloom / postprocessing。
+   比白色左右面板略深一档，使 3D 区读作「内嵌的内容面」而非独立白贴片。 */
+.anatomy-stage {
+  background-color: #e8eef5;
+  background-image:
+    /* 底部极弱的地面 / 空间平面暗示 */
+    radial-gradient(
+      66% 15% at 50% 101%,
+      rgba(112, 134, 164, 0.2) 0%,
+      rgba(112, 134, 164, 0) 72%
+    ),
+    /* 克制的冷灰 vignette：中心留白、四角轻微加深 */
+    radial-gradient(
+      104% 96% at 50% 40%,
+      rgba(255, 255, 255, 0) 55%,
+      rgba(138, 161, 191, 0.34) 100%
+    ),
+    /* 极淡的冷蓝灰垂直渐变（studio 背景板） */
+    linear-gradient(180deg, #ecf1f8 0%, #e5ecf4 56%, #d7e0eb 100%);
+}
+
+/* Anatomy 亮色作用域。module nav（AtlasSwitcher）与 Brain / 光合作用模块共享，
+   直接改它会波及 Brain 亮色页与其它页面的深色 header；滚动条 thumb 用 bg-border
+   （.dark 下为白色 15%，在白色面板上不可见）。两者都只在本作用域内覆盖。 */
+.anatomy-shell [data-slot='scroll-area-thumb'] {
+  background-color: #cbd5e1;
+}
+.anatomy-shell .anatomy-nav [aria-label='生命对象'] {
+  border-color: #e4e4e7;
+  background-color: #f4f4f5;
+}
+.anatomy-shell .anatomy-nav [aria-label='生命对象'] > span {
+  color: #71717a;
+}
+.anatomy-shell
+  .anatomy-nav
+  [aria-label='生命对象']
+  button:not([aria-pressed='true']) {
+  color: #52525b;
+}
+.anatomy-shell
+  .anatomy-nav
+  [aria-label='生命对象']
+  button:not([aria-pressed='true']):hover {
+  background-color: #e4e4e7;
+  color: #18181b;
+}
