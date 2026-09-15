@@ -55,6 +55,15 @@ const initialStats: BrainRuntimeStats = {
   triangles: 0,
 };
 
+/**
+ * 亮色主题下的 3D 控制 chip：白/浅灰底 + 浅边框 + 深灰文字；
+ * aria-pressed 激活态用 salmon accent，尺寸与行为保持不变。
+ */
+const STAGE_CHIP_CLASS =
+  'rounded-full border border-zinc-200 bg-white/85 px-3 py-2 text-[10px] text-zinc-700 backdrop-blur transition-colors hover:bg-white disabled:opacity-40';
+const STAGE_CHIP_ACTIVE_CLASS =
+  'aria-pressed:border-coral aria-pressed:bg-coral aria-pressed:text-white';
+
 export function BrainWorkbench({
   atlasSwitcher,
 }: {
@@ -114,41 +123,41 @@ export function BrainWorkbench({
   };
 
   return (
-    <main className="flex h-dvh min-h-[680px] flex-col overflow-hidden bg-[#09080d] text-zinc-100">
-      <header className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 px-4 lg:px-6">
+    <main className="brain-shell flex h-dvh min-h-[680px] flex-col overflow-hidden bg-[#f4f6f8] text-zinc-800">
+      <header className="flex h-16 shrink-0 items-center justify-between border-b border-zinc-200 bg-white px-4 lg:px-6">
         <div className="flex min-w-0 items-center gap-3">
           <div className="grid size-9 place-items-center rounded-xl bg-coral/15 text-coral">
             <Brain className="size-5" />
           </div>
           <div className="min-w-0">
-            <h1 className="truncate text-sm font-semibold tracking-wide">
+            <h1 className="truncate text-sm font-semibold tracking-wide text-zinc-900">
               Brain Workbench
             </h1>
-            <p className="font-mono text-[9px] tracking-[0.16em] text-zinc-600">
+            <p className="font-mono text-[9px] tracking-[0.16em] text-zinc-400">
               437 结构交互图谱
             </p>
           </div>
         </div>
-        {atlasSwitcher}
+        <div className="brain-nav shrink-0">{atlasSwitcher}</div>
       </header>
 
       <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)_320px]">
-        <aside className="hidden min-h-0 border-r border-white/10 bg-[#0c0b11] lg:flex lg:flex-col">
-          <div className="space-y-3 border-b border-white/10 p-4">
+        <aside className="hidden min-h-0 border-r border-zinc-200 bg-white lg:flex lg:flex-col">
+          <div className="space-y-3 border-b border-zinc-200 p-4">
             <div className="relative block">
-              <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-600" />
+              <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-400" />
               <Input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="搜索结构、区域或 ID"
-                className="border-white/10 bg-white/[0.035] pl-9 text-xs"
+                className="border-zinc-200 bg-zinc-50 pl-9 text-xs text-zinc-800 placeholder:text-zinc-400 dark:bg-zinc-50"
                 aria-label="搜索脑结构"
               />
             </div>
             <select
               value={category ?? ''}
               onChange={(event) => setCategory(event.target.value || null)}
-              className="h-9 w-full rounded-md border border-white/10 bg-[#15131b] px-3 text-xs text-zinc-300"
+              className="h-9 w-full rounded-md border border-zinc-200 bg-white px-3 text-xs text-zinc-700"
               aria-label="按分类筛选结构列表"
             >
               <option value="">全部分类</option>
@@ -161,7 +170,7 @@ export function BrainWorkbench({
           </div>
           <ScrollArea className="min-h-0 flex-1">
             <div className="p-2">
-              <p className="px-2 py-2 font-mono text-[9px] tracking-[0.14em] text-zinc-600">
+              <p className="px-2 py-2 font-mono text-[9px] tracking-[0.14em] text-zinc-400">
                 {filtered.length} / {manifest.nodes.length} 个结构
               </p>
               {filtered.map((node) => {
@@ -174,8 +183,8 @@ export function BrainWorkbench({
                     onClick={() => select(node.id)}
                     className={`mb-1 w-full rounded-lg px-3 py-2 text-left transition-colors ${
                       selectedId === node.id
-                        ? 'bg-coral/15 text-coral'
-                        : 'text-zinc-400 hover:bg-white/5 hover:text-zinc-100'
+                        ? 'bg-coral/10 text-coral ring-1 ring-coral/30 ring-inset'
+                        : 'text-zinc-800 hover:bg-zinc-100 hover:text-zinc-900'
                     }`}
                   >
                     <span
@@ -189,7 +198,7 @@ export function BrainWorkbench({
                         {term.englishLabel}
                       </span>
                     )}
-                    <span className="mt-0.5 block truncate font-mono text-[9px] text-zinc-600">
+                    <span className="mt-0.5 block truncate font-mono text-[9px] text-zinc-400">
                       #{node.id} · {term.sideChinese} · {term.categoryChinese}
                     </span>
                   </button>
@@ -214,7 +223,7 @@ export function BrainWorkbench({
             />
           )}
           {!ready && !loadError && (
-            <div className="pointer-events-none absolute inset-0 grid place-items-center bg-[#edf1f6]/88">
+            <div className="pointer-events-none absolute inset-0 grid place-items-center bg-[#e8eef5]/85">
               <div className="text-center">
                 <LoaderCircle className="mx-auto mb-3 size-6 animate-spin text-coral" />
                 <p className="font-mono text-[10px] tracking-[0.16em] text-zinc-500">
@@ -227,17 +236,18 @@ export function BrainWorkbench({
             <div className="absolute inset-0 grid place-items-center p-8">
               <div
                 role="alert"
-                className="max-w-md rounded-2xl border border-red-400/25 bg-[#1e1013]/95 p-6 text-center"
+                className="max-w-md rounded-2xl border border-red-200 bg-white/95 p-6 text-center shadow-[0_18px_50px_rgba(15,23,42,0.12)]"
               >
-                <p className="mb-2 text-sm font-semibold text-red-200">
+                <p className="mb-2 text-sm font-semibold text-red-600">
                   Brain atlas unavailable
                 </p>
-                <p className="mb-4 text-xs leading-5 text-zinc-400">
+                <p className="mb-4 text-xs leading-5 text-zinc-500">
                   {loadError}
                 </p>
                 <Button
                   size="sm"
                   variant="outline"
+                  className="border-zinc-300 bg-white text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900"
                   onClick={() => location.reload()}
                 >
                   Retry
@@ -252,7 +262,7 @@ export function BrainWorkbench({
               data-testid="brain-focus"
               disabled={!selectionVisible}
               onClick={() => setFocusNonce((value) => value + 1)}
-              className="rounded-full border border-white/10 bg-black/55 px-3 py-2 text-[10px] text-zinc-300 backdrop-blur disabled:opacity-35"
+              className={STAGE_CHIP_CLASS}
             >
               <Focus className="mr-1.5 inline size-3" /> 聚焦
             </button>
@@ -262,7 +272,7 @@ export function BrainWorkbench({
               disabled={!selectionVisible}
               aria-pressed={fadeOthers}
               onClick={() => dispatchVisual({ type: 'toggle-fade' })}
-              className="rounded-full border border-white/10 bg-black/55 px-3 py-2 text-[10px] text-zinc-300 backdrop-blur disabled:opacity-35"
+              className={`${STAGE_CHIP_CLASS} ${STAGE_CHIP_ACTIVE_CLASS}`}
             >
               <Eye className="mr-1.5 inline size-3" /> 淡化上下文
             </button>
@@ -272,7 +282,7 @@ export function BrainWorkbench({
               disabled={!selectionVisible}
               aria-pressed={isolateSelected}
               onClick={() => dispatchVisual({ type: 'toggle-isolate' })}
-              className="rounded-full border border-white/10 bg-black/55 px-3 py-2 text-[10px] text-zinc-300 backdrop-blur disabled:opacity-35"
+              className={`${STAGE_CHIP_CLASS} ${STAGE_CHIP_ACTIVE_CLASS}`}
             >
               <EyeOff className="mr-1.5 inline size-3" /> 隔离
             </button>
@@ -280,7 +290,7 @@ export function BrainWorkbench({
               type="button"
               data-testid="brain-reset"
               onClick={reset}
-              className="rounded-full border border-white/10 bg-black/55 px-3 py-2 text-[10px] text-zinc-300 backdrop-blur"
+              className={STAGE_CHIP_CLASS}
             >
               <RotateCcw className="mr-1.5 inline size-3" /> 重置
             </button>
@@ -288,7 +298,7 @@ export function BrainWorkbench({
 
           <div
             data-testid="brain-runtime-stats"
-            className="absolute right-3 top-3 hidden rounded-full border border-white/10 bg-black/55 px-3 py-1.5 font-mono text-[9px] text-zinc-500 backdrop-blur sm:block"
+            className="absolute right-3 top-3 hidden rounded-full border border-zinc-200 bg-white/85 px-3 py-1.5 font-mono text-[9px] text-zinc-500 backdrop-blur sm:block"
           >
             {stats.structures}/437 · {stats.meshes} 网格 · {stats.fps || '—'}
             {' fps · '}
@@ -298,7 +308,7 @@ export function BrainWorkbench({
           <div
             data-testid="brain-explode-control"
             data-explode-progress={explodeProgress}
-            className="absolute bottom-4 left-1/2 w-[min(82%,480px)] -translate-x-1/2 rounded-2xl border border-white/10 bg-[#0a0910]/80 px-4 py-3 shadow-[0_18px_50px_rgba(0,0,0,0.38)] backdrop-blur-xl"
+            className="absolute bottom-4 left-1/2 w-[min(82%,480px)] -translate-x-1/2 rounded-2xl border border-zinc-200 bg-white/90 px-4 py-3 shadow-[0_18px_50px_rgba(15,23,42,0.1)] backdrop-blur-xl"
           >
             <div className="mb-2 flex items-center justify-between font-mono text-[9px] tracking-[0.15em]">
               <span
@@ -310,7 +320,7 @@ export function BrainWorkbench({
               </span>
               <output
                 htmlFor="brain-explode-slider"
-                className="rounded-full bg-white/[0.06] px-2 py-0.5 text-zinc-300"
+                className="rounded-full bg-zinc-100 px-2 py-0.5 text-zinc-600"
               >
                 {explodeProgress}%
               </output>
@@ -342,7 +352,7 @@ export function BrainWorkbench({
           </div>
         </section>
 
-        <aside className="hidden min-h-0 border-l border-white/10 bg-[#0c0b11] xl:flex xl:flex-col">
+        <aside className="hidden min-h-0 border-l border-zinc-200 bg-white xl:flex xl:flex-col">
           <ScrollArea className="min-h-0 flex-1">
             <div className="space-y-6 p-5">
               <section>
@@ -353,7 +363,7 @@ export function BrainWorkbench({
                   <>
                     <h2
                       data-testid="brain-selected-label"
-                      className="text-xl font-semibold leading-tight text-[#f3d8cd]"
+                      className="text-xl font-semibold leading-tight text-zinc-900"
                     >
                       {selectedTerm?.primaryLabel}
                     </h2>
@@ -362,26 +372,26 @@ export function BrainWorkbench({
                         {selectedTerm.englishLabel}
                       </p>
                     )}
-                    <p className="mt-2 font-mono text-[10px] text-zinc-600">
+                    <p className="mt-2 font-mono text-[10px] text-zinc-400">
                       #{selected.id} · {selectedTerm?.sideChinese} ·{' '}
                       {selectedTerm?.categoryChinese}
                     </p>
                     <dl className="mt-5 space-y-3 text-xs">
                       <div>
-                        <dt className="text-zinc-600">区域</dt>
-                        <dd className="mt-1 text-zinc-300">
+                        <dt className="text-zinc-500">区域</dt>
+                        <dd className="mt-1 text-zinc-700">
                           {getBrainRegionNameZh(selected.region)}
                         </dd>
                       </div>
                       <div>
-                        <dt className="text-zinc-600">来源元数据</dt>
-                        <dd className="mt-1 text-zinc-300">
+                        <dt className="text-zinc-500">来源元数据</dt>
+                        <dd className="mt-1 text-zinc-700">
                           {selected.source}
                         </dd>
                       </div>
                       <div>
-                        <dt className="text-zinc-600">层级</dt>
-                        <dd className="mt-1 leading-5 text-zinc-400">
+                        <dt className="text-zinc-500">层级</dt>
+                        <dd className="mt-1 leading-5 text-zinc-600">
                           {localizeBrainHierarchy(selected.ta2).join(' › ')}
                         </dd>
                       </div>
@@ -394,11 +404,11 @@ export function BrainWorkbench({
                 )}
               </section>
 
-              <section className="border-t border-white/10 pt-5">
-                <p className="mb-3 font-mono text-[9px] tracking-[0.14em] text-zinc-600">
+              <section className="border-t border-zinc-200 pt-5">
+                <p className="mb-3 font-mono text-[9px] tracking-[0.14em] text-zinc-400">
                   分类可见性
                 </p>
-                <p className="mb-3 text-[10px] leading-4 text-zinc-600">
+                <p className="mb-3 text-[10px] leading-4 text-zinc-500">
                   血管与脑神经等图层默认隐藏，以获得更清晰、更低绘制量的总览。
                 </p>
                 <div className="space-y-1.5">
@@ -411,7 +421,7 @@ export function BrainWorkbench({
                         data-brain-category={id}
                         aria-pressed={visible}
                         onClick={() => toggleCategory(id)}
-                        className="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left text-[11px] text-zinc-400 hover:bg-white/5"
+                        className="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left text-[11px] text-zinc-600 hover:bg-zinc-100"
                       >
                         <span className="flex min-w-0 items-center gap-2">
                           <span
@@ -426,7 +436,7 @@ export function BrainWorkbench({
                             {getBrainCategoryNameZh(id) ?? item.label}
                           </span>
                         </span>
-                        <span className="ml-2 font-mono text-[9px] text-zinc-600">
+                        <span className="ml-2 font-mono text-[9px] text-zinc-400">
                           {visible ? '开' : '关'} · {item.count}
                         </span>
                       </button>
@@ -452,8 +462,8 @@ export function BrainWorkbench({
                 </label>
               </section>
 
-              <section className="rounded-xl border border-emerald-400/15 bg-emerald-400/[0.035] p-4 text-[11px] leading-5 text-zinc-400">
-                <div className="mb-2 flex items-center gap-2 text-emerald-300">
+              <section className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-[11px] leading-5 text-zinc-600">
+                <div className="mb-2 flex items-center gap-2 text-emerald-700">
                   <ShieldCheck className="size-4" />
                   <strong>Asset license · CC BY-SA 4.0</strong>
                 </div>
@@ -465,11 +475,11 @@ export function BrainWorkbench({
                   href="https://creativecommons.org/licenses/by-sa/4.0/"
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-2 inline-flex items-center gap-1 text-emerald-300 underline underline-offset-2"
+                  className="mt-2 inline-flex items-center gap-1 text-emerald-700 underline underline-offset-2"
                 >
                   <Info className="size-3" /> License and attribution
                 </a>
-                <p className="mt-2 text-zinc-600">
+                <p className="mt-2 text-zinc-500">
                   Educational anatomy reference; not for clinical use.
                 </p>
               </section>
