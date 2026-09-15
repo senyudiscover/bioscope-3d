@@ -1,0 +1,2135 @@
+[
+  {
+    "englishLabel": "Posterior transverse collateral sulcus",
+    "candidateChinese": "后横侧副沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [0, 1]
+  },
+  {
+    "englishLabel": "Abducens nerve (VI)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [2, 3]
+  },
+  {
+    "englishLabel": "Accessory nerve (XI)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [4, 5]
+  },
+  {
+    "englishLabel": "Accessory nucleus of oculomotor nerve",
+    "candidateChinese": "副核动眼神经",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [6, 7]
+  },
+  {
+    "englishLabel": "Acoustic radiation",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [8, 9]
+  },
+  {
+    "englishLabel": "Adenohypophysis",
+    "candidateChinese": "腺垂体",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [10]
+  },
+  {
+    "englishLabel": "Angular gyrus",
+    "candidateChinese": "角回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [11, 12]
+  },
+  {
+    "englishLabel": "Anterior cerebral artery",
+    "candidateChinese": "前大脑动脉",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [13, 14]
+  },
+  {
+    "englishLabel": "Anterior commissure",
+    "candidateChinese": "前连合",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [15]
+  },
+  {
+    "englishLabel": "Anterior communicating artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [16]
+  },
+  {
+    "englishLabel": "Anterior division of mandibular nerve",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [17, 18]
+  },
+  {
+    "englishLabel": "Anterior hypothalamus",
+    "candidateChinese": "前下丘脑",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [19, 20]
+  },
+  {
+    "englishLabel": "Anterior inferior cerebellar artery",
+    "candidateChinese": "前下小脑动脉",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [21, 22]
+  },
+  {
+    "englishLabel": "Anterior intercavernous sinus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [23]
+  },
+  {
+    "englishLabel": "Anterior nuclei of thalamus",
+    "candidateChinese": "前核丘脑",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [24, 25]
+  },
+  {
+    "englishLabel": "Anterior occipital sulcus",
+    "candidateChinese": "前枕沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [26, 27]
+  },
+  {
+    "englishLabel": "Anterior quadrangular lobule",
+    "candidateChinese": "前四边形小叶",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [28, 29]
+  },
+  {
+    "englishLabel": "Anterior spinal artery",
+    "candidateChinese": "前脊动脉",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [30, 31]
+  },
+  {
+    "englishLabel": "Anterior thalamic radiation",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [32, 33]
+  },
+  {
+    "englishLabel": "Aqueduct of midbrain",
+    "candidateChinese": "导水管中脑",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [34]
+  },
+  {
+    "englishLabel": "Arcuate fasciculus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [35, 36]
+  },
+  {
+    "englishLabel": "Basilar artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [37]
+  },
+  {
+    "englishLabel": "Basilar venous plexus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [38]
+  },
+  {
+    "englishLabel": "Basolateral complex",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [39, 40]
+  },
+  {
+    "englishLabel": "Biventral lobule",
+    "candidateChinese": "二腹小叶",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [41, 42]
+  },
+  {
+    "englishLabel": "Buccal nerve",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [43, 44]
+  },
+  {
+    "englishLabel": "Calcarine sulcus",
+    "candidateChinese": "距状沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [45, 46]
+  },
+  {
+    "englishLabel": "Callosomarginal artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [47, 48]
+  },
+  {
+    "englishLabel": "Caudate nucleus",
+    "candidateChinese": "尾状核",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [49, 50]
+  },
+  {
+    "englishLabel": "Cavernous sinus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [51, 52]
+  },
+  {
+    "englishLabel": "Central lobule",
+    "candidateChinese": "中央小叶",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [53]
+  },
+  {
+    "englishLabel": "Central nucleus",
+    "candidateChinese": "中央核",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [54, 55]
+  },
+  {
+    "englishLabel": "Central sulcus",
+    "candidateChinese": "中央沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [56, 57]
+  },
+  {
+    "englishLabel": "Choroid plexus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [58, 59]
+  },
+  {
+    "englishLabel": "Cingulate gyrus (Posteroventral part)",
+    "candidateChinese": "扣带回后腹侧部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [60, 61]
+  },
+  {
+    "englishLabel": "Cingulate gyrus and sulcus (Middle anterior part)",
+    "candidateChinese": "扣带回及沟中前部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [62, 63]
+  },
+  {
+    "englishLabel": "Cingulate gyrus and sulcus (Middle posterior part)",
+    "candidateChinese": "扣带回及沟中后部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [64, 65]
+  },
+  {
+    "englishLabel": "Cingulate gyrus and sulcus (Posterior dorsal part)",
+    "candidateChinese": "扣带回及沟后背侧部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [66, 67]
+  },
+  {
+    "englishLabel": "Cingulate sulcus (Marginal part)",
+    "candidateChinese": "扣带沟缘部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [68, 69]
+  },
+  {
+    "englishLabel": "Circular sulcus of insula",
+    "candidateChinese": "环形沟岛",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [70, 71]
+  },
+  {
+    "englishLabel": "Collateral sulcus",
+    "candidateChinese": "侧副沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [72, 73]
+  },
+  {
+    "englishLabel": "Corpus callosum",
+    "candidateChinese": "体胼胝",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [74]
+  },
+  {
+    "englishLabel": "Corticobulbar tract",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [75, 76]
+  },
+  {
+    "englishLabel": "Corticomedial group",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [77, 78]
+  },
+  {
+    "englishLabel": "Corticopontine tract (frontal)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [79, 80]
+  },
+  {
+    "englishLabel": "Corticopontine tract (occipital)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [81, 82]
+  },
+  {
+    "englishLabel": "Corticopontine tract (parietal)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [83, 84]
+  },
+  {
+    "englishLabel": "Corticospinal tract",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [85, 86]
+  },
+  {
+    "englishLabel": "Corticostriatal tract (anterior)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [87, 88]
+  },
+  {
+    "englishLabel": "Corticostriatal tract (posterior)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [89, 90]
+  },
+  {
+    "englishLabel": "Corticostriatal tract (superior)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [91, 92]
+  },
+  {
+    "englishLabel": "Culmen",
+    "candidateChinese": "山顶",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [93]
+  },
+  {
+    "englishLabel": "Cuneus",
+    "candidateChinese": "楔",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [94, 95]
+  },
+  {
+    "englishLabel": "Declive",
+    "candidateChinese": "坡",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [96]
+  },
+  {
+    "englishLabel": "Dentatorubrothalamic tract",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [97, 98]
+  },
+  {
+    "englishLabel": "Distal lateral striate branches",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [99, 100]
+  },
+  {
+    "englishLabel": "Facial nerve (VII)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [101, 102]
+  },
+  {
+    "englishLabel": "Falx cerebri",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [103]
+  },
+  {
+    "englishLabel": "Flocculus",
+    "candidateChinese": "绒球",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [104, 105]
+  },
+  {
+    "englishLabel": "Folium of vermis",
+    "candidateChinese": "叶蚓部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [106]
+  },
+  {
+    "englishLabel": "Fornix",
+    "candidateChinese": "穹隆",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [107, 108]
+  },
+  {
+    "englishLabel": "Fourth ventricle",
+    "candidateChinese": "第四心室",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [109]
+  },
+  {
+    "englishLabel": "Frontal aslant tract",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [110, 111]
+  },
+  {
+    "englishLabel": "Frontal branches of callosomarginal artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [112, 113]
+  },
+  {
+    "englishLabel": "Globus pallidus external",
+    "candidateChinese": "苍白球苍白外",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [114, 115]
+  },
+  {
+    "englishLabel": "Globus pallidus internal",
+    "candidateChinese": "苍白球苍白内",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [116, 117]
+  },
+  {
+    "englishLabel": "Gracile lobule",
+    "candidateChinese": "薄小叶",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [118, 119]
+  },
+  {
+    "englishLabel": "Habenula",
+    "candidateChinese": "缰",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [120]
+  },
+  {
+    "englishLabel": "Hippocampal commissure",
+    "candidateChinese": "海马连合",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [121]
+  },
+  {
+    "englishLabel": "Hippocampus",
+    "candidateChinese": "海马",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [122, 123]
+  },
+  {
+    "englishLabel": "Hypoglossal nerve (XII)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [124, 125]
+  },
+  {
+    "englishLabel": "Inferior alveolar nerve",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [126, 127]
+  },
+  {
+    "englishLabel": "Inferior cerebellar peduncle",
+    "candidateChinese": "下小脑脚",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [128, 129]
+  },
+  {
+    "englishLabel": "Inferior colliculus",
+    "candidateChinese": "下丘",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [130, 131]
+  },
+  {
+    "englishLabel": "Inferior fronto-occipital fasciculus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [132, 133]
+  },
+  {
+    "englishLabel": "Inferior longitudinal fasciculus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [134, 135]
+  },
+  {
+    "englishLabel": "Inferior occipital gyrus and sulcus",
+    "candidateChinese": "下枕回及沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [136, 137]
+  },
+  {
+    "englishLabel": "Inferior petrosal sinus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [138, 139]
+  },
+  {
+    "englishLabel": "Inferior sagittal sinus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [140]
+  },
+  {
+    "englishLabel": "Inferior semilunar lobule",
+    "candidateChinese": "下半月小叶",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [141, 142]
+  },
+  {
+    "englishLabel": "Inferior temporal gyrus",
+    "candidateChinese": "下颞回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [143, 144]
+  },
+  {
+    "englishLabel": "Insula (Subcentral gyrus and ant. and post. sulci)",
+    "candidateChinese": "岛中央下回及前及后沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [145, 146]
+  },
+  {
+    "englishLabel": "Insular branches of middle cerebral artery (M2)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [147]
+  },
+  {
+    "englishLabel": "Insular branches of middle cerebral artery (M2-segment)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [148]
+  },
+  {
+    "englishLabel": "Internal carotid artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [149, 150]
+  },
+  {
+    "englishLabel": "Interpeduncular fossa",
+    "candidateChinese": "脚间窝",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [151, 152]
+  },
+  {
+    "englishLabel": "Intralaminar and lateral posterior nuclei",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [153, 154]
+  },
+  {
+    "englishLabel": "Lat Fis-ant-Horizont",
+    "candidateChinese": "外侧裂前水平",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [155, 156]
+  },
+  {
+    "englishLabel": "Lat Fis-ant-Vertical",
+    "candidateChinese": "外侧裂前垂直",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [157, 158]
+  },
+  {
+    "englishLabel": "Lat Fis-post",
+    "candidateChinese": "外侧裂后",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [159, 160]
+  },
+  {
+    "englishLabel": "Lateral geniculate body",
+    "candidateChinese": "外侧膝状体",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [161, 162]
+  },
+  {
+    "englishLabel": "Lateral hypothalamus",
+    "candidateChinese": "外侧下丘脑",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [163, 164]
+  },
+  {
+    "englishLabel": "Lateral nucleus",
+    "candidateChinese": "外侧核",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [165, 166]
+  },
+  {
+    "englishLabel": "Lateral occipital gyrus (Middle occipital gyrus)",
+    "candidateChinese": "外侧枕回中枕回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [167, 168]
+  },
+  {
+    "englishLabel": "Lateral occipitotemporal gyrus",
+    "candidateChinese": "外侧枕颞回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [169, 170]
+  },
+  {
+    "englishLabel": "Lateral pontine branches of basilar artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [171, 172]
+  },
+  {
+    "englishLabel": "Lateral ventricle",
+    "candidateChinese": "外侧心室",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [173, 174]
+  },
+  {
+    "englishLabel": "Lingual gyrus",
+    "candidateChinese": "舌回",
+    "status": "verified",
+    "source": "lib/anatomy-terminology.ts:nameOverrides",
+    "note": "继承现有人工确认术语。",
+    "occurrences": 2,
+    "atlasIds": [175, 176]
+  },
+  {
+    "englishLabel": "Lingual nerve",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [177, 178]
+  },
+  {
+    "englishLabel": "Lingula of cerebellum",
+    "candidateChinese": "小舌小脑",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [179]
+  },
+  {
+    "englishLabel": "Lunate sulcus",
+    "candidateChinese": "月状沟",
+    "status": "verified",
+    "source": "lib/anatomy-terminology.ts:nameOverrides",
+    "note": "继承现有人工确认术语。",
+    "occurrences": 2,
+    "atlasIds": [180, 181]
+  },
+  {
+    "englishLabel": "Mamillary body",
+    "candidateChinese": "乳头体",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [182, 183]
+  },
+  {
+    "englishLabel": "Maxillary nerve",
+    "candidateChinese": "上颌神经",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [184, 185]
+  },
+  {
+    "englishLabel": "Medial geniculate body",
+    "candidateChinese": "内侧膝状体",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [186, 187]
+  },
+  {
+    "englishLabel": "Medial lemniscus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [188, 189]
+  },
+  {
+    "englishLabel": "Medial occipitotemporal gyrus (Parahippocampal)",
+    "candidateChinese": "内侧枕颞回海马旁",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [190, 191]
+  },
+  {
+    "englishLabel": "Medial pontine branches of basilar artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [192, 193]
+  },
+  {
+    "englishLabel": "Mediodorsal nucleus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [194, 195]
+  },
+  {
+    "englishLabel": "Medulla oblongata",
+    "candidateChinese": "髓质延髓",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [196]
+  },
+  {
+    "englishLabel": "Meningeal branch of maxillary nerve",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [197, 198]
+  },
+  {
+    "englishLabel": "Mental nerve",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [199, 200]
+  },
+  {
+    "englishLabel": "Midbrain",
+    "candidateChinese": "中脑",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [201, 202]
+  },
+  {
+    "englishLabel": "Middle cerebellar peduncle",
+    "candidateChinese": "中小脑脚",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [203]
+  },
+  {
+    "englishLabel": "Middle cerebral artery (M1-segment)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [204, 205]
+  },
+  {
+    "englishLabel": "Middle cerebral artery (M3 segment)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [206]
+  },
+  {
+    "englishLabel": "Middle cerebral artery (M3-segment)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [207]
+  },
+  {
+    "englishLabel": "Middle frontal gyrus",
+    "candidateChinese": "中额回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [208, 209]
+  },
+  {
+    "englishLabel": "Middle longitudinal fasciculus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [210, 211]
+  },
+  {
+    "englishLabel": "Middle temporal gyrus",
+    "candidateChinese": "中颞回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [212, 213]
+  },
+  {
+    "englishLabel": "Motor nucleus of facial nerve",
+    "candidateChinese": "运动核面神经",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [214, 215]
+  },
+  {
+    "englishLabel": "Motor root of trigeminal nerve",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [216, 217]
+  },
+  {
+    "englishLabel": "Neurohypophysis",
+    "candidateChinese": "神经垂体",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [218]
+  },
+  {
+    "englishLabel": "Nodule of vermis",
+    "candidateChinese": "结节蚓部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [219]
+  },
+  {
+    "englishLabel": "Nucleus accumbens",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [220, 221]
+  },
+  {
+    "englishLabel": "Nucleus of abducens nerve",
+    "candidateChinese": "核外展神经",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [222, 223]
+  },
+  {
+    "englishLabel": "Nucleus of oculomotor nerve",
+    "candidateChinese": "核动眼神经",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [224, 225]
+  },
+  {
+    "englishLabel": "Occipital pole",
+    "candidateChinese": "枕极",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [226, 227]
+  },
+  {
+    "englishLabel": "Occipital sinus",
+    "candidateChinese": "枕窦",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [228]
+  },
+  {
+    "englishLabel": "Occipitotemporal sulcus (Lateral part)",
+    "candidateChinese": "枕颞沟外侧部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [229, 230]
+  },
+  {
+    "englishLabel": "Oculomotor nerve (III)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [231, 232]
+  },
+  {
+    "englishLabel": "Olfactory nerve (I)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [233, 234]
+  },
+  {
+    "englishLabel": "Olive",
+    "candidateChinese": "橄榄",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [235, 236]
+  },
+  {
+    "englishLabel": "Ophthalmic artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [237, 238]
+  },
+  {
+    "englishLabel": "Ophthalmic nerve",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [239, 240]
+  },
+  {
+    "englishLabel": "Optic chiasm",
+    "candidateChinese": "视交叉",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [241, 242]
+  },
+  {
+    "englishLabel": "Optic nerve (II)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [243, 244]
+  },
+  {
+    "englishLabel": "Optic radiation",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [245, 246]
+  },
+  {
+    "englishLabel": "Optic tract",
+    "candidateChinese": "视束",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [247, 248]
+  },
+  {
+    "englishLabel": "Orbital gyri (Frontomarginal gyrus and sulcus)",
+    "candidateChinese": "眶回额缘回及沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [249, 250]
+  },
+  {
+    "englishLabel": "Orbital gyri",
+    "candidateChinese": "眶回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [251, 252]
+  },
+  {
+    "englishLabel": "Orbital part of inferior frontal gyrus",
+    "candidateChinese": "眶部下额回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [253, 254]
+  },
+  {
+    "englishLabel": "Orbital sulci (H-shaped orbital sulci)",
+    "candidateChinese": "眶沟",
+    "status": "verified",
+    "source": "lib/anatomy-terminology.ts:nameOverrides",
+    "note": "继承现有人工确认术语。",
+    "occurrences": 2,
+    "atlasIds": [255, 256]
+  },
+  {
+    "englishLabel": "Orbital sulci (Lateral Orbital sulcus)",
+    "candidateChinese": "眶沟外侧眶沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [257, 258]
+  },
+  {
+    "englishLabel": "Orbitofrontal branches of anterior cerebral artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [259, 260]
+  },
+  {
+    "englishLabel": "Paracentral gyrus and sulcus",
+    "candidateChinese": "中央旁回及沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [261, 262]
+  },
+  {
+    "englishLabel": "Parietal branches of middle cerebral artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [263, 264]
+  },
+  {
+    "englishLabel": "Peduncle of flocculus",
+    "candidateChinese": "脚绒球",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [265, 266]
+  },
+  {
+    "englishLabel": "Pericallosal artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [267, 268]
+  },
+  {
+    "englishLabel": "Postcentral gyrus",
+    "candidateChinese": "中央后回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [269, 270]
+  },
+  {
+    "englishLabel": "Posterior cerebral artery",
+    "candidateChinese": "后大脑动脉",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [271, 272]
+  },
+  {
+    "englishLabel": "Posterior commissure",
+    "candidateChinese": "后连合",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [273]
+  },
+  {
+    "englishLabel": "Posterior communicating artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [274, 275]
+  },
+  {
+    "englishLabel": "Posterior division of mandibular nerve",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [276, 277]
+  },
+  {
+    "englishLabel": "Posterior hypothalamus",
+    "candidateChinese": "后下丘脑",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [278, 279]
+  },
+  {
+    "englishLabel": "Posterior inferior cerebellar artery",
+    "candidateChinese": "后下小脑动脉",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [280, 281]
+  },
+  {
+    "englishLabel": "Posterior thalamic radiation",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [282, 283]
+  },
+  {
+    "englishLabel": "Precentral gyrus",
+    "candidateChinese": "中央前回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [284, 285]
+  },
+  {
+    "englishLabel": "Precuneus",
+    "candidateChinese": "楔前",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [286, 287]
+  },
+  {
+    "englishLabel": "Preoptic hypothalamus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [288, 289]
+  },
+  {
+    "englishLabel": "Pulvinar",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [290, 291]
+  },
+  {
+    "englishLabel": "Red nucleus",
+    "candidateChinese": "红核",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [292, 293]
+  },
+  {
+    "englishLabel": "Reticulospinal tract",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [294, 295]
+  },
+  {
+    "englishLabel": "Septal nuclei",
+    "candidateChinese": "隔核",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [296]
+  },
+  {
+    "englishLabel": "Inferior frontal sulcus",
+    "candidateChinese": "下额沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [297, 298]
+  },
+  {
+    "englishLabel": "Inferior temporal sulcus",
+    "candidateChinese": "下颞沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [299, 300]
+  },
+  {
+    "englishLabel": "Intraparietal sulcus",
+    "candidateChinese": "顶内沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [301, 302]
+  },
+  {
+    "englishLabel": "Olfactory sulcus",
+    "candidateChinese": "嗅沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [303, 304]
+  },
+  {
+    "englishLabel": "Opercular part of inferior frontal gyrus",
+    "candidateChinese": "盖部下额回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [305, 306]
+  },
+  {
+    "englishLabel": "Paracentral sulcus",
+    "candidateChinese": "中央旁沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [307, 308]
+  },
+  {
+    "englishLabel": "Parieto-occipital sulcus",
+    "candidateChinese": "顶枕沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [309, 310]
+  },
+  {
+    "englishLabel": "Pineal gland",
+    "candidateChinese": "松果体",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [311]
+  },
+  {
+    "englishLabel": "Pons",
+    "candidateChinese": "脑桥",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [312, 313]
+  },
+  {
+    "englishLabel": "Postcentral sulcus",
+    "candidateChinese": "中央后沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [314, 315]
+  },
+  {
+    "englishLabel": "Posterior intercavernous sinus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [316]
+  },
+  {
+    "englishLabel": "Posterior quadrangular lobule",
+    "candidateChinese": "后四边形小叶",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [317, 318]
+  },
+  {
+    "englishLabel": "Precentral sulcus (inferior part)",
+    "candidateChinese": "中央前沟下部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [319, 320]
+  },
+  {
+    "englishLabel": "Precentral sulcus (Superior part)",
+    "candidateChinese": "中央前沟上部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [321, 322]
+  },
+  {
+    "englishLabel": "Proximal lateral striate branches",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [323, 324]
+  },
+  {
+    "englishLabel": "Putamen",
+    "candidateChinese": "壳核",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [325, 326]
+  },
+  {
+    "englishLabel": "Pyramid of medulla oblongata",
+    "candidateChinese": "锥体髓质延髓",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [327, 328]
+  },
+  {
+    "englishLabel": "Pyramis of vermis",
+    "candidateChinese": "锥体蚓部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [329]
+  },
+  {
+    "englishLabel": "Sensory root of trigeminal nerve",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [330, 331]
+  },
+  {
+    "englishLabel": "Septum pellucidum",
+    "candidateChinese": "隔透明",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [332]
+  },
+  {
+    "englishLabel": "Sigmoid sinus",
+    "candidateChinese": "乙状窦",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [333, 334]
+  },
+  {
+    "englishLabel": "Straight gyrus (Gyrus rectus)",
+    "candidateChinese": "直回回直",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [335, 336]
+  },
+  {
+    "englishLabel": "Straight sinus",
+    "candidateChinese": "直窦",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [337]
+  },
+  {
+    "englishLabel": "Stria medullaris thalami",
+    "candidateChinese": "纹髓质丘脑",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [338, 339]
+  },
+  {
+    "englishLabel": "Stria terminalis",
+    "candidateChinese": "纹终纹",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [340, 341]
+  },
+  {
+    "englishLabel": "Subparietal sulcus",
+    "candidateChinese": "顶下沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [342, 343]
+  },
+  {
+    "englishLabel": "Substantia nigra",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [344, 345]
+  },
+  {
+    "englishLabel": "Subthalamic nucleus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [346, 347]
+  },
+  {
+    "englishLabel": "Sulcus interm prim-Jensen",
+    "candidateChinese": "中间原始沟（Jensen）",
+    "status": "verified",
+    "source": "lib/anatomy-terminology.ts:nameOverrides",
+    "note": "继承现有人工确认术语。",
+    "occurrences": 2,
+    "atlasIds": [348, 349]
+  },
+  {
+    "englishLabel": "Superior cerebellar artery",
+    "candidateChinese": "上小脑动脉",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [350, 351]
+  },
+  {
+    "englishLabel": "Base of peduncle",
+    "candidateChinese": "底脚",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [352, 353]
+  },
+  {
+    "englishLabel": "Superior cerebellar peduncle",
+    "candidateChinese": "上小脑脚",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 3,
+    "atlasIds": [354, 355, 356]
+  },
+  {
+    "englishLabel": "Superior colliculus",
+    "candidateChinese": "上丘",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [357, 358]
+  },
+  {
+    "englishLabel": "Superior frontal gyrus",
+    "candidateChinese": "上额回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [359, 360]
+  },
+  {
+    "englishLabel": "Superior frontal sulcus",
+    "candidateChinese": "上额沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [361, 362]
+  },
+  {
+    "englishLabel": "Superior longitudinal fasciculus I",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [363, 364]
+  },
+  {
+    "englishLabel": "Superior longitudinal fasciculus II",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [365, 366]
+  },
+  {
+    "englishLabel": "Superior longitudinal fasciculus III",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [367, 368]
+  },
+  {
+    "englishLabel": "Superior occipital gyri",
+    "candidateChinese": "上枕回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [369, 370]
+  },
+  {
+    "englishLabel": "Superior parietal lobule",
+    "candidateChinese": "上顶小叶",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [371, 372]
+  },
+  {
+    "englishLabel": "Superior petrosal sinus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [373, 374]
+  },
+  {
+    "englishLabel": "Superior sagittal sinus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 1,
+    "atlasIds": [375]
+  },
+  {
+    "englishLabel": "Superior salivatory nucleus",
+    "candidateChinese": "上泌涎核",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [376, 377]
+  },
+  {
+    "englishLabel": "Superior semilunar lobule",
+    "candidateChinese": "上半月小叶",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [378, 379]
+  },
+  {
+    "englishLabel": "Superior temporal gyrus (Lateral part)",
+    "candidateChinese": "上颞回外侧部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [380, 381]
+  },
+  {
+    "englishLabel": "Superior temporal sulcus",
+    "candidateChinese": "上颞沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [382, 383]
+  },
+  {
+    "englishLabel": "Superior thalamic radiation",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [384, 385]
+  },
+  {
+    "englishLabel": "Supramarginal gyrus",
+    "candidateChinese": "缘上回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [386, 387]
+  },
+  {
+    "englishLabel": "Temporal branches of middle cerebral artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [388, 389]
+  },
+  {
+    "englishLabel": "Temporal plane",
+    "candidateChinese": "颞平面",
+    "status": "verified",
+    "source": "lib/anatomy-terminology.ts:nameOverrides",
+    "note": "继承现有人工确认术语。",
+    "occurrences": 2,
+    "atlasIds": [390, 391]
+  },
+  {
+    "englishLabel": "Temporal pole",
+    "candidateChinese": "颞极",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [392, 393]
+  },
+  {
+    "englishLabel": "Tentorium cerebelli",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [394, 395]
+  },
+  {
+    "englishLabel": "Third ventricle",
+    "candidateChinese": "第三心室",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [396]
+  },
+  {
+    "englishLabel": "Tonsil of cerebellum",
+    "candidateChinese": "扁桃体小脑",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [397, 398]
+  },
+  {
+    "englishLabel": "Transverse frontopolar gyrus and sulcus",
+    "candidateChinese": "横额极回及沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [399, 400]
+  },
+  {
+    "englishLabel": "Transverse occipital sulcus",
+    "candidateChinese": "横枕沟",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [401, 402]
+  },
+  {
+    "englishLabel": "Transverse sinus",
+    "candidateChinese": "横窦",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [403, 404]
+  },
+  {
+    "englishLabel": "Transverse temporal gyri",
+    "candidateChinese": "横颞回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [405, 406]
+  },
+  {
+    "englishLabel": "Triangular part of inferior frontal gyrus",
+    "candidateChinese": "三角部下额回",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [407, 408]
+  },
+  {
+    "englishLabel": "Trigeminal nerve (V)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [409, 410]
+  },
+  {
+    "englishLabel": "Trochlear nerve (IV)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [411, 412]
+  },
+  {
+    "englishLabel": "Tuber of vermis",
+    "candidateChinese": "结节蚓部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [413]
+  },
+  {
+    "englishLabel": "Tuberal hypothalamus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [414, 415]
+  },
+  {
+    "englishLabel": "Uncinate fasciculus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [416, 417]
+  },
+  {
+    "englishLabel": "Uvula of vermis",
+    "candidateChinese": "小舌蚓部",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 1,
+    "atlasIds": [418]
+  },
+  {
+    "englishLabel": "Vagus nerve (X)",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [419, 420]
+  },
+  {
+    "englishLabel": "Ventral anterior nucleus",
+    "candidateChinese": "腹侧前核",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [421, 422]
+  },
+  {
+    "englishLabel": "Ventral laterodorsal nucleus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [423, 424]
+  },
+  {
+    "englishLabel": "Ventral lateroventral nucleus",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [425, 426]
+  },
+  {
+    "englishLabel": "Vertebral artery",
+    "candidateChinese": null,
+    "status": "unavailable",
+    "source": null,
+    "note": "现有术语系统无可靠候选，需人工补录。",
+    "occurrences": 2,
+    "atlasIds": [427, 428]
+  },
+  {
+    "englishLabel": "Vestibular nerve",
+    "candidateChinese": "前庭神经",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [429, 430]
+  },
+  {
+    "englishLabel": "Vestibular nuclei",
+    "candidateChinese": "前庭核",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [431, 432]
+  },
+  {
+    "englishLabel": "White matter of telencephalon",
+    "candidateChinese": "白质端脑",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [433, 434]
+  },
+  {
+    "englishLabel": "Wing of central lobule",
+    "candidateChinese": "翼中央小叶",
+    "status": "needs_review",
+    "source": "lib/anatomy-terminology.ts:composed-rules",
+    "note": "规则生成候选，不得在人工复核前用于中文主名称。",
+    "occurrences": 2,
+    "atlasIds": [435, 436]
+  }
+]

@@ -1,3 +1,8 @@
+import {
+  getBrainCategoryNameZh,
+  resolveBrainStructureTerm,
+} from '@/lib/brain-terminology';
+
 export const BRAIN_STRUCTURE_COUNT = 437;
 
 export const DEFAULT_HIDDEN_BRAIN_CATEGORIES = [
@@ -341,12 +346,20 @@ export function filterBrainNodes(
   category: string | null,
 ): BrainManifestNode[] {
   const normalized = query.trim().toLocaleLowerCase();
-  return nodes.filter(
-    (node) =>
-      (!category || node.category === category) &&
-      (!normalized ||
-        [node.label, node.name, node.region, node.side, String(node.id)].some(
-          (value) => value.toLocaleLowerCase().includes(normalized),
-        )),
-  );
+  return nodes.filter((node) => {
+    if (category && node.category !== category) return false;
+    if (!normalized) return true;
+
+    const term = resolveBrainStructureTerm(node);
+    return [
+      term.chineseLabel,
+      node.label,
+      node.name,
+      node.region,
+      node.side,
+      String(node.id),
+      node.category,
+      getBrainCategoryNameZh(node.category),
+    ].some((value) => value?.toLocaleLowerCase().includes(normalized));
+  });
 }

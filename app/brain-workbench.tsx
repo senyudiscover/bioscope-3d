@@ -37,6 +37,10 @@ import {
   type BrainVisualAction,
   type BrainVisualState,
 } from '@/lib/brain-atlas';
+import {
+  getBrainCategoryNameZh,
+  resolveBrainStructureTerm,
+} from '@/lib/brain-terminology';
 
 const manifest = manifestJson as BrainManifest;
 const manifestErrors = validateBrainManifest(manifest);
@@ -81,6 +85,7 @@ export function BrainWorkbench({
 
   const selected =
     selectedId === null ? null : (nodesById.get(selectedId) ?? null);
+  const selectedTerm = selected ? resolveBrainStructureTerm(selected) : null;
   const selectionVisible =
     selected !== null && !hiddenCategories.has(selected.category);
   const filtered = useMemo(
@@ -147,7 +152,7 @@ export function BrainWorkbench({
               <option value="">全部分类</option>
               {Object.entries(manifest.categories).map(([id, item]) => (
                 <option key={id} value={id}>
-                  {item.label} ({item.count})
+                  {getBrainCategoryNameZh(id) ?? item.label} ({item.count})
                 </option>
               ))}
             </select>
@@ -157,26 +162,37 @@ export function BrainWorkbench({
               <p className="px-2 py-2 font-mono text-[9px] tracking-[0.14em] text-zinc-600">
                 {filtered.length} / {manifest.nodes.length} 个结构
               </p>
-              {filtered.map((node) => (
-                <button
-                  type="button"
-                  key={node.id}
-                  data-brain-id={node.id}
-                  onClick={() => select(node.id)}
-                  className={`mb-1 w-full rounded-lg px-3 py-2 text-left transition-colors ${
-                    selectedId === node.id
-                      ? 'bg-coral/15 text-coral'
-                      : 'text-zinc-400 hover:bg-white/5 hover:text-zinc-100'
-                  }`}
-                >
-                  <span className="block truncate text-xs font-medium">
-                    {node.label}
-                  </span>
-                  <span className="mt-0.5 block truncate font-mono text-[9px] text-zinc-600">
-                    #{node.id} · {node.side} · {node.region}
-                  </span>
-                </button>
-              ))}
+              {filtered.map((node) => {
+                const term = resolveBrainStructureTerm(node);
+                return (
+                  <button
+                    type="button"
+                    key={node.id}
+                    data-brain-id={node.id}
+                    onClick={() => select(node.id)}
+                    className={`mb-1 w-full rounded-lg px-3 py-2 text-left transition-colors ${
+                      selectedId === node.id
+                        ? 'bg-coral/15 text-coral'
+                        : 'text-zinc-400 hover:bg-white/5 hover:text-zinc-100'
+                    }`}
+                  >
+                    <span
+                      className="block truncate text-xs font-medium"
+                      title={term.englishLabel}
+                    >
+                      {term.primaryLabel}
+                    </span>
+                    {term.chineseLabel && (
+                      <span className="mt-0.5 block truncate text-[10px] text-zinc-500">
+                        {term.englishLabel}
+                      </span>
+                    )}
+                    <span className="mt-0.5 block truncate font-mono text-[9px] text-zinc-600">
+                      #{node.id} · {term.sideChinese} · {term.categoryChinese}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </ScrollArea>
         </aside>
@@ -337,10 +353,16 @@ export function BrainWorkbench({
                       data-testid="brain-selected-label"
                       className="text-xl font-semibold leading-tight text-[#f3d8cd]"
                     >
-                      {selected.label}
+                      {selectedTerm?.primaryLabel}
                     </h2>
+                    {selectedTerm?.chineseLabel && (
+                      <p className="mt-1 text-xs text-zinc-500">
+                        {selectedTerm.englishLabel}
+                      </p>
+                    )}
                     <p className="mt-2 font-mono text-[10px] text-zinc-600">
-                      #{selected.id} · {selected.side} · {selected.category}
+                      #{selected.id} · {selectedTerm?.sideChinese} ·{' '}
+                      {selectedTerm?.categoryChinese}
                     </p>
                     <dl className="mt-5 space-y-3 text-xs">
                       <div>
@@ -398,7 +420,9 @@ export function BrainWorkbench({
                                 BRAIN_CATEGORY_PALETTE[id] ?? '#9f8c85',
                             }}
                           />
-                          <span className="truncate">{item.label}</span>
+                          <span className="truncate">
+                            {getBrainCategoryNameZh(id) ?? item.label}
+                          </span>
                         </span>
                         <span className="ml-2 font-mono text-[9px] text-zinc-600">
                           {visible ? '开' : '关'} · {item.count}

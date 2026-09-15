@@ -16,6 +16,13 @@ import {
   type BrainVisualAction,
   type BrainVisualState,
 } from '@/lib/brain-atlas';
+import {
+  BRAIN_CATEGORY_NAMES_ZH,
+  BRAIN_SIDE_NAMES_ZH,
+  brainTerminologyReview,
+  resolveBrainStructureTerm,
+} from '@/lib/brain-terminology';
+import { getStructureTerm } from '@/lib/anatomy-terminology';
 
 const manifest = manifestJson as BrainManifest;
 const byId = new Map(manifest.nodes.map((node) => [node.id, node]));
@@ -192,6 +199,139 @@ describe('Brain list filtering contract', () => {
     const results = filterBrainNodes(manifest.nodes, 'caudate', 'deep_grey');
     expect(results.map((node) => node.id)).toEqual([49, 50]);
     expect(filterBrainNodes(manifest.nodes, '285', null)[0]?.id).toBe(285);
+  });
+
+  it('finds the same verified structure by Chinese, English and atlas identifier', () => {
+    expect(
+      filterBrainNodes(manifest.nodes, '舌回', null).map((node) => node.id),
+    ).toEqual([175, 176]);
+    expect(
+      filterBrainNodes(manifest.nodes, 'Lingual gyrus', null).map(
+        (node) => node.id,
+      ),
+    ).toEqual([175, 176]);
+    expect(
+      filterBrainNodes(manifest.nodes, 'Lingual gyrus.l', null).map(
+        (node) => node.id,
+      ),
+    ).toEqual([175]);
+    expect(
+      filterBrainNodes(manifest.nodes, '175', null).map((node) => node.id),
+    ).toEqual([175]);
+  });
+
+  it('searches by English category key and Chinese category name', () => {
+    expect(filterBrainNodes(manifest.nodes, 'ventricles', null)).toHaveLength(
+      7,
+    );
+    expect(filterBrainNodes(manifest.nodes, '脑室系统', null)).toHaveLength(7);
+  });
+});
+
+describe('Brain zh-CN terminology contract', () => {
+  it('localizes all 12 categories without changing their English manifest labels', () => {
+    expect(BRAIN_CATEGORY_NAMES_ZH).toEqual({
+      cortex: '大脑皮质——脑回、脑沟与脑叶',
+      cranial_nerves: '脑神经（I–XII）',
+      brainstem: '脑干',
+      tracts: '白质纤维束（传导通路）',
+      diencephalon: '间脑（丘脑、下丘脑）',
+      arteries: '动脉（Willis 环）',
+      white_matter: '白质与连合纤维',
+      veins_sinuses: '硬脑膜静脉窦与静脉',
+      cerebellum: '小脑',
+      deep_grey: '深部灰质 / 基底神经节',
+      ventricles: '脑室系统',
+      meninges_dura: '脑膜与硬脑膜（大脑镰、小脑幕）',
+    });
+    expect(Object.keys(BRAIN_CATEGORY_NAMES_ZH)).toEqual(
+      Object.keys(manifest.categories),
+    );
+    expect(manifest.categories.cortex.label).toBe(
+      'Cortex – gyri, sulci & lobes',
+    );
+  });
+
+  it('localizes every supported side deterministically', () => {
+    expect(BRAIN_SIDE_NAMES_ZH).toEqual({
+      left: '左侧',
+      right: '右侧',
+      median: '正中',
+    });
+    expect(
+      new Set(
+        manifest.nodes.map(
+          (node) => resolveBrainStructureTerm(node).sideChinese,
+        ),
+      ),
+    ).toEqual(new Set(['左侧', '右侧', '正中']));
+  });
+
+  it('covers 237 unique labels and all 437 occurrences in the review list', () => {
+    expect(brainTerminologyReview).toHaveLength(237);
+    expect(
+      brainTerminologyReview.reduce(
+        (total, entry) => total + entry.occurrences,
+        0,
+      ),
+    ).toBe(BRAIN_STRUCTURE_COUNT);
+    expect(
+      Object.fromEntries(
+        ['verified', 'needs_review', 'unavailable'].map((status) => [
+          status,
+          brainTerminologyReview.filter((entry) => entry.status === status)
+            .length,
+        ]),
+      ),
+    ).toEqual({ verified: 5, needs_review: 143, unavailable: 89 });
+    expect(
+      brainTerminologyReview
+        .flatMap((entry) => entry.atlasIds)
+        .sort((a, b) => a - b),
+    ).toEqual(Array.from({ length: BRAIN_STRUCTURE_COUNT }, (_, id) => id));
+    for (const entry of brainTerminologyReview) {
+      expect(
+        entry.atlasIds.every(
+          (id) => byId.get(id)?.label === entry.englishLabel,
+        ),
+      ).toBe(true);
+    }
+  });
+
+  it('inherits existing verified terms without upgrading generated candidates', () => {
+    for (const entry of brainTerminologyReview) {
+      const inherited = getStructureTerm({
+        id: `brain:${entry.atlasIds[0]}`,
+        name: entry.englishLabel,
+      });
+      if (entry.status === 'verified') {
+        expect(inherited.translationStatus).toBe('verified');
+        expect(entry.candidateChinese).toBe(inherited.zh);
+      } else {
+        expect(inherited.translationStatus).not.toBe('verified');
+      }
+    }
+  });
+
+  it('uses only verified Chinese as the primary label', () => {
+    expect(resolveBrainStructureTerm(byId.get(175)!)).toMatchObject({
+      primaryLabel: '舌回',
+      chineseLabel: '舌回',
+      englishLabel: 'Lingual gyrus',
+      status: 'verified',
+    });
+    expect(resolveBrainStructureTerm(byId.get(10)!)).toMatchObject({
+      primaryLabel: 'Adenohypophysis',
+      chineseLabel: null,
+      candidateChinese: '腺垂体',
+      status: 'needs_review',
+    });
+    expect(resolveBrainStructureTerm(byId.get(2)!)).toMatchObject({
+      primaryLabel: 'Abducens nerve (VI)',
+      chineseLabel: null,
+      candidateChinese: null,
+      status: 'unavailable',
+    });
   });
 });
 
