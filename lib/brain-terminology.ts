@@ -65,7 +65,9 @@ export function resolveBrainStructureTerm(node: BrainTermInput) {
   const review = reviewByEnglishLabel.get(node.label);
   const status = review?.status ?? 'unavailable';
   const chineseLabel =
-    status === 'verified' ? (review?.candidateChinese ?? null) : null;
+    status === 'verified' || status === 'needs_review'
+      ? (review?.candidateChinese ?? null)
+      : null;
 
   return {
     id: node.id,

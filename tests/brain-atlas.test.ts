@@ -220,6 +220,24 @@ describe('Brain list filtering contract', () => {
     ).toEqual([175]);
   });
 
+  it('finds needs-review structures by Chinese candidate without losing English search', () => {
+    expect(
+      filterBrainNodes(manifest.nodes, '后横侧副沟', null).map(
+        (node) => node.id,
+      ),
+    ).toEqual([0, 1]);
+    expect(
+      filterBrainNodes(
+        manifest.nodes,
+        'Posterior transverse collateral sulcus',
+        null,
+      ).map((node) => node.id),
+    ).toEqual([0, 1]);
+    expect(
+      filterBrainNodes(manifest.nodes, '腺垂体', null).map((node) => node.id),
+    ).toEqual([10]);
+  });
+
   it('searches by English category key and Chinese category name', () => {
     expect(filterBrainNodes(manifest.nodes, 'ventricles', null)).toHaveLength(
       7,
@@ -313,7 +331,7 @@ describe('Brain zh-CN terminology contract', () => {
     }
   });
 
-  it('uses only verified Chinese as the primary label', () => {
+  it('uses verified and needs-review Chinese as the primary label', () => {
     expect(resolveBrainStructureTerm(byId.get(175)!)).toMatchObject({
       primaryLabel: '舌回',
       chineseLabel: '舌回',
@@ -321,8 +339,8 @@ describe('Brain zh-CN terminology contract', () => {
       status: 'verified',
     });
     expect(resolveBrainStructureTerm(byId.get(10)!)).toMatchObject({
-      primaryLabel: 'Adenohypophysis',
-      chineseLabel: null,
+      primaryLabel: '腺垂体',
+      chineseLabel: '腺垂体',
       candidateChinese: '腺垂体',
       status: 'needs_review',
     });
