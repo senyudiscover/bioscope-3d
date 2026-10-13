@@ -2,8 +2,10 @@
 
 import {
   useCallback,
+  useEffect,
   useMemo,
   useReducer,
+  useRef,
   useState,
   type ReactNode,
 } from 'react';
@@ -13,6 +15,7 @@ import {
   EyeOff,
   Focus,
   Info,
+  Layers3,
   LoaderCircle,
   RotateCcw,
   Search,
@@ -88,11 +91,13 @@ export function BrainWorkbench({
   const [explodeProgress, setExplodeProgress] = useState(0);
   const [focusNonce, setFocusNonce] = useState(0);
   const [resetNonce, setResetNonce] = useState(0);
+  const [locateNonce, setLocateNonce] = useState(0);
   const [ready, setReady] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(
     manifestErrors.length ? manifestErrors.join(' ') : null,
   );
   const [stats, setStats] = useState(initialStats);
+  const selectedCardRef = useRef<HTMLButtonElement | null>(null);
 
   const selected =
     selectedId === null ? null : (nodesById.get(selectedId) ?? null);
@@ -100,12 +105,18 @@ export function BrainWorkbench({
   const selectionVisible =
     selected !== null && !hiddenCategories.has(selected.category);
   const filtered = useMemo(
-    () => filterBrainNodes(manifest.nodes, query, category).slice(0, 100),
+    () => filterBrainNodes(manifest.nodes, query, category),
     [category, query],
   );
 
   const select = useCallback((id: number) => {
     dispatchVisual({ type: 'select', id });
+  }, []);
+  const selectFromScene = useCallback((id: number) => {
+    setQuery('');
+    setCategory(null);
+    dispatchVisual({ type: 'select', id });
+    setLocateNonce((value) => value + 1);
   }, []);
   const markReady = useCallback((next: BrainRuntimeStats) => {
     setStats(next);
@@ -117,6 +128,22 @@ export function BrainWorkbench({
     setExplodeProgress(0);
     setResetNonce((value) => value + 1);
   };
+
+  const showAll = () => {
+    dispatchVisual({ type: 'show-all' });
+    setExplodeProgress(100);
+  };
+
+  useEffect(() => {
+    if (selectedId === null) return;
+    const frame = window.requestAnimationFrame(() => {
+      selectedCardRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [locateNonce, selectedId]);
 
   const toggleCategory = (id: string) => {
     dispatchVisual({ type: 'toggle-category', category: id });
@@ -180,6 +207,7 @@ export function BrainWorkbench({
                     type="button"
                     key={node.id}
                     data-brain-id={node.id}
+                    ref={selectedId === node.id ? selectedCardRef : undefined}
                     onClick={() => select(node.id)}
                     className={`mb-1 w-full rounded-lg px-3 py-2 text-left transition-colors ${
                       selectedId === node.id
@@ -216,7 +244,7 @@ export function BrainWorkbench({
               explodeProgress={explodeProgress}
               focusNonce={focusNonce}
               resetNonce={resetNonce}
-              onSelect={select}
+              onSelect={selectFromScene}
               onReady={markReady}
               onStats={setStats}
               onError={setLoadError}
@@ -285,6 +313,14 @@ export function BrainWorkbench({
               className={`${STAGE_CHIP_CLASS} ${STAGE_CHIP_ACTIVE_CLASS}`}
             >
               <EyeOff className="mr-1.5 inline size-3" /> 隔离
+            </button>
+            <button
+              type="button"
+              data-testid="brain-show-all"
+              onClick={showAll}
+              className={STAGE_CHIP_CLASS}
+            >
+              <Layers3 className="mr-1.5 inline size-3" /> 全部显示
             </button>
             <button
               type="button"

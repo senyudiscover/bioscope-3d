@@ -214,6 +214,7 @@ export type BrainVisualAction =
   | { type: 'toggle-category'; category: string }
   | { type: 'toggle-fade' }
   | { type: 'toggle-isolate' }
+  | { type: 'show-all' }
   | { type: 'set-cortex-opacity'; value: number }
   | { type: 'reset' };
 
@@ -302,6 +303,13 @@ export function reduceBrainVisualState(
         fadeOthers: false,
       };
     }
+    case 'show-all':
+      return {
+        ...state,
+        hiddenCategories: new Set(),
+        fadeOthers: false,
+        isolateSelected: false,
+      };
     case 'set-cortex-opacity': {
       const cortexOpacity = Math.min(1, Math.max(0.1, action.value));
       return { ...state, cortexOpacity };

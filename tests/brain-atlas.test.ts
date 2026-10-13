@@ -635,6 +635,23 @@ describe('Brain interaction state reducer contract (BIO-015 pre-merge fixes)', (
     expect(state.hiddenCategories).toEqual(hiddenBefore);
   });
 
+  it('show-all reveals every category and disarms fade/isolate without clearing selection', () => {
+    let state = reduce(createInitialBrainVisualState(), {
+      type: 'select',
+      id: cortex.id,
+    });
+    state = reduce(state, { type: 'toggle-isolate' });
+    expect(state.isolateSelected).toBe(true);
+
+    state = reduce(state, { type: 'show-all' });
+
+    expect(state.selectedId).toBe(cortex.id);
+    expect(state.hiddenCategories.size).toBe(0);
+    expect(state.fadeOthers).toBe(false);
+    expect(state.isolateSelected).toBe(false);
+    expect(countVisible(state)).toBe(manifest.nodes.length);
+  });
+
   it('E: property — isolateSelected ⇒ selected visible, scene keeps exactly it, for all 437 structures', () => {
     for (const node of manifest.nodes) {
       let state = reduce(createInitialBrainVisualState(), {
